@@ -2,7 +2,9 @@ import React from 'react'
 
 function AdminRoutes() {
   return (
-    <div>AdminRoutes</div>
+    <div>
+      <h1>adminrouts</h1>
+    </div>
   )
 }
 
