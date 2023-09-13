@@ -2,9 +2,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
+import { login } from "../../Api/UserApi";
+
 
 function Register() {
   const navigate = useNavigate();
+  const handleSubmit =(e)=>{
+    e.preventDefault()
+    const res = login('hey')
+  }
   return (
     <>
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
@@ -21,7 +27,7 @@ function Register() {
             </button>
           </div>
           <div className="LoginForm bg-gray-200 p-6 md:p-16 md:w-1/2 rounded-xl">
-            <form className="flex flex-col space-y-4">
+            <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
               <input
                 type="text"
                 id="email"
