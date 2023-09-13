@@ -1,11 +1,31 @@
-import React from "react";
+import React,{useState} from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
 
 
 function Register() {
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    mob: "",
+    password: ""
+  });
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
+  };
+
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
+    try {
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const navigate = useNavigate();
+  console.log(data);
   return (
     <>
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
@@ -25,8 +45,17 @@ function Register() {
             <form className="flex flex-col space-y-4">
               <input
                 type="text"
+                id="name"
+                name="name"
+                onChange={handleChange}
+                className="bg-gray-500 py-2 px-3 rounded-md"
+                placeholder="Enter your name"
+              />
+              <input
+                type="text"
                 id="email"
                 name="email"
+                onChange={handleChange}
                 className="bg-gray-500 py-2 px-3 rounded-md"
                 placeholder="Enter your email"
               />
@@ -34,6 +63,7 @@ function Register() {
                 type="text"
                 id="mobile"
                 name="mobile"
+                onChange={handleChange}
                 className="bg-gray-500 py-2 px-3 rounded-md"
                 placeholder="Enter your number"
               />
@@ -41,6 +71,7 @@ function Register() {
                 type="password"
                 id="password"
                 name="password"
+                onChange={handleChange}
                 className="bg-gray-500 py-2 px-3 rounded-md"
                 placeholder="Enter your password"
               />
@@ -78,7 +109,10 @@ function Register() {
             </div>
             <div className="flex justify-center">
               <FcGoogle className="w-6 h-6" />
-              <a href="" className="px-2"> or login with Google</a>
+              <a href="" className="px-2">
+                {" "}
+                or login with Google
+              </a>
             </div>
           </div>
         </div>

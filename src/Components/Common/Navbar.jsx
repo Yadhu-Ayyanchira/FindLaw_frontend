@@ -104,9 +104,11 @@ function NavbarDefault() {
         </div>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center justify-between">
-          <Badge content="1">
+          <div className="hidden md:flex md:items-center md:ml-6 mr-5 justify-normal">
+            <Badge content="1">
               <BiMessageAltDetail className="h-7 w-7" />
-          </Badge>
+            </Badge>
+          </div>
           <div className="hidden md:flex md:items-center md:ml-6 mr-5 justify-normal">
             <button className="focus:outline-none">
               <div
@@ -180,6 +182,9 @@ function NavbarDefault() {
               />
             </div>
           </button>
+          <Badge content="1">
+            <BiMessageAltDetail className="h-7 w-7" />
+          </Badge>
         </div>
       </MobileNav>
     </Navbar>
