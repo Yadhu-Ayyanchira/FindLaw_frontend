@@ -1,10 +1,12 @@
 import React from 'react'
+import { Route, Routes } from "react-router-dom";
+import AdminDashboard from '../Components/Admin/AdminDashboard';
 
 function AdminRoutes() {
   return (
-    <div>
-      <h1>adminrouts</h1>
-    </div>
+   <Routes>
+    <Route path="/" element={<AdminDashboard />} />
+   </Routes>
   )
 }
 
