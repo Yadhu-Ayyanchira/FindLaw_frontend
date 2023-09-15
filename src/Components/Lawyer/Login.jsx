@@ -35,18 +35,7 @@ function Register() {
     <>
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
         <div className="LoginContainer bg-[#1c1c1d] shadow-lg opacity-70 md:flex md:h-3/4 rounded-xl">
-          <div className="LoginLeft bg-[#111827] text-white py-8 px-4 text-center md:w-1/2 rounded-tl-xl md:rounded-bl-xl">
-            <img src={logo} alt="Logo" className="w-44 h-44 mx-auto" />
-            <p className="text-2xl md:text-5xl">Are you new here?</p>
-            <br />
-            <button
-              onClick={() => navigate("/register")}
-              className="w-32 h-12 bg-gray-500 hover:bg-gray-600 text-white rounded-3xl focus:outline-none"
-            >
-              Sign up
-            </button>
-          </div>
-          <div className="LoginForm bg-gray-200 p-6 md:p-16 md:w-1/2 rounded-xl">
+          <div className="LoginForm bg-gray-200 p-6 md:p-16 md:w-1/2 rounded-tl-xl rounded-bl-xl">
             <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
               <input
                 type="text"
@@ -71,7 +60,9 @@ function Register() {
               >
                 Login
               </button>
-              <a href="" className="text-blue-700">Forgot password?</a>
+              <a href="" className="text-blue-700">
+                Forgot password?
+              </a>
             </form>
             <div className="flex items-center justify-center py-6">
               <div className="border-t border-gray-700 flex-grow h-0"></div>
@@ -82,6 +73,17 @@ function Register() {
               <FcGoogle className="w-6 h-6" />
               <a>Or login with Google</a>
             </div>
+          </div>
+          <div className="LoginLeft bg-[#cf983b] text-white py-8 px-4 text-center md:w-1/2 rounded-tr-xl md:rounded-br-xl">
+            <img src={logo} alt="Logo" className="w-44 h-44 mx-auto" />
+            <p className="text-2xl md:text-5xl">Are you new here?</p>
+            <br />
+            <button
+              onClick={() => navigate("/lawyer/signup")}
+              className="w-32 h-12 bg-gray-800 hover:bg-gray-900 text-white rounded-3xl focus:outline-none"
+            >
+              Sign up
+            </button>
           </div>
         </div>
       </div>

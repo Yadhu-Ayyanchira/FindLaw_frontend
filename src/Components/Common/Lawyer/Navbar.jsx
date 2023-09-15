@@ -16,7 +16,7 @@ import {
 import { Badge, Avatar } from "@material-tailwind/react";
 import {BiArrowFromTop} from 'react-icons/bi'
 import { BiMessageAltDetail } from "react-icons/bi";
-import logo from "../../Assets/Images/Logo.svg";
+import logo from "../../../Assets/Images/Logo.svg";
 
 
 function NavbarDefault() {

@@ -3,7 +3,7 @@ import {Routes, Route} from 'react-router-dom'
 import Login from '../Components/User/Login'
 import Register from '../Components/User/Register'
 import Home from '../Components/User/Home'
-import Navbar from '../Components/Common/Navbar'
+import Navbar from '../Components/Common/User/Navbar'
 
 function UserRoutes() {
   return (
