@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
-import { UserRegister } from "../../Api/UserApi";
+import { UserRegister, UserRegisterWithGoogle } from "../../Api/UserApi";
 import { useDispatch } from "react-redux";
 import { setuserdetails } from "../../Redux/UserSlice";
 import { useGoogleLogin,googleLogout } from "@react-oauth/google";
@@ -27,9 +27,42 @@ function Register() {
   };
 
   const Gsignup = useGoogleLogin({
-    onSuccess: (codeResponse) => setGUser(codeResponse),
+    onSuccess: (codeResponse) => {setGUser(codeResponse)
+    console.log("Success", codeResponse);},
     onError: (error) => console.log("Signup Failed:", error),
   });
+  useEffect(() => {
+    if (guser) {
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${guser.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${guser.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          UserRegisterWithGoogle(res.data).then((response) => {
+            if (response.data.created) {
+              console.log(response);
+              const userDetails = {
+                name: response.data.user.name,
+                email: response.data.user.email,
+              };
+              localStorage.setItem("currentUser", response.data.token);
+              dispatch(setuserdetails({ userInfo: userDetails }));
+              navigate("/");
+            } else {
+              setError(response.data.message);
+            }
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [guser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,8 +82,8 @@ function Register() {
         setError("Pasword not match!")
       } else {
         const response = await UserRegister(data);
-        if(response.data.status){
-
+        if(response.data.created){
+          navigate('/verify')
         }else{
           setError("User already Exists");
         }
@@ -59,37 +92,7 @@ function Register() {
       console.log(error);
     }
   };
-useEffect(() => {
-  if (guser) {
-    axios
-      .get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${guser.access_token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${guser.access_token}`,
-            Accept: "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        UserSignupWithGoogle(res.data).then((response) => {
-          if (response.data.created) {
-            console.log(response);
-            const userDetails = {
-              name: response.data.user.name,
-              email: response.data.user.email,
-            };
-            localStorage.setItem("currentUser", response.data.token);
-            dispatch(setuserdetails({ userInfo: userDetails }));
-            navigate("/");
-          } else {
-            setError(response.data.message);
-          }
-        });
-      })
-      .catch((err) => console.log(err));
-  }
-}, [guser]);
+
   
   return (
     <>
@@ -177,7 +180,7 @@ useEffect(() => {
             </div>
             <div className="flex justify-center">
               <FcGoogle className="w-6 h-6" />
-              <a href="" onClick={() => Gsignup()} className="px-2">
+              <a  onClick={() => Gsignup()} className="px-2">
                 login with Google
               </a>
             </div>
