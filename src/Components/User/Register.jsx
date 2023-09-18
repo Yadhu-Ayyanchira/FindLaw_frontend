@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
 import { UserRegister } from "../../Api/UserApi";
+import { useDispatch } from "react-redux";
+import { setuserdetails } from "../../Redux/UserSlice";
+import { useGoogleLogin,googleLogout } from "@react-oauth/google";
+import axios from "axios";
+
 
 function Register() {
   const [data, setData] = useState({
@@ -13,11 +18,18 @@ function Register() {
     confirmPassword: ""
   });
   const [error, setError] = useState("");
+  const [guser, setGUser] = useState([]);
   
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
+
+  const Gsignup = useGoogleLogin({
+    onSuccess: (codeResponse) => setGUser(codeResponse),
+    onError: (error) => console.log("Signup Failed:", error),
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,8 +59,38 @@ function Register() {
       console.log(error);
     }
   };
-
-  console.log(data);
+useEffect(() => {
+  if (guser) {
+    axios
+      .get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${guser.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${guser.access_token}`,
+            Accept: "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        UserSignupWithGoogle(res.data).then((response) => {
+          if (response.data.created) {
+            console.log(response);
+            const userDetails = {
+              name: response.data.user.name,
+              email: response.data.user.email,
+            };
+            localStorage.setItem("currentUser", response.data.token);
+            dispatch(setuserdetails({ userInfo: userDetails }));
+            navigate("/");
+          } else {
+            setError(response.data.message);
+          }
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+}, [guser]);
+  
   return (
     <>
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
@@ -135,9 +177,8 @@ function Register() {
             </div>
             <div className="flex justify-center">
               <FcGoogle className="w-6 h-6" />
-              <a href="" className="px-2">
-                {" "}
-                or login with Google
+              <a href="" onClick={() => Gsignup()} className="px-2">
+                login with Google
               </a>
             </div>
           </div>

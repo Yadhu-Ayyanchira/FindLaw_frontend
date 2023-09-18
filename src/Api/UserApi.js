@@ -19,3 +19,7 @@ export async function UserRegister(user) {
     return error;
   }
 }
+
+export async function UserSignupWithGoogle(data){
+
+}

@@ -1,4 +1,4 @@
-import {PersistStore,persistReducer} from "react-persist"
+import { persistStore, persistReducer } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit"
 import storage from "redux-persist/lib/storage";
 import UserSlice from "./UserSlice";
@@ -18,6 +18,6 @@ const Store = configureStore({
         lawyer : persistedLawyerReducer
     }
 })
-const persistor = PersistStore(Store)
+const persistor = persistStore(Store)
 
 export {Store,persistor}
