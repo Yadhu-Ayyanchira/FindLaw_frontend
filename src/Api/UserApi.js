@@ -2,13 +2,14 @@ import UserRequest from "../Utils/UserRequest";
 
 export async function UserLogin(user) {
   try {
-    console.log(user);
-    const data = await UserRequest.get("/login", { user });
+    console.log("api data disp", user);
+    const data = await UserRequest.post("/login", user);
     return data;
   } catch (error) {
     return error;
   }
 }
+
 
 export async function UserRegister(user) {
   try {

@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
 import { UserLogin } from "../../Api/UserApi";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useDispatch } from "react-redux";
+import setuserdetails from '../../Redux/UserSlice'
 
 
-function Register() {
+
+function Login() {
   const [data,setData] = useState({
     email: "",
     password: ""
   })
   const [error,setError] = useState("")
+  const [guser, setGUser] = useState([]);
+  const dispatch = useDispatch();
   
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
   const navigate = useNavigate();
-  const handleSubmit =(e)=>{
+  const handleSubmit = async (e)=>{
     e.preventDefault()
     let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const {email, password} = data
@@ -28,9 +35,55 @@ function Register() {
     }else if (!email.match(validRegex)) {
       setError("Invalid email");
     } else {
-      const res = UserLogin(data);
+      const res = await UserLogin(data);
+      if(res.data.access){
+        localStorage.setItem("currentUser", response.data.token);
+        navigate("/");
+      }else{
+        setError(res.data.message)
+      }
     }
   }
+
+const Glogin = useGoogleLogin({
+  onSuccess: (codeResponse) => setGUser(codeResponse),
+  onError: (error) => console.log("Login Failed:", error),
+});
+
+useEffect(() => {
+  if (guser) {
+    axios
+      .get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${guser.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${guser.access_token}`,
+            Accept: "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        UserLogin({ email: res.data.email, password: res.data.id }).then(
+          (response) => {
+            if (response.data.access) {
+              const userDetails = {
+                name: response.data.info.name,
+                email: response.data.info.email,
+              }
+              //dispatch(setuserdetails({ userInfo: userDetails }));
+              console.log("responsess in det :",userDetails);
+              localStorage.setItem("token", response.data.token);
+              navigate("/");
+            } else {
+              setError(response.data.message);
+            }
+          }
+        );
+      })
+      .catch((err) => console.log(err));
+  }
+}, [guser]);
+
   return (
     <>
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
@@ -71,7 +124,9 @@ function Register() {
               >
                 Login
               </button>
-              <a href="" className="text-blue-700">Forgot password?</a>
+              <a href="" className="text-blue-700">
+                Forgot password?
+              </a>
             </form>
             <div className="flex items-center justify-center py-6">
               <div className="border-t border-gray-700 flex-grow h-0"></div>
@@ -80,7 +135,9 @@ function Register() {
             </div>
             <div className="flex justify-center">
               <FcGoogle className="w-6 h-6" />
-              <a>Or login with Google</a>
+              <a onClick={() => Glogin()} className="px-2">
+                login with Google
+              </a>
             </div>
           </div>
         </div>
@@ -89,4 +146,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;
