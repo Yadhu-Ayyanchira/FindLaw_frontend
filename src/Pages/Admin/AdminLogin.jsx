@@ -1,16 +1,37 @@
 import React, { useState } from "react";
 import logo from "../../Assets/Images/Logo.svg";
 function AdminLogin() {
+    const [data, setData] = useState({
+      email: "",
+      password: "",
+    });
+    const [error,setError] = useState("")
   const backgroundImageUrl =
     "https://images.unsplash.com/photo-1474377207190-a7d8b3334068?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
 
   const backgroundStyle = { backgroundImage: `url(${backgroundImageUrl})`,};
-  const [error,setError] = useState("")
  const handleChange = ({ currentTarget: input }) => {
    setData({ ...data, [input.name]: input.value });
  };
- const handleSubmit =(e)=>{
-    console.log("submitted");
+ const handleSubmit  = async (e)=>{
+    e.preventDefault()
+    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const {email, password} = data
+    if(email.trim()===""){
+      setError("Email is required")
+    }else if(password.trim() === ""){
+      setError("Password is required")
+    }else if (!email.match(validRegex)) {
+      setError("Invalid email");
+    } else {
+      const res = await AdminLogin(data);
+      if(res.data.access){
+        localStorage.setItem("currentUser", response.data.token);
+        navigate("/");
+      }else{
+        setError(res.data.message)
+      }
+    }
  }
   return (
     <div

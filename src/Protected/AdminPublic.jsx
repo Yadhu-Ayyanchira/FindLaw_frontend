@@ -6,7 +6,7 @@ function AdminPublic(props) {
     console.log("the public route console");
     return <Navigate to="/admin/home" />;
   }
-  <Navigate to="admin/login" />;
+  <Navigate to="/login" />;
   return props.children;
 }
 
