@@ -37,7 +37,7 @@ function Login() {
     } else {
       const res = await UserLogin(data);
       if(res.data.access){
-        localStorage.setItem("currentUser", response.data.token);
+        localStorage.setItem("currentUser", res.data.token);
         navigate("/");
       }else{
         setError(res.data.message)

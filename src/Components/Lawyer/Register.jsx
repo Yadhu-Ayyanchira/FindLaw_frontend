@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { setlawyerdetails } from "../../Redux/LawyerSlice";
 import { useDispatch } from "react-redux";
 import { useGoogleLogin, googleLogout } from "@react-oauth/google";
-import { LawyerRegister, LawyerRegisterWithGoogle } from "../../Api/LawyerApi";
+import { LawyerRegister, LawyerRegisterWithGoogle, lawlog } from "../../Api/LawyerApi";
 import axios from "axios";
 
 function Register() {
@@ -82,18 +82,9 @@ function Register() {
       } else if (confirmPassword !== password) {
         setError("Pasword not match!");
       } else {
-        const response = await LawyerRegister(data);
-        if (response.data.created) {
-          const userDetails = {
-            name: response.data.user.name,
-            email: response.data.user.email,
-          };
-          localStorage.setItem("currentLawyer", response.data.token);
-          dispatch(setlawyerdetails({ lawyerInfo: userDetails }));
-          navigate("/verify");
-        } else {
-          setError("User already Exists");
-        }
+        //LawyerRegister(data);
+        lawlog();
+        
       }
     } catch (error) {
       console.log(error);

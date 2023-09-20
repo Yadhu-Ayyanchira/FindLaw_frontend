@@ -1,4 +1,4 @@
-import LawyerRequest from "../Utils/LawyerRequests";
+import LawyerRequest from "../Utils/LawyerRequests"
 
 export async function LawyerRegister(user) {
   try {
@@ -18,3 +18,15 @@ export async function LawyerRegisterWithGoogle(data) {
     return error;
   }
 }
+export async function lawlog() {
+  try {
+    console.log("lawlog disp");
+    const response = await LawyerRequest.get("/lawlog");
+    return response.data; // Return the response data if needed
+  } catch (error) {
+    return error;
+  }
+}
+
+
+
