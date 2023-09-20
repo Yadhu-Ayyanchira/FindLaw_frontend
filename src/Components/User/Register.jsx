@@ -83,6 +83,12 @@ function Register() {
       } else {
         const response = await UserRegister(data);
         if(response.data.created){
+          const userDetails = {
+            name: response.data.user.name,
+            email: response.data.user.email,
+          };
+          localStorage.setItem("currentUser", response.data.token);
+          dispatch(setuserdetails({ userInfo: userDetails }));
           navigate('/verify')
         }else{
           setError("User already Exists");
@@ -152,18 +158,7 @@ function Register() {
                 className="bg-gray-500 py-2 px-3 rounded-md"
                 placeholder="Confirm your password"
               />
-              {/* <div className="flex flex-col md:flex-row md:space-x-4">
-                <input
-                  type="otp"
-                  id="otp"
-                  name="otp"
-                  className="bg-gray-500 py-2 px-3 rounded-md flex-grow mb-2 md:mb-0"
-                  placeholder="Enter your OTP"
-                />
-                <button className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md">
-                  Get OTP
-                </button>
-              </div> */}
+              
               {error && <p className="text-center text-red-600">{error}</p>}
               <button
                 type="submit"
@@ -181,7 +176,7 @@ function Register() {
             <div className="flex justify-center">
               <FcGoogle className="w-6 h-6" />
               <a  onClick={() => Gsignup()} className="px-2">
-                login with Google
+                Signin with Google
               </a>
             </div>
           </div>

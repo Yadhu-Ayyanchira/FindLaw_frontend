@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
-import { UserRegister } from "../../Api/UserApi";
+import { setlawyerdetails } from "../../Redux/LawyerSlice";
+import { useDispatch } from "react-redux";
+import { useGoogleLogin, googleLogout } from "@react-oauth/google";
+import { LawyerRegister, LawyerRegisterWithGoogle } from "../../Api/LawyerApi";
+import axios from "axios";
 
 function Register() {
   const [data, setData] = useState({
@@ -13,19 +17,61 @@ function Register() {
     confirmPassword: ""
   });
   const [error, setError] = useState("");
-  
+  const [guser, setGUser] = useState([]);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
+  const Gsignup = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      setGUser(codeResponse);
+    },
+    onError: (error) => console.log("Signup Failed:", error),
+  });
+
+  
+  useEffect(() => {
+    if (guser) {
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${guser.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${guser.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          LawyerRegisterWithGoogle(res.data).then((response) => {
+            if (response.data.created) {
+              console.log(response);
+              const userDetails = {
+                name: response.data.user.name,
+                email: response.data.user.email,
+              };
+              localStorage.setItem("currentLawyer", response.data.token);
+              dispatch(setlawyerdetails({ lawyerInfo: userDetails }));
+              navigate("/");
+            } else {
+              setError(response.data.message);
+            }
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [guser]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('handle submit');
+    console.log("handle submit");
     try {
       const { email, password, name, mobile, confirmPassword } = data;
-      let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      if (email.trim()=="" && !email.match(validRegex)) {
+      let validRegex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (email.trim() == "" && !email.match(validRegex)) {
         setError("Invalid Email");
       } else if (password.trim() == "") {
         setError("Password is required");
@@ -33,13 +79,19 @@ function Register() {
         setError("Name is required");
       } else if (mobile.trim() == "") {
         setError("Number is required");
-      }else if(confirmPassword !== password){
-        setError("Pasword not match!")
+      } else if (confirmPassword !== password) {
+        setError("Pasword not match!");
       } else {
-        const response = await UserRegister(data);
-        if(response.data.status){
-
-        }else{
+        const response = await LawyerRegister(data);
+        if (response.data.created) {
+          const userDetails = {
+            name: response.data.user.name,
+            email: response.data.user.email,
+          };
+          localStorage.setItem("currentLawyer", response.data.token);
+          dispatch(setlawyerdetails({ lawyerInfo: userDetails }));
+          navigate("/verify");
+        } else {
           setError("User already Exists");
         }
       }
@@ -48,7 +100,7 @@ function Register() {
     }
   };
 
-  console.log(data);
+
   return (
     <>
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
@@ -107,18 +159,6 @@ function Register() {
                 className="bg-gray-500 py-2 px-3 rounded-md"
                 placeholder="Confirm your password"
               />
-              {/* <div className="flex flex-col md:flex-row md:space-x-4">
-                <input
-                  type="otp"
-                  id="otp"
-                  name="otp"
-                  className="bg-gray-500 py-2 px-3 rounded-md flex-grow mb-2 md:mb-0"
-                  placeholder="Enter your OTP"
-                />
-                <button className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md">
-                  Get OTP
-                </button>
-              </div> */}
               {error && <p className="text-center text-red-600">{error}</p>}
               <button
                 type="submit"
@@ -135,9 +175,8 @@ function Register() {
             </div>
             <div className="flex justify-center">
               <FcGoogle className="w-6 h-6" />
-              <a href="" className="px-2">
-                {" "}
-                login with Google
+              <a onClick={() => Gsignup()} className="px-2">
+                Signin with Google
               </a>
             </div>
           </div>

@@ -12,12 +12,12 @@ import AdminLogin from '../Pages/Admin/AdminLogin'
 function UserRoutes() {
   return (
     <Routes>
-      <Route element={<UserPublic/>}>
+  
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/verify" element={<Verify/>}/>
-      </Route>
+      
       <Route path="/test" element={<AdminLogin/>}/>
     </Routes>
   )

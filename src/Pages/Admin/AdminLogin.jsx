@@ -32,7 +32,7 @@ function AdminLogin() {
       console.log('resp',res);
       if(res.data.access){
         console.log('oye');
-        localStorage.setItem("admintoken", res.data.token);
+        localStorage.setItem("currentAdmin", res.data.token);
         navigate("/admin");
       }else{
         setError(res.data.message)
