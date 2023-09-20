@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import logo from "../../Assets/Images/Logo.svg";
+import { adminLogin } from "../../Api/AdminApi";
+import { useNavigate } from "react-router-dom";
 function AdminLogin() {
     const [data, setData] = useState({
       email: "",
       password: "",
     });
     const [error,setError] = useState("")
+    const navigate = useNavigate();
   const backgroundImageUrl =
     "https://images.unsplash.com/photo-1474377207190-a7d8b3334068?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
 
@@ -24,10 +27,13 @@ function AdminLogin() {
     }else if (!email.match(validRegex)) {
       setError("Invalid email");
     } else {
-      const res = await AdminLogin(data);
+        console.log('inside success');
+      const res = await adminLogin(data);
+      console.log('resp',res);
       if(res.data.access){
-        localStorage.setItem("currentUser", response.data.token);
-        navigate("/");
+        console.log('oye');
+        localStorage.setItem("admintoken", res.data.token);
+        navigate("/admin");
       }else{
         setError(res.data.message)
       }

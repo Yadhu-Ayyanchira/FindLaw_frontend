@@ -1,10 +1,10 @@
 import AdminRequest from "../Utils/AdminRequest";
 
 
-export async function AdminLogin(admin) {
+export async function adminLogin(admin) {
   try {
-    console.log("api data disp", admin);
-    const data = await UserRequest.post("/login", admin);
+    console.log("adminapi data disp", admin);
+    const data = await AdminRequest.post("/login", admin);
     return data;
   } catch (error) {
     return error;
