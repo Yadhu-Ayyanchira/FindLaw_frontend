@@ -79,7 +79,7 @@ function Register() {
             <p className="text-2xl md:text-5xl">Are you new here?</p>
             <br />
             <button
-              onClick={() => navigate("/lawyer/signup")}
+              onClick={() => navigate("/lawyer/register")}
               className="w-32 h-12 bg-gray-800 hover:bg-gray-900 text-white rounded-3xl focus:outline-none"
             >
               Sign up

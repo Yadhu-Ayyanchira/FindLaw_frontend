@@ -3,7 +3,7 @@ const LawyerRequest = axios.create({
   baseURL: "http://localhost:4000/lawyer",
 });
 
-AdminRequest.interceptors.request.use((req) => {
+LawyerRequest.interceptors.request.use((req) => {
   if (localStorage.getItem("currentLawyer")) {
     req.headers.Authorization =
       "Bearer " + localStorage.getItem("currentLawyer");
