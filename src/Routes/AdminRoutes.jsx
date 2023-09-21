@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import AdminDashboard from '../Components/Admin/AdminDashboard';
 import AdminProtected from '../Protected/AdminProtected';
 import AdminPublic from '../Protected/AdminPublic';
-import AdminLogin from '../Pages/Admin/AdminLogin';
+import AdminLogin from '../Pages/Admin/AdminLogin'
 
 function AdminRoutes() {
   return (

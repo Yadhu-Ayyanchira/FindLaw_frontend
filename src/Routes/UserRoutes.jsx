@@ -5,7 +5,6 @@ import UserPublic from "../Protected/UserPublic";
 import Login from "../Pages/User/Login";
 import Register from "../Pages/User/Register";
 import Home from "../Components/User/Home";
-import Navbar from "../Components/Common/User/Navbar";
 import Verify from "../Components/Common/User/Verify";
 
 function UserRoutes() {
