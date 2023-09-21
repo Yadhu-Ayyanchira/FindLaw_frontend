@@ -3,7 +3,7 @@ import LawyerRequest from "../Utils/LawyerRequests"
 export async function LawyerRegister(user) {
   try {
     console.log("lawyer api data disp", user);
-    const data = await LawyerRequest.post("/login", user);
+    const data = await LawyerRequest.post("/register", user);
     return data;
   } catch (error) {
     return error;

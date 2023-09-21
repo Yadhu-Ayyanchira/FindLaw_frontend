@@ -82,9 +82,7 @@ function Register() {
       } else if (confirmPassword !== password) {
         setError("Pasword not match!");
       } else {
-        //LawyerRegister(data);
-        lawlog();
-        
+        LawyerRegister(data);      
       }
     } catch (error) {
       console.log(error);
