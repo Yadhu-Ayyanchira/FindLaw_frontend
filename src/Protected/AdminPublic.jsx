@@ -1,13 +1,13 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 function AdminPublic(props) {
   if (localStorage.getItem("currentAdmin")) {
     console.log("the public route console");
-    return <Navigate to="/admin/home" />;
+    return <Navigate to="/admin" />;
   }
-  <Navigate to="/login" />;
-  return props.children;
+  
+  return <Outlet/>
 }
 
 export default AdminPublic;

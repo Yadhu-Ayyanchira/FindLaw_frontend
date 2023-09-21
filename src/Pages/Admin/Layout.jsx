@@ -1,8 +1,7 @@
 import React from "react";
-import { NavBar } from "../../Components/Common/Admin/Navbar";
-import { Sidebar } from "../../Components/Common/Admin/Sidebar";
+import NavBar from "../../Components/Common/Admin/NavBar";
+import Sidebar from "../../Components/Common/Admin/Sidebar";
 import { Outlet } from "react-router-dom";
-import React from 'react'
 
 function Layout() {
   return (
@@ -15,14 +14,9 @@ function Layout() {
           <div className="invisible md:visible">
             <Sidebar />
           </div>
-
           <div>
             <div className="h-full ">
               <Outlet />
-            </div>
-
-            <div>
-              <Footer />
             </div>
           </div>
         </div>
@@ -31,4 +25,4 @@ function Layout() {
   );
 }
 
-export default Layout
+export default Layout;

@@ -1,6 +1,4 @@
 import React from "react";
-import NavBar from "../Common/Admin/NavBar";
-import Sidebar from "../Common/Admin/Sidebar";
 import { Card, Typography,Button } from "@material-tailwind/react";
 
 function AdminDashboard() {
