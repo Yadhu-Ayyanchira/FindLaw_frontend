@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
-import { UserLogin } from "../../Api/UserApi";
+import { LawyerLogin } from "../../Api/LawyerApi";
 
 
 function Register() {
@@ -17,7 +17,7 @@ function Register() {
   };
 
   const navigate = useNavigate();
-  const handleSubmit =(e)=>{
+  const handleSubmit = async (e)=>{
     e.preventDefault()
     let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const {email, password} = data
@@ -28,7 +28,14 @@ function Register() {
     }else if (!email.match(validRegex)) {
       setError("Invalid email");
     } else {
-      const res = UserLogin(data);
+      const res = await LawyerLogin(data);
+      console.log('thid ',res);
+      if (res.data.access) {
+        localStorage.setItem("currentLawyer", res.data.token);
+        navigate("/lawyer");
+      } else {
+        setError(res.data.message);
+      }
     }
   }
   return (

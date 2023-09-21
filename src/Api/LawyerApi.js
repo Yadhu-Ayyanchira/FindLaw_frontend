@@ -18,11 +18,11 @@ export async function LawyerRegisterWithGoogle(data) {
     return error;
   }
 }
-export async function lawlog() {
+export async function LawyerLogin(data) {
   try {
     console.log("lawlog disp");
-    const response = await LawyerRequest.get("/lawlog");
-    return response.data; // Return the response data if needed
+    const response = await LawyerRequest.post("/login",data);
+    return response 
   } catch (error) {
     return error;
   }

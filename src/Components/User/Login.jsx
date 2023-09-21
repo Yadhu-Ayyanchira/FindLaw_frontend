@@ -72,7 +72,7 @@ useEffect(() => {
               }
               //dispatch(setuserdetails({ userInfo: userDetails }));
               console.log("responsess in det :",userDetails);
-              localStorage.setItem("token", response.data.token);
+              localStorage.setItem("currentUser", response.data.token);
               navigate("/");
             } else {
               setError(response.data.message);

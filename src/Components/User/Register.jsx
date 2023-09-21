@@ -28,7 +28,7 @@ function Register() {
 
   const Gsignup = useGoogleLogin({
     onSuccess: (codeResponse) => {setGUser(codeResponse)
-    console.log("Success", codeResponse);},
+    console.log("Successs", codeResponse);},
     onError: (error) => console.log("Signup Failed:", error),
   });
   useEffect(() => {
@@ -166,7 +166,7 @@ function Register() {
               >
                 Sign up
               </button>
-              <a href="">Are you a lawyer?</a>
+              <a onClick={()=>navigate('/lawyer/register')}>Are you a lawyer?</a>
             </form>
             <div className="flex items-center justify-center py-6">
               <div className="border-t border-gray-700 flex-grow h-0"></div>
