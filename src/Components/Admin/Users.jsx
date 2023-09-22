@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+import AdminRequest from "../../Utils/AdminRequest";
 import {
   Card,
   CardHeader,
@@ -18,7 +20,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-const TABLE_HEAD = ["Transaction", "Amount", "Date", "Status", "Account", ""];
+const TABLE_HEAD = ["Name", "Email", "Date", "Status", "Mobile", ""];
 
 const TABLE_ROWS = [
   {
@@ -74,6 +76,23 @@ const TABLE_ROWS = [
 ];
 
 function Users() {
+  const queryClient = useQueryClient();
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => AdminRequest.get("/users").then((res) => res.data),
+  });
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    }
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -274,4 +293,4 @@ function Users() {
   );
 }
 
-export default Users
+export default Users;
