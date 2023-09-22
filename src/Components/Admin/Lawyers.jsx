@@ -1,10 +1,11 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { PencilIcon, NoSymbolIcon } from "@heroicons/react/24/solid";
+import { NoSymbolIcon } from "@heroicons/react/24/solid";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+import { manageLawyer } from "../../Api/AdminApi";
 import AdminRequest from "../../Utils/AdminRequest";
 import {
   Card,
@@ -22,37 +23,43 @@ import {
 
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
-
-
-function Users() {
+function Lawyers() {
   const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => AdminRequest.get("/users").then((res) => res.data),
+    queryKey: ["lawyers"],
+    queryFn: () => AdminRequest.get("/lawyers").then((res) => res.data),
   });
-  console.log('dataaa',data);
+  console.log("dataaa", data);
   function formatDate(dateString) {
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
+const handleAction = async (userId) => {
+  await manageLawyer(userId);
+  queryClient.invalidateQueries("users");
+};
 
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
           <div>
-            <Typography variant="h5" color="blue-gray" className="text-2xl font-extrabold font-serif">
-              USERS
+            <Typography
+              variant="h5"
+              color="blue-gray"
+              className="text-2xl font-extrabold font-serif"
+            >
+              LAWYERS
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              These are details of all users
+              These are details of all Lawyers
             </Typography>
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
@@ -90,17 +97,7 @@ function Users() {
           </thead>
           <tbody>
             {data.data.map(
-              (
-                {
-                  image,
-                  name,
-                  mobile,
-                  email,
-                  verified,
-                  is_blocked,
-                },
-                index
-              ) => {
+              ({ image, name, mobile, email, verified, is_blocked, _id }, index) => {
                 const isLast = index === data.data.length - 1;
                 const classes = isLast
                   ? "p-4"
@@ -235,4 +232,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Lawyers;

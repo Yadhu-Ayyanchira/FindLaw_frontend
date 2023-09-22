@@ -6,6 +6,7 @@ import AdminPublic from '../Protected/AdminPublic';
 import AdminLogin from '../Pages/Admin/AdminLogin'
 import Layout from '../Pages/Admin/Layout';
 import Users from '../Components/Admin/Users';
+import Lawyers from '../Components/Admin/Lawyers';
 
 function AdminRoutes() {
   return (
@@ -17,6 +18,7 @@ function AdminRoutes() {
         <Route path="/" element={<Layout></Layout>}>
           <Route index  element={<AdminDashboard/>} />
           <Route path='/users'  element={<Users/>} />
+          <Route path='/lawyers'  element={<Lawyers/>} />
         </Route>
       </Route>
     </Routes>

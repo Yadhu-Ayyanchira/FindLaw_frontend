@@ -10,3 +10,11 @@ export async function adminLogin(admin) {
     return error;
   }
 }
+
+export async function manageLawyer(id){
+  return AdminRequest.put(`/managelawyer/${id}`);
+}
+
+export async function manageUser(id){
+  return AdminRequest.put(`/manageuser/${id}`);
+}

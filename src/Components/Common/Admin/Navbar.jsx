@@ -133,57 +133,53 @@ function NavBar() {
   const closeDrawer = () => setOpen(false);
 
   return (
-    <navbar className="  lg:rounded-none   fixed top-0 left-0 right-0 bg-[#0a2125] z-50">
-      <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#0a2125] ">
-        <Drawer open={open} onClose={closeDrawer} className="bg-[#0a2125] ">
-          <div className="mb-2 flex items-center justify-between p-4 ">
-            <div>
-              <img src={logo} alt="Logo" className="w-40 mx-auto" />
+    <div>
+      <navbar className="  lg:rounded-none   fixed top-0 left-0 right-0 bg-[#0a2125] z-50">
+        <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#0a2125] ">
+          <Drawer open={open} onClose={closeDrawer} className="bg-[#0a2125] ">
+            <div className="mb-2 flex items-center justify-between p-4 ">
+              <div>
+                <img src={logo} alt="Logo" className="w-40 mx-auto" />
+              </div>
+              <IconButton variant="text" color="white" onClick={closeDrawer}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconButton>
             </div>
-            <IconButton variant="text" color="white" onClick={closeDrawer}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </IconButton>
-          </div>
-          <Sidebar />
-        </Drawer>
-        <Bars3Icon
-          onClick={openDrawer}
-          className="h-8 w-8 ms-5 cursor-pointer text-white visible md:invisible"
-        />
-        <div className="ms-12">
-          <img src={logo} alt="Logo" className="w-40 mx-auto" />
-        </div>
-        <img
-          src="../../../public/logoImages/logonobackground.png"
-          alt=""
-          className="h-14 ps-7 py-1 md:-ms-10"
-        />
-        {/* <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+            <Sidebar />
+          </Drawer>
+          <Bars3Icon
+            onClick={openDrawer}
+            className="h-8 w-8 ms-5 cursor-pointer text-white visible md:invisible"
+          />
          
-        </div> */}
-        <IconButton
-          size="sm"
-          color="blue-gray"
-          variant="text"
-          onClick={toggleIsNavOpen}
-          className="ml-auto mr-2 lg:hidden"
-        ></IconButton>
-        <ProfileMenu />
-      </div>
-    </navbar>
+          <img src={logo} alt="" className="h-14 ps-7 py-1 md:-ms-10" />
+         
+          <IconButton
+            size="sm"
+            color="blue-gray"
+            variant="text"
+            onClick={toggleIsNavOpen}
+            className="ml-auto mr-2 lg:hidden"
+          >
+            1
+          </IconButton>
+          <ProfileMenu />
+        </div>
+      </navbar>
+    </div>
   );
 }
 
