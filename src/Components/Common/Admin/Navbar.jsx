@@ -23,17 +23,19 @@ import {
   PowerIcon,
   RocketLaunchIcon,
   Bars3Icon,
-
 } from "@heroicons/react/24/outline";
 import Sidebar from "./Sidebar";
 import logo from "../../../Assets/Images/Logo.svg";
+//import { logout } from "../../../Api/AdminApi";
+import { useNavigate } from "react-router-dom";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
-  const signOut = () => {
+  const navigate = useNavigate()
+  const signOut = async () => {
     setIsMenuOpen(false);
-
+    localStorage.removeItem("currentAdmin");
+    navigate("/admin/login");
   }
 
   return (

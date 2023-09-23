@@ -20,5 +20,6 @@ export async function manageUser(id){
 }
 
 export async function logout(){
+  console.log('admin logout');
   return  AdminRequest.get('/logout');
 }
