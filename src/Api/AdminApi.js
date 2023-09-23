@@ -18,3 +18,7 @@ export async function manageLawyer(id){
 export async function manageUser(id){
   return AdminRequest.put(`/manageuser/${id}`);
 }
+
+export async function logout(){
+  return  AdminRequest.get('/logout');
+}

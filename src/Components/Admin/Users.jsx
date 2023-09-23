@@ -19,6 +19,7 @@ import {
   Tooltip,
   Input,
 } from "@material-tailwind/react";
+import { manageUser } from "../../Api/AdminApi";
 
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
@@ -43,6 +44,11 @@ function Users() {
     if (error) {
       return <div>Error: {error.message}</div>;
     }
+    const handleAction = async (userId) => {
+      await manageUser(userId);
+      queryClient.invalidateQueries("users");
+    };
+
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -98,6 +104,7 @@ function Users() {
                   email,
                   verified,
                   is_blocked,
+                  _id
                 },
                 index
               ) => {

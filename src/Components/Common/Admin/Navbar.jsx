@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Navbar,
+  Navbar, // Update the component name to use an uppercase "N"
   MobileNav,
   Typography,
   Button,
@@ -23,40 +23,18 @@ import {
   PowerIcon,
   RocketLaunchIcon,
   Bars3Icon,
+
 } from "@heroicons/react/24/outline";
 import Sidebar from "./Sidebar";
 import logo from "../../../Assets/Images/Logo.svg";
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-    onClick: () => {
-      console.log("fdsjakakakakak");
-    },
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const closeMenu = () => setIsMenuOpen(false);
+  const signOut = () => {
+    setIsMenuOpen(false);
+
+  }
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -82,33 +60,17 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
+        <MenuItem
+          key="Sign out"
+          onClick={signOut}
+          className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+        >
+          {React.createElement(PowerIcon, {
+            className: "h-4 w-4 text-red-500",
+            strokeWidth: 2,
+          })}
+          Sign out
+        </MenuItem>
       </MenuList>
     </Menu>
   );
