@@ -26,7 +26,7 @@ function Login() {
   const navigate = useNavigate();
   const handleSubmit = async (e)=>{
     e.preventDefault()
-    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     const {email, password} = data
     if(email.trim()===""){
       setError("Email is required")
@@ -37,7 +37,7 @@ function Login() {
     } else {
       const res = await UserLogin(data);
       if(res.data.access){
-        localStorage.setItem("currentUser", res.data.token);
+        localStorage.setItem("currentUser", res.data.token)
         navigate("/");
       }else{
         setError(res.data.message)
