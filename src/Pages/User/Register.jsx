@@ -81,13 +81,13 @@ function Register() {
       }else if(confirmPassword !== password){
         setError("Pasword not match!")
       } else {
-        const response = await UserRegister(data);
+        const response = await UserRegister(data)
         if(response.data.created){
           const userDetails = {
             name: response.data.user.name,
             email: response.data.user.email,
           };
-          localStorage.setItem("currentUser", response.data.token);
+          localStorage.setItem("currentUser", response.data.token)
           dispatch(setuserdetails({ userInfo: userDetails }));
           navigate('/verify')
         }else{

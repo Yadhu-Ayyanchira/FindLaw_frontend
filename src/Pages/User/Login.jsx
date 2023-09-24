@@ -20,7 +20,7 @@ function Login() {
   const dispatch = useDispatch();
   
   const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
+    setData({ ...data, [input.name]: input.value })
   };
 
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ function Login() {
     }else if (!email.match(validRegex)) {
       setError("Invalid email");
     } else {
-      const res = await UserLogin(data);
+      const res = await UserLogin(data)
       if(res.data.access){
         localStorage.setItem("currentUser", res.data.token)
         navigate("/");
