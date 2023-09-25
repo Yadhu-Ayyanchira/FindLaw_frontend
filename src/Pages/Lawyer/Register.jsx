@@ -89,7 +89,7 @@ function Register() {
             email: response.data.user.email,
           };
           localStorage.setItem("currentLawyer", response.data.token);
-          dispatch(setlawyerdetails({ userInfo: userDetails }));
+          dispatch(setlawyerdetails({ lawyerInfo: userDetails }));
           navigate("/verify");
         } else {
           setError("User already Exists");

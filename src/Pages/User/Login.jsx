@@ -36,8 +36,9 @@ function Login() {
       setError("Invalid email");
     } else {
       const res = await UserLogin(data)
+      console.log('res',res.data.info);
       if(res.data.access){
-        localStorage.setItem("currentUser", res.data.token)
+        localStorage.setItem("currentUser", JSON.stringify(res.data.info));
         navigate("/");
       }else{
         setError(res.data.message)
@@ -65,6 +66,7 @@ useEffect(() => {
       .then((res) => {
         UserLogin({ email: res.data.email, password: res.data.id }).then(
           (response) => {
+            console.log("aaaaaa",response);
             if (response.data.access) {
               const userDetails = {
                 name: response.data.info.name,

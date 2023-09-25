@@ -21,6 +21,7 @@ import {
   PowerIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -81,6 +82,11 @@ function NavbarDefault() {
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
+  let token = localStorage.getItem("currentUser")
+  let user = useSelector((user) => user.userReducer);
+  console.log("jyfxdxjexg",user);
+
+  console.log(token);
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -175,7 +181,7 @@ function NavbarDefault() {
                   }
                   alt="User Photo"
                 /> */}
-                <ProfileMenu />
+                {token?<ProfileMenu />:"login"}
               </div>
             </button>
           </div>
