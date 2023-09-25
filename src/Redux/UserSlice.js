@@ -9,7 +9,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setuserdetails: (state, action) => {
-      state.userInfo = action.payload.userInfo;
+      console.log("pay",action.payload);
+      state.name = action.payload.name;
     },
     logoutUser: (state) => {
       state.userInfo = {};

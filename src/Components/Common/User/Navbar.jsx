@@ -82,11 +82,10 @@ function NavbarDefault() {
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
-  let token = localStorage.getItem("currentUser")
-  let user = useSelector((user) => user.userReducer);
+  //let token = localStorage.getItem("currentUser")
+  let user = useSelector((user) => console.log(user.user));
   console.log("jyfxdxjexg",user);
 
-  console.log(token);
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">

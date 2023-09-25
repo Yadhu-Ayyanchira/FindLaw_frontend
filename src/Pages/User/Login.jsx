@@ -39,6 +39,10 @@ function Login() {
       console.log('res',res.data.info);
       if(res.data.access){
         localStorage.setItem("currentUser", JSON.stringify(res.data.info));
+        const detail = res.data.info;
+        dispatch(setuserdetails({
+          name:detail.name
+        }))
         navigate("/");
       }else{
         setError(res.data.message)
