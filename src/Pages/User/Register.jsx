@@ -48,12 +48,22 @@ function Register() {
           UserRegisterWithGoogle(res.data).then((response) => {
             if (response.data.created) {
               console.log(response);
-              const userDetails = {
-                name: response.data.user.name,
-                email: response.data.user.email,
-              };
+              // const userDetails = {
+              //   name: response.data.user.name,
+              //   email: response.data.user.email,
+              // };
+              const detail = response.data.user;
               localStorage.setItem("currentUser", response.data.token);
-              dispatch(setUserDetails({ userInfo: userDetails }));
+              dispatch(
+                setUserDetails({
+                  id: detail?._id,
+                  name: detail?.name,
+                  email: detail?.email,
+                  mobile: detail?.mobile,
+                  is_admin: detail?.is_admin,
+                  image: detail?.image,
+                })
+              );
               navigate("/");
             } else {
               setError(response.data.message);
@@ -83,12 +93,18 @@ function Register() {
       } else {
         const response = await UserRegister(data)
         if(response.data.created){
-          const userDetails = {
-            name: response.data.user.name,
-            email: response.data.user.email,
-          };
           localStorage.setItem("currentUser", response.data.token)
-          dispatch(setUserDetails({ userInfo: userDetails }));
+          const detail = response.data.user;
+          dispatch(
+            setUserDetails({
+              id: detail?._id,
+              name: detail?.name,
+              email: detail?.email,
+              mobile: detail?.mobile,
+              is_admin: detail?.is_admin,
+              image: detail?.image,
+            })
+          );
           navigate('/verify')
         }else{
           setError("User already Exists");

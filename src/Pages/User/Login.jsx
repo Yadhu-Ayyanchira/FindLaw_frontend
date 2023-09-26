@@ -1,12 +1,13 @@
 import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "axios"; 
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
 import { UserLogin } from "../../Api/UserApi";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
-import setuserdetails from '../../Redux/UserSlice'
+import { setUserDetails } from "../../Redux/UserSlice";
+
 
 
 
@@ -40,8 +41,13 @@ function Login() {
       if(res.data.access){
         localStorage.setItem("currentUser", JSON.stringify(res.data.info));
         const detail = res.data.info;
-        dispatch(setuserdetails({
-          name:detail.name
+        dispatch(setUserDetails({
+          id : detail?._id,
+          name : detail?.name,
+          email : detail?.email,
+          mobile : detail?.mobile,
+          is_admin : detail?.is_admin,
+          image : detail?.image
         }))
         navigate("/");
       }else{
@@ -56,7 +62,8 @@ const Glogin = useGoogleLogin({
 });
 
 useEffect(() => {
-  if (guser) {
+  if (guser && guser.access_token) {
+    // Check if guser and access_token are available
     axios
       .get(
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${guser.access_token}`,
@@ -70,14 +77,19 @@ useEffect(() => {
       .then((res) => {
         UserLogin({ email: res.data.email, password: res.data.id }).then(
           (response) => {
-            console.log("aaaaaa",response);
+            console.log("aaaaaa", response);
             if (response.data.access) {
-              const userDetails = {
-                name: response.data.info.name,
-                email: response.data.info.email,
-              }
-              //dispatch(setuserdetails({ userInfo: userDetails }));
-              console.log("responsess in det :",userDetails);
+              const detail = response.data.info;
+              dispatch(
+                setUserDetails({
+                  id: detail?._id,
+                  name: detail?.name,
+                  email: detail?.email,
+                  mobile: detail?.mobile,
+                  is_admin: detail?.is_admin,
+                  image: detail?.image,
+                })
+              );
               localStorage.setItem("currentUser", response.data.token);
               navigate("/");
             } else {
@@ -89,6 +101,7 @@ useEffect(() => {
       .catch((err) => console.log(err));
   }
 }, [guser]);
+
 
   return (
     <>
