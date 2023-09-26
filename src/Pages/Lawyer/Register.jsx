@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
-import { setlawyerdetails } from "../../Redux/LawyerSlice";
+import { setlawyerDetails } from "../../Redux/LawyerSlice";
 import { useDispatch } from "react-redux";
 import { useGoogleLogin, googleLogout } from "@react-oauth/google";
 import { LawyerRegister, LawyerRegisterWithGoogle } from "../../Api/LawyerApi";
@@ -54,7 +54,7 @@ function Register() {
                 email: response.data.user.email,
               };
               localStorage.setItem("currentLawyer", response.data.token);
-              dispatch(setlawyerdetails({ lawyerInfo: userDetails }));
+              dispatch(setlawyerDetails({ lawyerInfo: userDetails }));
               navigate("/");
             } else {
               setError(response.data.message);
@@ -89,7 +89,7 @@ function Register() {
             email: response.data.user.email,
           };
           localStorage.setItem("currentLawyer", response.data.token);
-          dispatch(setlawyerdetails({ lawyerInfo: userDetails }));
+          dispatch(setlawyerDetails({ lawyerInfo: userDetails }));
           navigate("/verify");
         } else {
           setError("User already Exists");

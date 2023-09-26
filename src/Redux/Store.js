@@ -9,29 +9,28 @@ import lawyerReducer from "./LawyerSlice";
 //   : null;
 
 const initialState = {
-  userReducer: {},
-  lawyerReducer: {},
+  user: {},
+  lawyer: {},
 };
 
 const rootReducer = combineReducers({
   user : userReducer, 
-  lawyer : lawyerReducer, // Add the lawyerReducer
+  lawyer : lawyerReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["userReducer", "lawyerReducer"],
+  whitelist: ["user", "lawyer"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  preloadedState: initialState, // Set the initial state here
+  preloadedState: initialState,
 });
 
 const persistor = persistStore(store);
 
-export { store, persistor };
-// 
+export { store, persistor }; 

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   MobileNav,
+  Collapse ,
   Typography,
   Button,
   IconButton,
@@ -35,11 +36,7 @@ function ProfileMenu() {
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-1 rounded-full py-0.5 pr-2 me-8 pl-0.5 lg:ml-auto"
-        >
+        <div className="flex items-center gap-1 rounded-full py-0.5 pr-2 me-8 pl-0.5 lg:ml-auto">
           <Avatar
             variant="circular"
             size="sm"
@@ -53,7 +50,7 @@ function ProfileMenu() {
               isMenuOpen ? "rotate-180" : ""
             }`}
           />
-        </Button>
+        </div>
       </MenuHandler>
       <MenuList className="p-1">
         <MenuItem
@@ -73,6 +70,7 @@ function ProfileMenu() {
 }
 
 
+
 function NavbarDefault() {
   const [openNav, setOpenNav] = React.useState(false);
 
@@ -82,7 +80,7 @@ function NavbarDefault() {
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
-  //let token = localStorage.getItem("currentUser")
+  let token = localStorage.getItem("currentUser")
   let user = useSelector((user) => console.log(user.user));
   console.log("jyfxdxjexg",user);
 
@@ -97,10 +95,10 @@ function NavbarDefault() {
       >
         <Menu>
           <MenuHandler>
-            <a className="flex items-center">
+            <p className="flex items-center">
               Lawyer directory{" "}
               <BiArrowFromTop className="ml-1 text-blue-gray-400" />
-            </a>
+            </p>
           </MenuHandler>
           <MenuList>
             <MenuItem>Menu Item 1</MenuItem>
@@ -126,9 +124,7 @@ function NavbarDefault() {
           color="blue-gray"
           className="p-1 font-bold"
         >
-          <a href="#" className="flex items-center">
             About
-          </a>
         </Typography>
       </Link>
       <Typography
@@ -137,9 +133,9 @@ function NavbarDefault() {
         color="blue-gray"
         className="p-1 font-bold"
       >
-        <a href="#" className="flex items-center">
-          Contacts
-        </a>
+        <Link to="/login" className="flex items-center">
+          Docs
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -147,9 +143,7 @@ function NavbarDefault() {
         color="blue-gray"
         className="p-1 font-bold"
       >
-        <a href="#" className="flex items-center">
-          Docs
-        </a>
+          Contact
       </Typography>
     </ul>
   );
@@ -163,7 +157,11 @@ function NavbarDefault() {
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center justify-between">
           <div className="hidden md:flex md:items-center md:ml-6 mr-5 justify-normal">
-            <Badge content="1">
+            <Badge
+              content={1}
+              color="red"
+              placement={() => ({ top: 0, right: 0 })}
+            >
               <BiMessageAltDetail className="h-7 w-7" />
             </Badge>
           </div>
@@ -180,7 +178,7 @@ function NavbarDefault() {
                   }
                   alt="User Photo"
                 /> */}
-                {token?<ProfileMenu />:"login"}
+                {token ? <ProfileMenu /> : "login"}
               </div>
             </button>
           </div>
@@ -223,7 +221,7 @@ function NavbarDefault() {
           )}
         </IconButton>
       </div>
-      <MobileNav open={openNav}>
+      <Collapse open={openNav}>
         <div className="container mx-auto">
           {navList}
 
@@ -241,11 +239,15 @@ function NavbarDefault() {
               />
             </div>
           </button>
-          <Badge content="1">
+          <Badge
+            content={1}
+            color="red"
+            placement={() => ({ top: 0, right: 0 })}
+          >
             <BiMessageAltDetail className="h-7 w-7" />
           </Badge>
         </div>
-      </MobileNav>
+      </Collapse>
     </Navbar>
   );
 }

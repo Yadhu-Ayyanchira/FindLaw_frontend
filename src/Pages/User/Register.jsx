@@ -4,7 +4,7 @@ import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
 import { UserRegister, UserRegisterWithGoogle } from "../../Api/UserApi";
 import { useDispatch } from "react-redux";
-import { setuserdetails } from "../../Redux/UserSlice";
+import { setUserDetails } from "../../Redux/UserSlice";
 import { useGoogleLogin,googleLogout } from "@react-oauth/google";
 import axios from "axios";
 
@@ -53,7 +53,7 @@ function Register() {
                 email: response.data.user.email,
               };
               localStorage.setItem("currentUser", response.data.token);
-              dispatch(setuserdetails({ userInfo: userDetails }));
+              dispatch(setUserDetails({ userInfo: userDetails }));
               navigate("/");
             } else {
               setError(response.data.message);
@@ -88,7 +88,7 @@ function Register() {
             email: response.data.user.email,
           };
           localStorage.setItem("currentUser", response.data.token)
-          dispatch(setuserdetails({ userInfo: userDetails }));
+          dispatch(setUserDetails({ userInfo: userDetails }));
           navigate('/verify')
         }else{
           setError("User already Exists");
