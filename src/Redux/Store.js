@@ -1,32 +1,37 @@
 import { persistStore, persistReducer } from "redux-persist";
-import { combineReducers, configureStore, createStore } from "@reduxjs/toolkit"
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
-import UserSlice from "./UserSlice";
-import LawyerSlice from "./LawyerSlice";
+import userReducer from "./UserSlice";
+import lawyerReducer from "./LawyerSlice";
 
-const Storage= localStorage.getItem("currentUser")? JSON.parse(localStorage.getItem("currentUser")):null
+// const Storage = localStorage.getItem("currentUser")
+//   ? JSON.parse(localStorage.getItem("currentUser"))
+//   : null;
 
 const initialState = {
-    userReducer: {},
-    lawyerReducer: {},
+  userReducer: {},
+  lawyerReducer: {},
 };
 
-const combineReducer= combineReducers({
-    userReducer:UserSlice,
-    lawyerReducer : LawyerSlice
-})
+const rootReducer = combineReducers({
+  user : userReducer, 
+  lawyer : lawyerReducer, // Add the lawyerReducer
+});
+
 const persistConfig = {
   key: "root",
   storage,
   whitelist: ["userReducer", "lawyerReducer"],
 };
 
-const persistedUserReducer = persistReducer(persistConfig,combineReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const Store = createStore(
-        persistedUserReducer,
-        initialState
-)
-const persistor = persistStore(Store)
+const store = configureStore({
+  reducer: persistedReducer,
+  preloadedState: initialState, // Set the initial state here
+});
 
-export {Store,persistor}
+const persistor = persistStore(store);
+
+export { store, persistor };
+// 
