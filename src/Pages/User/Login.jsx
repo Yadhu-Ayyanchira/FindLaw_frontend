@@ -143,9 +143,12 @@ useEffect(() => {
               >
                 Login
               </button>
-              <a href="" className="text-blue-700">
-                Forgot password?
-              </a>
+              <div>
+                <a href="" className="text-blue-700">
+                  Forgot password?
+                </a>
+                <a className="ps-8" onClick={() => navigate("/lawyer/login")}>Are you a Lawyer?</a>
+              </div>
             </form>
             <div className="flex items-center justify-center py-6">
               <div className="border-t border-gray-700 flex-grow h-0"></div>

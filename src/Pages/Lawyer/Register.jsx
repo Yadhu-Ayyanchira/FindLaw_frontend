@@ -55,7 +55,7 @@ function Register() {
               };
               localStorage.setItem("currentLawyer", response.data.token);
               dispatch(setlawyerDetails({ lawyerInfo: userDetails }));
-              navigate("/");
+              navigate("/lawyer");
             } else {
               setError(response.data.message);
             }

@@ -67,10 +67,16 @@ function Register() {
               >
                 Login
               </button>
-              <a href="" className="text-blue-700">
-                Forgot password?
-              </a>
+              <div>
+                <a href="" className="text-blue-700">
+                  Forgot password?
+                </a>
+                <a className="ps-10" onClick={() => navigate("/login")}>
+                  Are you a Client?
+                </a>
+              </div>
             </form>
+
             <div className="flex items-center justify-center py-6">
               <div className="border-t border-gray-700 flex-grow h-0"></div>
               <div className="mx-2 text-gray-800">OR</div>
