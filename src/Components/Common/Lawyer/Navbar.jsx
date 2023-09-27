@@ -1,108 +1,148 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {
-  Navbar,
+  Navbar, // Update the component name to use an uppercase "N"
   MobileNav,
   Typography,
   Button,
-  IconButton,
-} from "@material-tailwind/react";
-import {
   Menu,
   MenuHandler,
   MenuList,
   MenuItem,
+  Avatar,
+  Card,
+  IconButton,
+  Drawer,
 } from "@material-tailwind/react";
-import { Badge, Avatar } from "@material-tailwind/react";
-import { BiArrowFromTop } from "react-icons/bi";
-import { BiMessageAltDetail } from "react-icons/bi";
+import {
+  UserCircleIcon,
+  Square3Stack3DIcon,
+  ChevronDownIcon,
+  Cog6ToothIcon,
+  InboxArrowDownIcon,
+  LifebuoyIcon,
+  PowerIcon,
+  RocketLaunchIcon,
+  Bars3Icon,
+} from "@heroicons/react/24/outline";
+import Sidebar from "../Lawyer/LawyerSidebar";
 import logo from "../../../Assets/Images/Logo.svg";
-import SideBar from "./LawyerSidebar";
+import { useNavigate } from "react-router-dom";
+
+function ProfileMenu() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const signOut = async () => {
+    setIsMenuOpen(false);
+    localStorage.removeItem("currentLawyer");
+    navigate("/lawyer/login");
+  };
+
+  return (
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+      <MenuHandler>
+        <Button
+          variant="text"
+          color="blue-gray"
+          className="flex items-center gap-1 rounded-full py-0.5 pr-2 me-8 pl-0.5 lg:ml-auto"
+        >
+          <Avatar
+            variant="circular"
+            size="sm"
+            alt="tania andrew"
+            className="border border-gray-900 p-0.5"
+            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+          />
+          <ChevronDownIcon
+            strokeWidth={2.5}
+            className={`h-3 w-3 transition-transform ${
+              isMenuOpen ? "rotate-180" : ""
+            }`}
+          />
+        </Button>
+      </MenuHandler>
+      <MenuList className="p-1">
+        <MenuItem
+          key="Sign out"
+          onClick={signOut}
+          className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+        >
+          {React.createElement(PowerIcon, {
+            className: "h-4 w-4 text-red-500",
+            strokeWidth: 2,
+          })}
+          Sign out
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  );
+}
+
+// nav list menu
 
 function NavbarDefault() {
-  const [openNav, setOpenNav] = React.useState(false);
+  const [isNavOpen, setIsNavOpen] = React.useState(false);
+
+  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
   React.useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false)
+      () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
 
-  return (
-    <Navbar className="mx-auto max-w-full py-2 px-4 lg:px-8 lg:py-4 ">
-      <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
-        <div>
-          <img src={logo} alt="Logo" className="lg:w-40 w-24 mx-auto" />
-        </div>
+  const [open, setOpen] = React.useState(false);
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
 
-        <div className="flex items-center justify-end ">
-          <div className="relative inline-block -me-16 md:me-3">
-            <Badge content="1">
-              <BiMessageAltDetail className="h-7 w-7" />
-            </Badge>
-          </div>
-          <div className="md:flex md:items-center md:ml-6 mr-5 justify-normal">
-            <button className="focus:outline-none">
-              <div
-                className="relative inline-block -me-56 md:me-1"
-                style={{ boxShadow: "0 0 0 2px white", borderRadius: "50%" }}
-              >
-                <img
-                  className="w-8 h-8 rounded-full cursor-pointer"
-                  src={
-                    "https://res.cloudinary.com/dvprhxg7x/image/upload/v1692803989/asset/noavatar_vhrf74.jpg"
-                  }
-                  alt="User Photo"
-                />
+  return (
+    <div>
+      <navbar className="  lg:rounded-none   fixed top-0 left-0 right-0 bg-[#ffffff] z-50">
+        <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#1d6143] ">
+          <Drawer open={open} onClose={closeDrawer} className="bg-[#1d6143] ">
+            <div className="mb-2 flex items-center justify-between p-4 ">
+              <div>
+                <img src={logo} alt="Logo" className="w-40 mx-auto" />
               </div>
-            </button>
-          </div>
+              <IconButton variant="text" color="white" onClick={closeDrawer}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconButton>
+            </div>
+            <Sidebar />
+          </Drawer>
+          <Bars3Icon
+            onClick={openDrawer}
+            className="h-8 w-8 ms-5 cursor-pointer text-white visible md:invisible"
+          />
+
+          <img src={logo} alt="" className="h-14 ps-7 py-1 md:-ms-10" />
+
+          <IconButton
+            size="sm"
+            color="blue-gray"
+            variant="text"
+            onClick={toggleIsNavOpen}
+            className="ml-auto mr-2 lg:hidden"
+          >
+            1
+          </IconButton>
+          <ProfileMenu />
         </div>
-        <IconButton
-          variant="text"
-          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent md:hidden lg:hidden"
-          ripple={false}
-          onClick={() => setOpenNav(!openNav)}
-        >
-          {openNav ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              className="h-6 w-6"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          )}
-        </IconButton>
-      </div>
-      <MobileNav open={openNav}>
-        <div className="container mx-auto">
-          <SideBar />
-        </div>
-      </MobileNav>
-    </Navbar>
+      </navbar>
+    </div>
   );
 }
 
