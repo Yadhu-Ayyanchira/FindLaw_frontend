@@ -5,18 +5,23 @@ import EditProfile from "./EditProfile";
 
 function Dashboard() {
   return (
-    <>
-      <div className="h-screen grid grid-rows-[5rem] w-full">
-        {/* <div> */}
-          <Navbar />
-        {/* </div> */}
-        <div className="md:grid md:grid-cols-[18.7rem,1fr]">
-          <div className="invisible md:visible">
-            <SideBar />
-          </div>
-        </div>
-      </div>
-    </>
+    
+      <>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+        <h1>Hey There,............</h1>
+      </>
+    
   );
 }
 

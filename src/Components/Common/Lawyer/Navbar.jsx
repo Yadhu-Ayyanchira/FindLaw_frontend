@@ -99,7 +99,7 @@ function NavbarDefault() {
     <div>
       <navbar className="  lg:rounded-none   fixed top-0 left-0 right-0 bg-[#ffffff] z-50">
         <div className="relative mx-auto flex items-center text-blue-gray-900 py-3 bg-[#1d6143] ">
-          <Drawer open={open} onClose={closeDrawer} className="bg-[#1d6143] ">
+          <Drawer open={open} onClose={closeDrawer} className="bg-[#f1f0f0] ">
             <div className="mb-2 flex items-center justify-between p-4 ">
               <div>
                 <img src={logo} alt="Logo" className="w-40 mx-auto" />
