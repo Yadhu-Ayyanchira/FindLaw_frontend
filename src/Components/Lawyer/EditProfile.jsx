@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -8,58 +8,96 @@ import {
   CardFooter,
   Typography,
   Input,
-  Checkbox,
 } from "@material-tailwind/react";
 
 function EditProfile() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen((cur) => !cur);
+
+  // Assuming you have a lawyer object with initial values
+  const initialLawyerData = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    mobile: "1234567890",
+    // ... other fields with initial values
+  };
+
+  const [lawyerData, setLawyerData] = useState(initialLawyerData);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLawyerData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+
+    // Assuming you have an updateLawyer function that makes an API call to update the lawyer data
+    // Replace this with the actual function you use to update the lawyer data
+    updateLawyer(lawyerData)
+      .then(() => {
+        console.log("Lawyer data updated successfully");
+        handleOpen(); // Close the dialog after updating
+      })
+      .catch((error) => {
+        console.error("Error updating lawyer data:", error);
+      });
+  };
 
   return (
     <>
-      <Button onClick={handleOpen}>Sign In</Button>
+      <Button onClick={handleOpen}>Edit Profile</Button>
       <Dialog
         size="xs"
         open={open}
         handler={handleOpen}
-        className="bg-transparent shadow-none"
+        className="bg-transparent shadow-black"
       >
-        <Card className="mx-auto w-full max-w-[24rem]">
-          <CardHeader
-            variant="gradient"
-            color="blue"
-            className="mb-4 grid h-28 place-items-center"
-          >
-            <Typography variant="h3" color="white">
-              Sign In
-            </Typography>
-          </CardHeader>
-          <CardBody className="flex flex-col gap-4">
-            <Input label="Email" size="lg" />
-            <Input label="Password" size="lg" />
-            <div className="-ml-2.5">
-              <Checkbox label="Remember Me" />
-            </div>
-          </CardBody>
-          <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={handleOpen} fullWidth>
-              Sign In
-            </Button>
-            <Typography variant="small" className="mt-6 flex justify-center">
-              Don&apos;t have an account?
-              <Typography
-                as="a"
-                href="#signup"
-                variant="small"
-                color="blue"
-                className="ml-1 font-bold"
-                onClick={handleOpen}
-              >
-                Sign up
+        <form onSubmit={handleUpdate}>
+          <Card className="mx-auto w-full max-w-[24rem]">
+            <CardHeader
+              variant="gradient"
+              color="blue"
+              className="mb-4 grid h-10 place-items-center"
+            >
+              <Typography variant="h3" color="white">
+                Edit Profile
               </Typography>
-            </Typography>
-          </CardFooter>
-        </Card>
+            </CardHeader>
+            <CardBody className="flex flex-col gap-4">
+              <Input
+                label="Name"
+                size="lg"
+                name="name"
+                value={lawyerData.name}
+                onChange={handleChange}
+              />
+              <Input
+                label="Email"
+                size="lg"
+                name="email"
+                value={lawyerData.email}
+                onChange={handleChange}
+              />
+              <Input
+                label="Mobile"
+                size="lg"
+                name="mobile"
+                value={lawyerData.mobile}
+                onChange={handleChange}
+              />
+              {/* Add similar Input components for other fields */}
+            </CardBody>
+            <CardFooter className="pt-0">
+              <Button variant="gradient" type="submit" fullWidth>
+                Update
+              </Button>
+            </CardFooter>
+          </Card>
+        </form>
       </Dialog>
     </>
   );
