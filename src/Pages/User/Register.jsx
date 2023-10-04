@@ -48,10 +48,6 @@ function Register() {
           UserRegisterWithGoogle(res.data).then((response) => {
             if (response.data.created) {
               console.log(response);
-              // const userDetails = {
-              //   name: response.data.user.name,
-              //   email: response.data.user.email,
-              // };
               const detail = response.data.user;
               localStorage.setItem("currentUser", response.data.token);
               dispatch(
@@ -60,10 +56,11 @@ function Register() {
                   name: detail?.name,
                   email: detail?.email,
                   mobile: detail?.mobile,
-                  is_admin: detail?.is_admin,
                   image: detail?.image,
                 })
               );
+               console.log('rsp is:',detail);
+
               navigate("/");
             } else {
               setError(response.data.message);
@@ -101,7 +98,6 @@ function Register() {
               name: detail?.name,
               email: detail?.email,
               mobile: detail?.mobile,
-              is_admin: detail?.is_admin,
               image: detail?.image,
             })
           );

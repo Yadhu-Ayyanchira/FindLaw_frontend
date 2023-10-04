@@ -11,7 +11,7 @@ function UserRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<UserPublic><Login /></UserPublic>} />
       <Route path="/register" element={<Register />} />
       <Route path="/verify" element={<Verify />} />
     </Routes>

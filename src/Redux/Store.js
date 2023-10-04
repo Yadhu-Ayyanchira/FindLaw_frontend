@@ -9,8 +9,22 @@ import lawyerReducer from "./LawyerSlice";
 //   : null;
 
 const initialState = {
-  user: null, 
-  lawyer: null, 
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    mobile: "",
+    is_admin: "",
+    image: "",
+  },
+  lawyer: {
+    id: "",
+    name: "",
+    email: "",
+    mobile: "",
+    is_admin: "",
+    image: "",
+  },
 };
 
 const rootReducer = combineReducers({

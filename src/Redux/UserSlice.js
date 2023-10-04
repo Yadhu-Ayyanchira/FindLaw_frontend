@@ -5,7 +5,6 @@ const initialState = {
   name: "",
   email: "",
   mobile: "",
-  is_admin: "",
   image: "",
 };
 
@@ -14,20 +13,25 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserDetails: (state, action) => {
-      state.id = action.payload.id;
-      state.name = action.payload.name;
-      state.email = action.payload.email;
-      state.mob = action.payload.mobile;
-      state.is_admin = action.payload.is_admin;
-      state.image = action.payload.image;
+      const { id, name, email, mobile, image } = action.payload;
+      return {
+        ...state,
+        id: id || state.id,
+        name: name || state.name,
+        email: email || state.email,
+        mobile: mobile || state.mobile,
+        image: image || state.image,
+      };
     },
     logoutUser: (state, action) => {
-      state.id = "";
-      state.name = "";
-      state.email = "";
-      state.mobile = "";
-      state.is_admin = "";
-      state.image = "";
+      return {
+        ...state,
+        id: "",
+        name: "",
+        email: "",
+        mobile: "",
+        image: "",
+      };
     },
   },
 });
