@@ -22,14 +22,17 @@ import {
   PowerIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../../Redux/UserSlice";
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const signOut = async () => {
     setIsMenuOpen(false);
     localStorage.removeItem("currentUser");
+    dispatch(logoutUser())
     navigate("/login");
   };
 

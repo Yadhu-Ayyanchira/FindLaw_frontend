@@ -16,9 +16,10 @@ function AdminRoutes() {
       </Route>
       <Route element={<AdminProtected />}>
         <Route path="/" element={<Layout></Layout>}>
-          <Route index  element={<AdminDashboard/>} />
-          <Route path='/users'  element={<Users/>} />
-          <Route path='/lawyers'  element={<Lawyers/>} />
+          <Route index element={<AdminDashboard />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/lawyers" element={<Lawyers />} />
+          <Route path="/lawyerRequests" element={<Lawyers />} />
         </Route>
       </Route>
     </Routes>

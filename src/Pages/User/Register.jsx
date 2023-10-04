@@ -5,9 +5,8 @@ import { FcGoogle } from "react-icons/fc";
 import { UserRegister, UserRegisterWithGoogle } from "../../Api/UserApi";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../Redux/UserSlice";
-import { useGoogleLogin,googleLogout } from "@react-oauth/google";
+import { useGoogleLogin, googleLogout } from "@react-oauth/google";
 import axios from "axios";
-
 
 function Register() {
   const [data, setData] = useState({
@@ -15,20 +14,23 @@ function Register() {
     email: "",
     mobile: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [error, setError] = useState("");
   const [guser, setGUser] = useState([]);
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
   const Gsignup = useGoogleLogin({
-    onSuccess: (codeResponse) => {setGUser(codeResponse)
-    console.log("Successs", codeResponse);},
+    onSuccess: (codeResponse) => {
+      setGUser(codeResponse);
+      console.log("Successs", codeResponse);
+    },
     onError: (error) => console.log("Signup Failed:", error),
   });
   useEffect(() => {
@@ -59,7 +61,7 @@ function Register() {
                   image: detail?.image,
                 })
               );
-               console.log('rsp is:',detail);
+              console.log("rsp is:", detail);
 
               navigate("/");
             } else {
@@ -73,11 +75,12 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('handle submit');
+    console.log("handle submit");
     try {
       const { email, password, name, mobile, confirmPassword } = data;
-      let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      if (email.trim()=="" && !email.match(validRegex)) {
+      let validRegex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (email.trim() == "" && !email.match(validRegex)) {
         setError("Invalid Email");
       } else if (password.trim() == "") {
         setError("Password is required");
@@ -85,12 +88,12 @@ function Register() {
         setError("Name is required");
       } else if (mobile.trim() == "") {
         setError("Number is required");
-      }else if(confirmPassword !== password){
-        setError("Pasword not match!")
+      } else if (confirmPassword !== password) {
+        setError("Pasword not match!");
       } else {
-        const response = await UserRegister(data)
-        if(response.data.created){
-          localStorage.setItem("currentUser", response.data.token)
+        const response = await UserRegister(data);
+        if (response.data.created) {
+          localStorage.setItem("currentUser", response.data.token);
           const detail = response.data.user;
           dispatch(
             setUserDetails({
@@ -101,8 +104,8 @@ function Register() {
               image: detail?.image,
             })
           );
-          navigate('/verify')
-        }else{
+          navigate("/verify");
+        } else {
           setError("User already Exists");
         }
       }
@@ -111,7 +114,6 @@ function Register() {
     }
   };
 
-  
   return (
     <>
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
@@ -170,7 +172,7 @@ function Register() {
                 className="bg-gray-500 py-2 px-3 rounded-md"
                 placeholder="Confirm your password"
               />
-              
+
               {error && <p className="text-center text-red-600">{error}</p>}
               <button
                 type="submit"
@@ -178,7 +180,9 @@ function Register() {
               >
                 Sign up
               </button>
-              <a onClick={()=>navigate('/lawyer/register')}>Are you a lawyer?</a>
+              <a onClick={() => navigate("/lawyer/register")}>
+                Are you a lawyer?
+              </a>
             </form>
             <div className="flex items-center justify-center py-6">
               <div className="border-t border-gray-700 flex-grow h-0"></div>
@@ -187,7 +191,7 @@ function Register() {
             </div>
             <div className="flex justify-center">
               <FcGoogle className="w-6 h-6" />
-              <a  onClick={() => Gsignup()} className="px-2">
+              <a onClick={() => Gsignup()} className="px-2">
                 Signin with Google
               </a>
             </div>

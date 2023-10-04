@@ -46,7 +46,7 @@ function Sidebar() {
           </ListItemPrefix>
           Users
         </ListItem>
-        <ListItem>
+        <ListItem onClick={() => navigate("/admin/lawyerRequests")}>
           <ListItemPrefix>
             <InboxIcon className="h-5 w-5" />
           </ListItemPrefix>

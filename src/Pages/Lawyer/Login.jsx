@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
 import { LawyerLogin } from "../../Api/LawyerApi";
+import { useDispatch } from "react-redux";
+import { setlawyerDetails } from "../../Redux/LawyerSlice";
 
 
 function Register() {
@@ -11,12 +13,15 @@ function Register() {
     password: ""
   })
   const [error,setError] = useState("")
+
   
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
   const handleSubmit = async (e)=>{
     e.preventDefault()
     let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -32,6 +37,16 @@ function Register() {
       console.log('thid ',res);
       if (res.data.access) {
         localStorage.setItem("currentLawyer", res.data.token);
+        const detail = res.data.info;
+        dispatch(
+          setlawyerDetails({
+            name: detail?.name,
+            email: detail?.email,
+            mobile: detail?.mobile,
+            is_admin: detail?.is_admin,
+            image: detail?.image,
+          })
+        );
         navigate("/lawyer");
       } else {
         setError(res.data.message);

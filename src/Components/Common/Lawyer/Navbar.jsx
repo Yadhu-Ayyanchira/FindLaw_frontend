@@ -27,13 +27,19 @@ import {
 import Sidebar from "../Lawyer/LawyerSidebar";
 import logo from "../../../Assets/Images/Logo.svg";
 import { useNavigate } from "react-router-dom";
+import { logoutLawyer } from "../../../Redux/LawyerSlice";
+import { useDispatch } from "react-redux";
+
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
   const signOut = async () => {
     setIsMenuOpen(false);
     localStorage.removeItem("currentLawyer");
+    dispatch(logoutLawyer());
     navigate("/lawyer/login");
   };
 

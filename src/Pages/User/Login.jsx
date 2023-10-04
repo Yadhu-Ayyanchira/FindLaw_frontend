@@ -37,12 +37,11 @@ function Login() {
       setError("Invalid email");
     } else {
       const res = await UserLogin(data)
-      console.log('res',res.data.info);
+      console.log('res',res);
       if(res.data.access){
-        localStorage.setItem("currentUser", JSON.stringify(res.data.info));
+        localStorage.setItem("currentUser", res.data.token);
         const detail = res.data.info;
         dispatch(setUserDetails({
-          id : detail?._id,
           name : detail?.name,
           email : detail?.email,
           mobile : detail?.mobile,
@@ -51,6 +50,7 @@ function Login() {
         }))
         navigate("/");
       }else{
+        console.log(res.data.message);
         setError(res.data.message)
       }
     }
@@ -82,7 +82,6 @@ useEffect(() => {
               const detail = response.data.info;
               dispatch(
                 setUserDetails({
-                  id: detail?._id,
                   name: detail?.name,
                   email: detail?.email,
                   mobile: detail?.mobile,

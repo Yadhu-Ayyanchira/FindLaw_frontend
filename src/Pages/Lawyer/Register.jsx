@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
-import { setlawyerDetails } from "../../Redux/LawyerSlice";
 import { useDispatch } from "react-redux";
+import { setlawyerDetails } from "../../Redux/LawyerSlice";
 import { useGoogleLogin, googleLogout } from "@react-oauth/google";
 import { LawyerRegister, LawyerRegisterWithGoogle } from "../../Api/LawyerApi";
 import axios from "axios";
@@ -14,12 +14,14 @@ function Register() {
     email: "",
     mobile: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [error, setError] = useState("");
   const [guser, setGUser] = useState([]);
-  const dispatch = useDispatch()
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
@@ -31,7 +33,6 @@ function Register() {
     onError: (error) => console.log("Signup Failed:", error),
   });
 
-  
   useEffect(() => {
     if (guser) {
       axios
@@ -49,12 +50,17 @@ function Register() {
           LawyerRegisterWithGoogle(res.data).then((response) => {
             if (response.data.created) {
               console.log(response);
-              const userDetails = {
-                name: response.data.user.name,
-                email: response.data.user.email,
-              };
+              const detail = response.data.user;
               localStorage.setItem("currentLawyer", response.data.token);
-              dispatch(setlawyerDetails({ lawyerInfo: userDetails }));
+              dispatch(
+                setlawyerDetails({
+                  id: detail?._id,
+                  name: detail?.name,
+                  email: detail?.email,
+                  mobile: detail?.mobile,
+                  image: detail?.image,
+                })
+              );
               navigate("/lawyer");
             } else {
               setError(response.data.message);
@@ -89,17 +95,25 @@ function Register() {
             email: response.data.user.email,
           };
           localStorage.setItem("currentLawyer", response.data.token);
-          dispatch(setlawyerDetails({ lawyerInfo: userDetails }));
+          const detail = response.data.user;
+          dispatch(
+            setlawyerDetails({
+              id: detail?._id,
+              name: detail?.name,
+              email: detail?.email,
+              mobile: detail?.mobile,
+              image: detail?.image,
+            })
+          );
           navigate("/verify");
         } else {
           setError("User already Exists");
-        }      
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <>
@@ -166,7 +180,7 @@ function Register() {
               >
                 Sign up
               </button>
-              <a onClick={()=>navigate('/register')}>Are you a Client?</a>
+              <a onClick={() => navigate("/register")}>Are you a Client?</a>
             </form>
             <div className="flex items-center justify-center py-6">
               <div className="border-t border-gray-700 flex-grow h-0"></div>
