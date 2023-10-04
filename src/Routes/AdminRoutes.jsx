@@ -7,6 +7,7 @@ import AdminLogin from '../Pages/Admin/AdminLogin'
 import Layout from '../Pages/Admin/Layout';
 import Users from '../Components/Admin/Users';
 import Lawyers from '../Components/Admin/Lawyers';
+import LawyerRequests from '../Components/Admin/LawyerRequests';
 
 function AdminRoutes() {
   return (
@@ -19,7 +20,7 @@ function AdminRoutes() {
           <Route index element={<AdminDashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/lawyers" element={<Lawyers />} />
-          <Route path="/lawyerRequests" element={<Lawyers />} />
+          <Route path="/lawyerRequests" element={<LawyerRequests />} />
         </Route>
       </Route>
     </Routes>

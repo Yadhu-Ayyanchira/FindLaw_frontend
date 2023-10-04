@@ -14,6 +14,9 @@ export async function adminLogin(admin) {
 export async function manageLawyer(id){
   return AdminRequest.put(`/managelawyer/${id}`);
 }
+export async function approveLawyer(id) {
+  return AdminRequest.put(`/approvelawyer/${id}`);
+}
 
 export async function manageUser(id){
   return AdminRequest.put(`/manageuser/${id}`);
