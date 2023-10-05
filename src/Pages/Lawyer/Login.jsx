@@ -36,7 +36,7 @@ function Register() {
       const res = await LawyerLogin(data);
       console.log('thid ',res);
       if (res.data.access) {
-        localStorage.setItem("currentLawyer", res.data.token);
+        localStorage.setItem("currentLawyer",res.data.token);
         const detail = res.data.info;
         dispatch(
           setlawyerDetails({

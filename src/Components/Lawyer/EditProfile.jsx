@@ -9,6 +9,7 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
+import { useSelector } from "react-redux";
 
 function EditProfile() {
   const [open, setOpen] = useState(true);
@@ -21,6 +22,9 @@ function EditProfile() {
     mobile: "1234567890",
     // ... other fields with initial values
   };
+  const lawyer = localStorage.getItem("currentLawyer");
+  console.log('imin law:::',lawyer);
+
 
   const [lawyerData, setLawyerData] = useState(initialLawyerData);
 
@@ -75,18 +79,32 @@ function EditProfile() {
                 value={lawyerData.name}
                 onChange={handleChange}
               />
+                <Input
+                  label="Mobile"
+                  size="lg"
+                  name="mobile"
+                  value={lawyerData.mobile}
+                  onChange={handleChange}
+                />
               <Input
-                label="Email"
+                label="About"
                 size="lg"
-                name="email"
+                name="about"
                 value={lawyerData.email}
                 onChange={handleChange}
               />
               <Input
-                label="Mobile"
+                label="Place"
                 size="lg"
-                name="mobile"
-                value={lawyerData.mobile}
+                name="place"
+                value={lawyerData.email}
+                onChange={handleChange}
+              />
+              <Input
+                label="Practice"
+                size="lg"
+                name="practice"
+                value={lawyerData.email}
                 onChange={handleChange}
               />
               {/* Add similar Input components for other fields */}
