@@ -14,21 +14,16 @@ import {
   Drawer,
 } from "@material-tailwind/react";
 import {
-  UserCircleIcon,
-  Square3Stack3DIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
-  RocketLaunchIcon,
   Bars3Icon,
+  UserIcon
 } from "@heroicons/react/24/outline";
 import Sidebar from "../Lawyer/LawyerSidebar";
 import logo from "../../../Assets/Images/Logo.svg";
 import { useNavigate } from "react-router-dom";
 import { logoutLawyer } from "../../../Redux/LawyerSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function ProfileMenu() {
@@ -42,12 +37,14 @@ function ProfileMenu() {
     dispatch(logoutLawyer());
     navigate("/lawyer/login");
   };
+  const { name, image } = useSelector((state) => state.lawyer);
+
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
         <Button
-          variant="text"
+          variant="outlined"
           color="blue-gray"
           className="flex items-center gap-1 rounded-full py-0.5 pr-2 me-8 pl-0.5 lg:ml-auto"
         >
@@ -56,8 +53,10 @@ function ProfileMenu() {
             size="sm"
             alt="tania andrew"
             className="border border-gray-900 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+            src= {image}
           />
+          <Typography className="text-white hover:text-black">{name}</Typography>
+
           <ChevronDownIcon
             strokeWidth={2.5}
             className={`h-3 w-3 transition-transform ${
@@ -77,6 +76,14 @@ function ProfileMenu() {
             strokeWidth: 2,
           })}
           Sign out
+        </MenuItem>
+        <MenuItem
+          key="Sign out"
+          onClick={() => navigate("/lawyer/lawyerProfile")}
+          className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+        >
+          <UserIcon className="h-5 w-5 text-green-500" />
+          Profile
         </MenuItem>
       </MenuList>
     </Menu>
