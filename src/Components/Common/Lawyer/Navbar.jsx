@@ -95,7 +95,7 @@ function ProfileMenu() {
 function NavbarDefault() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
 
-  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
+  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur)
 
   React.useEffect(() => {
     window.addEventListener(

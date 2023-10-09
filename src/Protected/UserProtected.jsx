@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom"
 
 function UserProtected(props) {
   if (localStorage.getItem("currentUser")) {
@@ -8,4 +8,4 @@ function UserProtected(props) {
   return <Navigate to="/" />;
 }
 
-export default UserProtected;
+export default UserProtected
