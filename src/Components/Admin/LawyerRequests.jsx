@@ -39,6 +39,12 @@ function LawyerRequests() {
     await approveLawyer(Id);
     queryClient.invalidateQueries("users");
   };
+ if (!data || data.data.length === 0) {
+   return (
+     <div className="flex justify-center items-center h-full">Empty...</div>
+   );
+ }
+
 
   if (isLoading) {
     return <div>Loading...</div>;
