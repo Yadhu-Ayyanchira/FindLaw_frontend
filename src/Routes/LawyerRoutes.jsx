@@ -6,6 +6,7 @@ import Dashboard from '../Components/Lawyer/Dashboard';
 import Login from '../Pages/Lawyer/Login';
 import Layout from '../Pages/Lawyer/Layout';
 import Register from '../Pages/Lawyer/Register'
+import LawyerProfile from '../Components/Lawyer/LawyerProfile';
 
 function LawyerRoutes() {
   // return (
@@ -24,6 +25,7 @@ function LawyerRoutes() {
       <Route element={<LawyerProtected />}>
         <Route path="/" element={<Layout></Layout>}>
           <Route index element={<Dashboard />} />
+          <Route path='/lawyerprofile' element={<LawyerProfile />} />
         </Route>
       </Route>
     </Routes>

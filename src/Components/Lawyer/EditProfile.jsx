@@ -12,7 +12,7 @@ import {
 import { useSelector } from "react-redux";
 
 function EditProfile() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
   // Assuming you have a lawyer object with initial values
