@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../Redux/UserSlice";
 import { useGoogleLogin, googleLogout } from "@react-oauth/google";
 import axios from "axios";
+import Loader from "../../Components/Loader/Loader";
 
 function Register() {
   const [data, setData] = useState({
@@ -21,6 +22,9 @@ function Register() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [load, setLoad] = useState(false);
+  const handleLoad = () => setLoad((cur) => !cur);
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -46,6 +50,7 @@ function Register() {
           }
         )
         .then((res) => {
+          handleLoad();
           console.log(res);
           UserRegisterWithGoogle(res.data).then((response) => {
             if (response.data.created) {
@@ -61,15 +66,18 @@ function Register() {
                   image: detail?.image,
                 })
               );
-              console.log("rsp is:", detail);
-
+              handleLoad();
               navigate("/");
             } else {
+               handleLoad();
               setError(response.data.message);
             }
           });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          handleLoad();
+          console.log(err);
+        });
     }
   }, [guser]);
 
@@ -91,6 +99,8 @@ function Register() {
       } else if (confirmPassword !== password) {
         setError("Pasword not match!");
       } else {
+        handleLoad();
+        console.log("wtf");
         const response = await UserRegister(data);
         if (response.data.created) {
           localStorage.setItem("currentUser", response.data.token);
@@ -104,18 +114,24 @@ function Register() {
               image: detail?.image,
             })
           );
+          handleLoad();
           navigate("/verify");
         } else {
+          handleLoad();
           setError("User already Exists");
         }
       }
     } catch (error) {
+      handleLoad();
       console.log(error);
+    } finally {
+      handleLoad();
     }
   };
 
   return (
     <>
+    {load && <Loader/>}
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
         <div className="LoginContainer bg-[#1c1c1d] shadow-lg opacity-70 md:flex md:h-3/4 rounded-xl">
           <div className="LoginLeft bg-[#111827] text-white py-8 px-4 text-center md:w-1/2 rounded-tl-xl md:rounded-bl-xl">

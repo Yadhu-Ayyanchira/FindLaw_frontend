@@ -42,6 +42,7 @@ function Login() {
         localStorage.setItem("currentUser", res.data.token);
         const detail = res.data.info;
         dispatch(setUserDetails({
+          id : detail?._id,
           name : detail?.name,
           email : detail?.email,
           mobile : detail?.mobile,

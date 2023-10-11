@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -7,10 +7,15 @@ import {
   Typography,
   Avatar,
 } from "@material-tailwind/react";
+import Loader from "../Loader/Loader";
 
 function LawyerProfile() {
+  const [load, setLoad] = useState(false);
+  const handleLoad = () => setLoad(!load);
+
   return (
     <>
+      {load && <Loader />}
       <div className="container flex">
         <Card className="h-64 w-full max-w-[48rem] flex-row bg-blue-gray-50 m-5">
           <CardHeader
