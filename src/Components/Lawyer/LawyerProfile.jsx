@@ -5,7 +5,7 @@ import {XCircleIcon} from "@heroicons/react/24/outline"
 
 function VerifiedTag() {
   return (
-    <div className="flex items-center mt-3 bg-green-400 text-white p-2 mt-11 rounded-full">
+    <div className="flex items-center mt-3 bg-green-400 text-white p-2  rounded-full">
       <CheckBadgeIcon className="h-4 w-4 mr-1" />
       <span className="text-xs font-semibold">Verified</span>
     </div>

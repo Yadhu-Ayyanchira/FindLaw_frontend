@@ -1,121 +1,111 @@
 import React, { useState } from "react";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import {
   Button,
   Dialog,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
   Input,
+  Select,
+  Option,
+  Spinner,
 } from "@material-tailwind/react";
-import { useSelector } from "react-redux";
+
+// Import any additional dependencies or utilities needed for form handling
 
 function EditProfile() {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
 
-  // Assuming you have a lawyer object with initial values
-  const initialLawyerData = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    mobile: "1234567890",
-    // ... other fields with initial values
-  };
-  const lawyer = localStorage.getItem("currentLawyer");
-  console.log('imin law:::',lawyer);
+  const handleOpen = () => setOpen(!open);
 
+  // Uncomment and utilize the necessary dependencies and form handling logic
+  // const { doctorInfo } = useSelector((state) => state.doctor);
+  // const id = doctorInfo.id;
+  // const queryClient = useQueryClient();
 
-  const [lawyerData, setLawyerData] = useState(initialLawyerData);
+  // const initialValues = {
+  //   name: doctor ? doctor.name : "",
+  //   currentHospital: doctor ? doctor.currentHospital : "",
+  //   department: doctor ? doctor.department : "",
+  //   qualification: doctor ? doctor.qualification : "",
+  //   experience: doctor ? doctor.experience : "",
+  //   description: doctor ? doctor.description : "",
+  // };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setLawyerData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleUpdate = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-
-    // Assuming you have an updateLawyer function that makes an API call to update the lawyer data
-    // Replace this with the actual function you use to update the lawyer data
-    updateLawyer(lawyerData)
-      .then(() => {
-        console.log("Lawyer data updated successfully");
-        handleOpen(); // Close the dialog after updating
-      })
-      .catch((error) => {
-        console.error("Error updating lawyer data:", error);
-      });
-  };
+  // const {
+  //   values,
+  //   errors,
+  //   touched,
+  //   handleBlur,
+  //   handleSubmit,
+  //   handleChange,
+  //   setFieldValue,
+  // } = useFormik({
+  //   initialValues: initialValues,
+  //   validationSchema: doctorEditProfileSchema,
+  //   enableReinitialize: true,
+  //   onSubmit: async (values) => {
+  //     const response = await editProfile(values, id);
+  //     if (response) {
+  //       setOpen(!open);
+  //       queryClient.invalidateQueries(["doctor"]);
+  //     }
+  //   },
+  // });
 
   return (
     <>
-      <Button onClick={handleOpen}>Edit Profile</Button>
+      <p
+        onClick={handleOpen}
+        className="hover:bg-[#5d7582] hover:text-white  me-10 cursor-pointer  rounded-full text-[#5d7582] text-xs"
+      >
+        <PencilSquareIcon className="w-8 h-8 m-3" />
+      </p>
       <Dialog
-        size="xs"
         open={open}
         handler={handleOpen}
-        className="bg-transparent shadow-black"
+        size="sm"
+        className="rounded-none"
       >
-        <form onSubmit={handleUpdate}>
-          <Card className="mx-auto w-full max-w-[24rem]">
-            <CardHeader
-              variant="gradient"
-              color="blue"
-              className="mb-4 grid h-10 place-items-center"
-            >
-              <Typography variant="h3" color="white">
-                Edit Profile
-              </Typography>
-            </CardHeader>
-            <CardBody className="flex flex-col gap-4">
-              <Input
-                label="Name"
-                size="lg"
-                name="name"
-                value={lawyerData.name}
-                onChange={handleChange}
-              />
-                <Input
-                  label="Mobile"
-                  size="lg"
-                  name="mobile"
-                  value={lawyerData.mobile}
-                  onChange={handleChange}
-                />
-              <Input
-                label="About"
-                size="lg"
-                name="about"
-                value={lawyerData.email}
-                onChange={handleChange}
-              />
-              <Input
-                label="Place"
-                size="lg"
-                name="place"
-                value={lawyerData.email}
-                onChange={handleChange}
-              />
-              <Input
-                label="Practice"
-                size="lg"
-                name="practice"
-                value={lawyerData.email}
-                onChange={handleChange}
-              />
-              {/* Add similar Input components for other fields */}
-            </CardBody>
-            <CardFooter className="pt-0">
-              <Button variant="gradient" type="submit" fullWidth>
-                Update
+        <DialogHeader>EDIT PROFILE</DialogHeader>
+        <DialogBody className="flex justify-center ">
+          <form>
+            <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
+              <div className="my-3">
+                <Input size="md" variant="standard" name="name" label="Name" />
+              </div>
+            </div>
+            <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
+              <div className="my-3">
+                <Input size="md" variant="standard" name="name" label="Name" />
+              </div>
+            </div>
+            <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
+              <div className="my-3">
+                <Input size="md" variant="standard" name="name" label="Name" />
+              </div>
+            </div>
+            <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
+              <div className="my-3">
+                <Input size="md" variant="standard" name="name" label="Name" />
+              </div>
+            </div>
+            <DialogFooter className="flex justify-between">
+              <Button
+                variant="text"
+                color="red"
+                onClick={handleOpen}
+                className="mr-1"
+              >
+                <span>Cancel</span>
               </Button>
-            </CardFooter>
-          </Card>
-        </form>
+              <Button variant="filled" type="submit" color="green">
+                <span>Save</span>
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogBody>
       </Dialog>
     </>
   );
