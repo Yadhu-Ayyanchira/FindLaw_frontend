@@ -40,6 +40,7 @@ function Register() {
         const detail = res.data.info;
         dispatch(
           setlawyerDetails({
+            id : detail?._id,
             name: detail?.name,
             email: detail?.email,
             mobile: detail?.mobile,

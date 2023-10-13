@@ -1,7 +1,17 @@
 import React from "react";
 import { Badge } from "@material-tailwind/react";
-import { MapPinIcon, CheckBadgeIcon,PencilSquareIcon,BriefcaseIcon,} from "@heroicons/react/24/solid";
-import {XCircleIcon} from "@heroicons/react/24/outline"
+import LawyerRequests from "../../Utils/LawyerRequests";
+import {
+  MapPinIcon,
+  CheckBadgeIcon,
+  PencilSquareIcon,
+  BriefcaseIcon,
+} from "@heroicons/react/24/solid";
+import { XCircleIcon } from "@heroicons/react/24/outline";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import EditProfile from "./EditProfile";
+import { useSelector } from "react-redux";
+import Loader from "../Loader/Loader";
 
 function VerifiedTag() {
   return (
@@ -13,6 +23,32 @@ function VerifiedTag() {
 }
 
 function LawyerProfile() {
+  const queryClient = useQueryClient();
+  const { id } = useSelector((state) => state.lawyer);
+  // const { isLoading, error, data } = useQuery({
+  //   queryKey: ["lawyer"],
+  //   queryFn: () => LawyerRequests.get("/lawyerData").then((res) => res.data),
+  // });
+
+  const { data, isLoading, error } = useQuery(["userData", id], async () => {
+    const response = LawyerRequests.get(`/lawyerData/${id}`).then(
+      (res) => res.data
+    );
+    const data = await response;
+    return data;
+  });
+
+  const { name, email, mobile } = data.data;
+  console.log("this is fname", name);
+
+  console.log("su fucking data", data);
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <>
       <div className="container mx-auto">
@@ -28,13 +64,13 @@ function LawyerProfile() {
                   size=""
                   src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436178.jpg?w=740&t=st=1694511037~exp=1694511637~hmac=7afb019f7b279def27b7c8cff245f9ab0ecc12fadc50d085af0db00d777ee63b"
                   alt="tania andrew"
-                  className="rounded-full mx-8 m-5 lg:w-52 lg:h-52 w-32 h-32" // Adjusted the size for small devices
+                  className="rounded-full mx-8 m-5 lg:w-52 lg:h-52 w-32 h-32"
                 />
               </Badge>
             </div>
             <div className="details m-5 p-5 ms-10 mb-0 h-auto flex flex-col">
-              <p className="text-3xl font-bold text-blue-gray-600 font-serif mb-1">
-                Yadhu
+              <p className="text-3xl font-bold text-blue-gray-800 font-serif mb-1">
+                {name}
               </p>
               <div className="flex items-center mb-1">
                 <MapPinIcon className="h-4 w-4 mr-2" />
@@ -46,22 +82,15 @@ function LawyerProfile() {
               </div>
               <br />
               <p className="text-base italic text-blue-gray-700">
-                <span className="font-bold">Email:</span>yadhu@gmail.com
+                <span className="font-bold">Email:</span>{email}
               </p>
               <p className="text-base italic text-blue-gray-700">
-                <span className="font-bold">Mobile:</span>9744011366
+                <span className="font-bold">Mobile:</span>
+                {mobile}
               </p>
             </div>
             <div className="p-10">
-              <button
-                type="submit"
-                className="flex items-center space-x-2 text-black rounded-md py-1 px-2 outline-black hover:bg-blue-gray-200"
-              >
-                <div className="hover:text-blue-500 hover:cursor-pointer">
-                  <PencilSquareIcon className="h-5 w-5" />
-                </div>
-                <span>Edit Profile</span>
-              </button>
+              <EditProfile />
               <VerifiedTag />
             </div>
           </div>

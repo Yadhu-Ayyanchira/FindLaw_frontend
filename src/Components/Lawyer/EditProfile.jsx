@@ -53,15 +53,20 @@ function EditProfile() {
   //     }
   //   },
   // });
+  const onSubmit = () =>{
+    alert("fuck you")
+  }
 
   return (
     <>
       <p
         onClick={handleOpen}
-        className="hover:bg-[#5d7582] hover:text-white  me-10 cursor-pointer  rounded-full text-[#5d7582] text-xs"
+        className="flex items-center hover:border-1 hover:text-black me-10 cursor-pointer rounded-xl text-[#5d7582] text-xs"
       >
         <PencilSquareIcon className="w-8 h-8 m-3" />
+        <span className="ml-1">Edit Profile</span>
       </p>
+
       <Dialog
         open={open}
         handler={handleOpen}
@@ -70,7 +75,7 @@ function EditProfile() {
       >
         <DialogHeader>EDIT PROFILE</DialogHeader>
         <DialogBody className="flex justify-center ">
-          <form>
+          <form onSubmit={onSubmit}>
             <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
               <div className="my-3">
                 <Input size="md" variant="standard" name="name" label="Name" />
