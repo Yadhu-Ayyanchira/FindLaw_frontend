@@ -1,6 +1,7 @@
 import React from "react";
 import { Badge } from "@material-tailwind/react";
-import { MapPinIcon, CheckBadgeIcon,PencilSquareIcon,BriefcaseIcon} from "@heroicons/react/24/solid";
+import { MapPinIcon, CheckBadgeIcon,PencilSquareIcon,BriefcaseIcon,} from "@heroicons/react/24/solid";
+import {XCircleIcon} from "@heroicons/react/24/outline"
 
 function VerifiedTag() {
   return (
@@ -56,7 +57,9 @@ function LawyerProfile() {
                 type="submit"
                 className="flex items-center space-x-2 text-black rounded-md py-1 px-2 outline-black hover:bg-blue-gray-200"
               >
-                <PencilSquareIcon className="h-5 w-5" />
+                <div className="hover:text-blue-500 hover:cursor-pointer">
+                  <PencilSquareIcon className="h-5 w-5" />
+                </div>
                 <span>Edit Profile</span>
               </button>
               <VerifiedTag />
@@ -66,28 +69,54 @@ function LawyerProfile() {
           <div className="flc lg:w-1/3 h-64 m-5 lg:ms-0 shadow-xl rounded-xl"></div>
         </div>
         <div className="flex flex-col lg:flex-row w-full">
-          <div className="about lg:w-full h-64 m-5 lg:m-5 shadow-xl rounded-xl flex-col relative">
-            <h2 className="text-lg font-semibold mb-2 p-4 pb-0">About</h2>
+          <div className="about lg:w-full h-auto p-5 m-5 lg:m-5 shadow-xl rounded-xl flex-col relative">
+            <h2 className="text-lg font-semibold mb-2 p-4 pb-0">
+              Practiced areas
+            </h2>
             <button
               className=" text-black px-4 py-2 absolute top-0 right-0 m-4"
               onClick="editContent()"
             >
               <PencilSquareIcon className="h-8 w-8" />
             </button>
-            <p className="mt-8 m-5">
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-              eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-              est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-              velit, sed quia non numquam eius modi tempora incidunt ut labore
-              et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
-              veniam, quis nostrum exercitationem ullam corporis suscipit
-              laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem
-              vel eum iure reprehend
-            </p>
+            <div className="flex flex-wrap">
+              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
+                <p>Family</p>
+                <XCircleIcon className="w-5 h-5 ms-2" />
+              </div>
+              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
+                <p>Business consulting</p>
+                <XCircleIcon className="w-5 h-5" />
+              </div>
+              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
+                <p>Business consulting</p>
+                <XCircleIcon className="w-5 h-5" />
+              </div>
+              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
+                <p>Business consulting</p>
+                <XCircleIcon className="w-5 h-5" />
+              </div>
+              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
+                <p>Business consulting</p>
+                <XCircleIcon className="w-5 h-5" />
+              </div>
+              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
+                <p>Business consulting</p>
+                <XCircleIcon className="w-5 h-5" />
+              </div>
+              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
+                <p>Business consulting</p>
+                <XCircleIcon className="w-5 h-5" />
+              </div>
+              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
+                <p>Business consulting</p>
+                <XCircleIcon className="w-5 h-5 V" />
+              </div>
+              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
+                <p>Business consulting</p>
+                <XCircleIcon className="w-5 h-5 ms-2" />
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col lg:flex-row w-full">
