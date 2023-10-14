@@ -11,6 +11,7 @@ import {
   Option,
   Spinner,
 } from "@material-tailwind/react";
+import { useSelector } from "react-redux";
 
 // Import any additional dependencies or utilities needed for form handling
 
@@ -18,41 +19,8 @@ function EditProfile() {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
+  const {id,name,place,mobile,email,verified} = useSelector((state)=>state.lawyer)
 
-  // Uncomment and utilize the necessary dependencies and form handling logic
-  // const { doctorInfo } = useSelector((state) => state.doctor);
-  // const id = doctorInfo.id;
-  // const queryClient = useQueryClient();
-
-  // const initialValues = {
-  //   name: doctor ? doctor.name : "",
-  //   currentHospital: doctor ? doctor.currentHospital : "",
-  //   department: doctor ? doctor.department : "",
-  //   qualification: doctor ? doctor.qualification : "",
-  //   experience: doctor ? doctor.experience : "",
-  //   description: doctor ? doctor.description : "",
-  // };
-
-  // const {
-  //   values,
-  //   errors,
-  //   touched,
-  //   handleBlur,
-  //   handleSubmit,
-  //   handleChange,
-  //   setFieldValue,
-  // } = useFormik({
-  //   initialValues: initialValues,
-  //   validationSchema: doctorEditProfileSchema,
-  //   enableReinitialize: true,
-  //   onSubmit: async (values) => {
-  //     const response = await editProfile(values, id);
-  //     if (response) {
-  //       setOpen(!open);
-  //       queryClient.invalidateQueries(["doctor"]);
-  //     }
-  //   },
-  // });
   const onSubmit = () =>{
     alert("fuck you")
   }
@@ -78,22 +46,22 @@ function EditProfile() {
           <form onSubmit={onSubmit}>
             <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
               <div className="my-3">
-                <Input size="md" variant="standard" name="name" label="Name" />
+                <Input size="md" variant="standard" name="name" label="Name" value={name} />
               </div>
             </div>
             <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
               <div className="my-3">
-                <Input size="md" variant="standard" name="name" label="Name" />
+                <Input size="md" variant="standard" name="place" label="Place" value={place} />
               </div>
             </div>
             <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
               <div className="my-3">
-                <Input size="md" variant="standard" name="name" label="Name" />
+                <Input size="md" variant="standard" name="experience" label="Experience" />
               </div>
             </div>
             <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
               <div className="my-3">
-                <Input size="md" variant="standard" name="name" label="Name" />
+                <Input size="md" variant="standard" name="mobile" label="Mobile" />
               </div>
             </div>
             <DialogFooter className="flex justify-between">

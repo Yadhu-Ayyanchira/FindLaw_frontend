@@ -40,11 +40,13 @@ function Register() {
         const detail = res.data.info;
         dispatch(
           setlawyerDetails({
-            id : detail?._id,
+            id: detail?._id,
             name: detail?.name,
             email: detail?.email,
             mobile: detail?.mobile,
-            is_admin: detail?.is_admin,
+            place: detail?.place,
+            verified: detail?.verified,
+            // is_admin: detail?.is_admin,
             image: detail?.image,
           })
         );

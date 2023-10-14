@@ -25,23 +25,17 @@ function VerifiedTag() {
 function LawyerProfile() {
   const queryClient = useQueryClient();
   const { id } = useSelector((state) => state.lawyer);
-  // const { isLoading, error, data } = useQuery({
-  //   queryKey: ["lawyer"],
-  //   queryFn: () => LawyerRequests.get("/lawyerData").then((res) => res.data),
-  // });
 
-  const { data, isLoading, error } = useQuery(["userData", id], async () => {
+  const { data, isLoading, error } = useQuery(["lawyer", id], async () => {
     const response = LawyerRequests.get(`/lawyerData/${id}`).then(
       (res) => res.data
     );
     const data = await response;
     return data;
   });
+  console.log("data",data);
+  const { name, email, mobile } = data ? data.data : {};
 
-  const { name, email, mobile } = data.data;
-  console.log("this is fname", name);
-
-  console.log("su fucking data", data);
   if (isLoading) {
     return <Loader />;
   }

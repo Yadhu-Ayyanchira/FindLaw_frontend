@@ -58,6 +58,9 @@ function Register() {
                   name: detail?.name,
                   email: detail?.email,
                   mobile: detail?.mobile,
+                  place: detail?.place,
+                  verified: detail?.verified,
+                 // is_admin: detail?.is_admin,
                   image: detail?.image,
                 })
               );
@@ -102,6 +105,9 @@ function Register() {
               name: detail?.name,
               email: detail?.email,
               mobile: detail?.mobile,
+              place: detail?.place,
+              verified: detail?.verified,
+              // is_admin: detail?.is_admin,
               image: detail?.image,
             })
           );

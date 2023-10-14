@@ -22,7 +22,7 @@ const initialState = {
     name: "",
     email: "",
     mobile: "",
-    is_admin: "",
+    verified: false,
     image: "",
   },
 };
