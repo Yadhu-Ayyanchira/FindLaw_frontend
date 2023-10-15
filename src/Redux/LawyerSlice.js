@@ -43,8 +43,9 @@ const initialState = {
   mobile: "",
   place: "",
   verified: false,
-  image: "",
   experience: 0,
+  about:"About your self",
+  image: "",
 };
 
 const lawyerSlice = createSlice({
@@ -52,7 +53,7 @@ const lawyerSlice = createSlice({
   initialState,
   reducers: {
     setlawyerDetails: (state, action) => {
-      const { id, name, email, mobile, image, place,verified,experience } = action.payload;
+      const { id, name, email, mobile, image, place,verified,experience,about } = action.payload;
       return {
         ...state,
         id: id || state.id,
@@ -62,6 +63,7 @@ const lawyerSlice = createSlice({
         email: email || state.email,
         mobile: mobile || state.mobile,
         experience: experience || state.experience,
+        about: about || state.about,
         image: image || state.image,
       };
     },
@@ -75,6 +77,7 @@ const lawyerSlice = createSlice({
         image: "",
         experience: 0,
         place: "",
+        about: "",
         verified: false,
         
       };

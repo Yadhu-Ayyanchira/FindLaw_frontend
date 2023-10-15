@@ -10,14 +10,24 @@ import {
 import { XCircleIcon } from "@heroicons/react/24/outline";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import EditProfile from "./EditProfile";
+import EditAbout from "./EditAbout";
 import { useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
+
 
 function VerifiedTag() {
   return (
     <div className="flex items-center mt-3 bg-green-400 text-white p-2  rounded-full">
       <CheckBadgeIcon className="h-4 w-4 mr-1" />
-      <span className="text-xs font-semibold">Verified</span>
+      <span className="text-xs font-semibold">Approved</span>
+    </div>
+  );
+}
+function NotVerifiedTag() {
+  return (
+    <div className="flex items-center mt-3 bg-red-400 text-white p-2  rounded-full">
+      <CheckBadgeIcon className="h-4 w-4 mr-1" />
+      <span className="text-xs font-semibold"> Not Approved</span>
     </div>
   );
 }
@@ -37,7 +47,7 @@ function LawyerProfile() {
       }
     );
   console.log("data",data);
-  const { name, email, mobile } = data ? data.data : {};
+  const { name, email, mobile,place,about,experience,is_approved } = data ? data.data : {};
 
   const handleEditProfile = () => {
     console.log("refetch");
@@ -80,11 +90,11 @@ function LawyerProfile() {
               </p>
               <div className="flex items-center mb-1">
                 <MapPinIcon className="h-4 w-4 mr-2" />
-                <p>Calicut</p>
+                <p>{place}</p>
               </div>
               <div className="flex items-center mb-1">
                 <BriefcaseIcon className="h-4 w-4 mr-2" />
-                <p>7 Years</p>
+                <p>{experience} Years</p>
               </div>
               <br />
               <p className="text-base italic text-blue-gray-700">
@@ -97,8 +107,8 @@ function LawyerProfile() {
               </p>
             </div>
             <div className="p-10">
-              <EditProfile val={data} onEdit={handleEditProfile} />
-              <VerifiedTag />
+              <EditProfile onEdit={handleEditProfile} />
+              {is_approved ? <VerifiedTag /> : <NotVerifiedTag />}
             </div>
           </div>
 
@@ -158,25 +168,12 @@ function LawyerProfile() {
         <div className="flex flex-col lg:flex-row w-full">
           <div className="about lg:w-full h-64 m-5 lg:m-5 shadow-xl rounded-xl flex-col relative">
             <h2 className="text-lg font-semibold mb-2 p-4 pb-0">About</h2>
-            <button
-              className=" text-black px-4 py-2 absolute top-0 right-0 m-4"
-              onClick="editContent()"
-            >
-              <PencilSquareIcon className="h-8 w-8" />
-            </button>
+            <div className=" text-black px-4 py-2 absolute top-0 right-0 m-4">
+              <EditAbout val={data}/>
+            </div>
+
             <p className="mt-8 m-5">
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-              eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-              est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-              velit, sed quia non numquam eius modi tempora incidunt ut labore
-              et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
-              veniam, quis nostrum exercitationem ullam corporis suscipit
-              laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem
-              vel eum iure reprehend
+              {about}
             </p>
           </div>
         </div>

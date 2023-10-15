@@ -24,6 +24,7 @@ const initialState = {
     mobile: "",
     verified: false,
     experience: 0,
+    about: "About your self",
     image: "",
   },
 };

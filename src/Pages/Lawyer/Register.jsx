@@ -61,6 +61,7 @@ function Register() {
                   place: detail?.place,
                   verified: detail?.verified,
                   experience: detail?.experience,
+                  about: detail?.about,
                   image: detail?.image,
                 })
               );
@@ -108,6 +109,7 @@ function Register() {
               place: detail?.place,
               verified: detail?.verified,
               experience: detail?.experience,
+              about: detail?.about,
               image: detail?.image,
             })
           );

@@ -16,13 +16,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { LawyerProfileEdit } from "../../Api/LawyerApi";
 import { setlawyerDetails } from "../../Redux/LawyerSlice";
 
-function EditProfile() {
+function EditAbout() {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
-  const {id, name, place,mobile,experience } = useSelector((state) => state.lawyer);
-  const dispatch = useDispatch()
+  const { id, name, place, mobile, experience } = useSelector(
+    (state) => state.lawyer
+  );
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  
 
   const [data, setData] = useState({
     name: "",
@@ -30,45 +31,45 @@ function EditProfile() {
     place: "",
     experience: 0,
   });
-// useEffect(()=>{
-//   setData({
-//     name:name || "",
-//     place:place || "",
-//     mobile : mobile ||"",
-//     experience : experience || ""
-//   })
-// },[])
-useEffect(() => {
-  setData({
-    name: name || "",
-    place: place || "",
-    mobile: mobile || "",
-    experience: experience || "",
-  });
-}, [name, place, mobile, experience]);
+  // useEffect(()=>{
+  //   setData({
+  //     name:name || "",
+  //     place:place || "",
+  //     mobile : mobile ||"",
+  //     experience : experience || ""
+  //   })
+  // },[])
+  useEffect(() => {
+    setData({
+      name: name || "",
+      place: place || "",
+      mobile: mobile || "",
+      experience: experience || "",
+    });
+  }, [name, place, mobile, experience]);
 
   const handleOpen = () => setOpen(!open);
-  
-const handleChange = ({ currentTarget: input }) => {
-  setData({ ...data, [input.name]: input.value });
-};
+
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handle submit");
     try {
-      const {name, mobile, place, experience} = data
-      if(name.trim()== ""){
+      const { name, mobile, place, experience } = data;
+      if (name.trim() == "") {
         setError("Invalid Name");
-      }else if(place.trim()==""){
-        setError("Invalid Place")
-      }else if(mobile.trim()==""){
-        setError("Mobile Number Required")
-      }else{
-        const response = await LawyerProfileEdit(data,id)
-        console.log("fuck uu",response);
-        if(response.data.updated){
-          const detail = response.data.data
-          console.log("name is",detail.name);
+      } else if (place.trim() == "") {
+        setError("Invalid Place");
+      } else if (mobile.trim() == "") {
+        setError("Mobile Number Required");
+      } else {
+        const response = await LawyerProfileEdit(data, id);
+        console.log("fuck uu", response);
+        if (response.data.updated) {
+          const detail = response.data.data;
+          console.log("name is", detail.name);
           dispatch(
             setlawyerDetails({
               id: detail?._id,
@@ -83,15 +84,14 @@ const handleChange = ({ currentTarget: input }) => {
             })
           );
         }
-        console.log("edit data",response);
+        console.log("edit data", response);
         queryClient.invalidateQueries(["lawyer", id]);
-        handleOpen()     
+        handleOpen();
       }
     } catch (error) {
       console.log(error);
     }
   };
- 
 
   return (
     <>
@@ -160,9 +160,8 @@ const handleChange = ({ currentTarget: input }) => {
                 />
               </div>
             </div>
-              {error && <p className="text-center text-red-600">{error}</p>}
+            {error && <p className="text-center text-red-600">{error}</p>}
             <DialogFooter className="flex justify-between">
-
               <Button
                 variant="text"
                 color="red"
@@ -182,4 +181,4 @@ const handleChange = ({ currentTarget: input }) => {
   );
 }
 
-export default EditProfile;
+export default EditAbout;
