@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Badge } from "@material-tailwind/react";
 import LawyerRequests from "../../Utils/LawyerRequests";
 import {
@@ -26,15 +26,23 @@ function LawyerProfile() {
   const queryClient = useQueryClient();
   const { id } = useSelector((state) => state.lawyer);
 
-  const { data, isLoading, error } = useQuery(["lawyer", id], async () => {
-    const response = LawyerRequests.get(`/lawyerData/${id}`).then(
-      (res) => res.data
+    const { data, isLoading, error, refetch } = useQuery(
+      ["lawyer", id],
+      async () => {
+        const response = LawyerRequests.get(`/lawyerData/${id}`).then(
+          (res) => res.data
+        );
+        const data = await response;
+        return data;
+      }
     );
-    const data = await response;
-    return data;
-  });
   console.log("data",data);
   const { name, email, mobile } = data ? data.data : {};
+
+  const handleEditProfile = () => {
+    console.log("refetch");
+    refetch();
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -42,6 +50,10 @@ function LawyerProfile() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+  useEffect(() => {
+    refetch();
+  }, [id]);
+
 
   return (
     <>
@@ -76,7 +88,8 @@ function LawyerProfile() {
               </div>
               <br />
               <p className="text-base italic text-blue-gray-700">
-                <span className="font-bold">Email:</span>{email}
+                <span className="font-bold">Email:</span>
+                {email}
               </p>
               <p className="text-base italic text-blue-gray-700">
                 <span className="font-bold">Mobile:</span>
@@ -84,7 +97,7 @@ function LawyerProfile() {
               </p>
             </div>
             <div className="p-10">
-              <EditProfile />
+              <EditProfile val={data} onEdit={handleEditProfile} />
               <VerifiedTag />
             </div>
           </div>

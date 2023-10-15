@@ -27,6 +27,16 @@ export async function LawyerLogin(data) {
     return error;
   }
 }
+export async function LawyerProfileEdit(data,id){
+  try {
+    console.log("LawyerProfileEdit",id,data);
+    const response = await LawyerRequest.post(`/profileEdit/${id}`,data);
+    console.log("resp is",response);
+    return response;
+  } catch (error) {
+    return(error)
+  }
+}
 
 
 

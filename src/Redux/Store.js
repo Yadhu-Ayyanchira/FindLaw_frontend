@@ -23,6 +23,7 @@ const initialState = {
     email: "",
     mobile: "",
     verified: false,
+    experience: 0,
     image: "",
   },
 };

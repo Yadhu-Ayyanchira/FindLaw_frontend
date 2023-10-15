@@ -60,7 +60,7 @@ function Register() {
                   mobile: detail?.mobile,
                   place: detail?.place,
                   verified: detail?.verified,
-                 // is_admin: detail?.is_admin,
+                  experience: detail?.experience,
                   image: detail?.image,
                 })
               );
@@ -107,7 +107,7 @@ function Register() {
               mobile: detail?.mobile,
               place: detail?.place,
               verified: detail?.verified,
-              // is_admin: detail?.is_admin,
+              experience: detail?.experience,
               image: detail?.image,
             })
           );
