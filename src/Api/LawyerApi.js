@@ -38,5 +38,16 @@ export async function LawyerProfileEdit(data,id){
   }
 }
 
+export async function LawyerAboutEdit(data, id) {
+  try {
+    console.log("LawyerAboutEdit", id, data);
+    const response = await LawyerRequest.put(`/aboutEdit/${id}`, data);
+    console.log("resp is", response);
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
+
 
 

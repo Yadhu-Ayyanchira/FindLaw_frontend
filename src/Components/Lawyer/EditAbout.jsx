@@ -13,40 +13,27 @@ import {
   Spinner,
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { LawyerProfileEdit } from "../../Api/LawyerApi";
+import { LawyerAboutEdit } from "../../Api/LawyerApi";
 import { setlawyerDetails } from "../../Redux/LawyerSlice";
 
 function EditAbout() {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
-  const { id, name, place, mobile, experience } = useSelector(
+  const { id, about } = useSelector(
     (state) => state.lawyer
   );
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   const [data, setData] = useState({
-    name: "",
-    mobile: "",
-    place: "",
-    experience: 0,
+    about: "",
   });
-  // useEffect(()=>{
-  //   setData({
-  //     name:name || "",
-  //     place:place || "",
-  //     mobile : mobile ||"",
-  //     experience : experience || ""
-  //   })
-  // },[])
+ 
   useEffect(() => {
     setData({
-      name: name || "",
-      place: place || "",
-      mobile: mobile || "",
-      experience: experience || "",
+      about: about,
     });
-  }, [name, place, mobile, experience]);
+  }, [about]);
 
   const handleOpen = () => setOpen(!open);
 
@@ -58,18 +45,14 @@ function EditAbout() {
     console.log("handle submit");
     try {
       const { name, mobile, place, experience } = data;
-      if (name.trim() == "") {
-        setError("Invalid Name");
-      } else if (place.trim() == "") {
-        setError("Invalid Place");
-      } else if (mobile.trim() == "") {
-        setError("Mobile Number Required");
-      } else {
-        const response = await LawyerProfileEdit(data, id);
-        console.log("fuck uu", response);
+      if (about.trim() == "") {
+        setError("Empty field...!");
+      }  else {
+        const response = await LawyerAboutEdit(data, id);
+        console.log("LawyerAboutEdit uu", response);
         if (response.data.updated) {
           const detail = response.data.data;
-          console.log("name is", detail.name);
+          console.log("LawyerAboutEdit name is", detail.name);
           dispatch(
             setlawyerDetails({
               id: detail?._id,
@@ -100,7 +83,7 @@ function EditAbout() {
         className="flex items-center hover:border-1 hover:text-black me-10 cursor-pointer rounded-xl text-[#5d7582] text-xs"
       >
         <PencilSquareIcon className="w-8 h-8 m-3" />
-        <span className="ml-1">Edit Profile</span>
+        <span className="ml-1">Edit About</span>
       </p>
 
       <Dialog
@@ -117,49 +100,14 @@ function EditAbout() {
                 <Input
                   size="md"
                   variant="standard"
-                  name="name"
-                  label="Name"
-                  value={data.name}
+                  name="about"
+                  label="About"
+                  value={data.about}
                   onChange={handleChange}
                 />
               </div>
-            </div>
-            <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
-              <div className="my-3">
-                <Input
-                  size="md"
-                  variant="standard"
-                  name="place"
-                  label="Place"
-                  value={data.place}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
-              <div className="my-3">
-                <Input
-                  size="md"
-                  variant="standard"
-                  name="experience"
-                  label="Experience"
-                  value={data.experience}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
-              <div className="my-3">
-                <Input
-                  size="md"
-                  variant="standard"
-                  name="mobile"
-                  label="Mobile"
-                  value={data.mobile}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
+            </div>           
+            
             {error && <p className="text-center text-red-600">{error}</p>}
             <DialogFooter className="flex justify-between">
               <Button

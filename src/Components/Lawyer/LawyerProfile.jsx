@@ -11,6 +11,7 @@ import { XCircleIcon } from "@heroicons/react/24/outline";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import EditProfile from "./EditProfile";
 import EditAbout from "./EditAbout";
+import EditImage from "./EditImage";
 import { useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
 
@@ -72,6 +73,7 @@ function LawyerProfile() {
           <div className="profile lg:w-2/3 h-64 m-5 lg:m-5 shadow-xl rounded-xl flex">
             <div className="image">
               <Badge
+                content={<EditImage />}
                 overlap="circular"
                 placement="bottom-end"
                 className="h-8 w-8 mb-5 me-2 hover:bg-white hover:text-[#5d7582] bg-[#5d7582] cursor-pointer"
@@ -169,12 +171,10 @@ function LawyerProfile() {
           <div className="about lg:w-full h-64 m-5 lg:m-5 shadow-xl rounded-xl flex-col relative">
             <h2 className="text-lg font-semibold mb-2 p-4 pb-0">About</h2>
             <div className=" text-black px-4 py-2 absolute top-0 right-0 m-4">
-              <EditAbout val={data}/>
+              <EditAbout val={data} />
             </div>
 
-            <p className="mt-8 m-5">
-              {about}
-            </p>
+            <p className="mt-8 m-5">{about}</p>
           </div>
         </div>
       </div>
