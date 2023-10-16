@@ -48,6 +48,25 @@ export async function LawyerAboutEdit(data, id) {
     return error;
   }
 }
+export async function UpdateImage(id,img){
+  try {
+    console.log("imgg",id,img);
+    const formData = new FormData()
+    formData.append('image', img)
+    formData.append('userId',id)
+    const config = {
+      header: {
+        "content-type": "multipart/form-data",
+        userId: id,
+      },
+      WithCreadentials: true,
+    }
+    const res = await LawyerRequest.post("/imgupdate",formData,config)
+    return res
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 

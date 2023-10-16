@@ -30,20 +30,13 @@ function EditProfile() {
     place: "",
     experience: 0,
   });
-// useEffect(()=>{
-//   setData({
-//     name:name || "",
-//     place:place || "",
-//     mobile : mobile ||"",
-//     experience : experience || ""
-//   })
-// },[])
+
 useEffect(() => {
   setData({
-    name: name || "",
-    place: place || "",
-    mobile: mobile || "",
-    experience: experience || "",
+    name: name,
+    place: place ,
+    mobile: mobile,
+    experience: experience,
   });
 }, [name, place, mobile, experience]);
 
