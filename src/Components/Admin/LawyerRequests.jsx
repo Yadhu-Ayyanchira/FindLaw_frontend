@@ -6,6 +6,7 @@ import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+import Loader from "../Loader/Loader";
 import { approveLawyer } from "../../Api/AdminApi";
 import AdminRequest from "../../Utils/AdminRequest";
 import {
@@ -21,6 +22,7 @@ import {
   Tooltip,
   Input,
 } from "@material-tailwind/react";
+import EmptyPage from "../EmptyPage/EmptyPage";
 
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
@@ -41,13 +43,13 @@ function LawyerRequests() {
   };
  if (!data || data.data.length === 0) {
    return (
-     <div className="flex justify-center items-center h-full">Empty...</div>
+     <EmptyPage/>
    );
  }
 
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   if (error) {

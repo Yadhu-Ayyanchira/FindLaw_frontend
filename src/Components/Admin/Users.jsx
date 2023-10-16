@@ -5,6 +5,7 @@ import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+import Loader from "../Loader/Loader";
 import AdminRequest from "../../Utils/AdminRequest";
 import {
   Card,
@@ -20,6 +21,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { manageUser } from "../../Api/AdminApi";
+import EmptyPage from "../EmptyPage/EmptyPage";
 
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
@@ -37,13 +39,16 @@ function Users() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
-
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    }
+  if (isLoading) {
+    return <Loader/>;
+  }
+  
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+  if (!data || data.data.length === 0) {
+    return <EmptyPage />;
+  }
     const handleAction = async (userId) => {
       await manageUser(userId);
       queryClient.invalidateQueries("users");

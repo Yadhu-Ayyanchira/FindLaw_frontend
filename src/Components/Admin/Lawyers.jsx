@@ -1,12 +1,10 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { NoSymbolIcon } from "@heroicons/react/24/solid";
-import {
-  ArrowDownTrayIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon,MagnifyingGlassIcon,} from "@heroicons/react/24/outline";
 import { manageLawyer } from "../../Api/AdminApi";
 import AdminRequest from "../../Utils/AdminRequest";
+import Loader from "../Loader/Loader"
 import {
   Card,
   CardHeader,
@@ -20,6 +18,7 @@ import {
   Tooltip,
   Input,
 } from "@material-tailwind/react";
+import EmptyPage from "../EmptyPage/EmptyPage";
 
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
@@ -39,13 +38,16 @@ const handleAction = async (userId) => {
   queryClient.invalidateQueries("users");
 };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+if (isLoading) {
+  return <Loader/>;
+}
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+if (error) {
+  return <div>Error: {error.message}</div>;
+}
+if (!data || data.data.length === 0) {
+  return <EmptyPage />;
+}
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
