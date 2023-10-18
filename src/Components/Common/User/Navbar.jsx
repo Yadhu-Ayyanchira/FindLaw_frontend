@@ -116,8 +116,8 @@ function NavbarDefault() {
         <Menu>
           <MenuHandler>
             <p className="flex items-center">
-              Lawyer directory{" "}
-              <BiArrowFromTop className="ml-1 text-blue-gray-400" />
+              Lawyer directory
+              <BiArrowFromTop className="ml-1 text-blue-gray-400 pointer-events-auto" />
             </p>
           </MenuHandler>
           <MenuList>

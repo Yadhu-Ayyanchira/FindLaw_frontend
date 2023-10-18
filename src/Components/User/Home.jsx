@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../Common/User/Navbar";
 import banner from "../../Assets/Images/fal_hero_steve_lg.jpg";
+import { UserFooter } from "../Common/User/UserFooter";
 
 function Home() {
   return (
@@ -17,6 +18,7 @@ function Home() {
       <div>
         <h1 className="text-center text-black text-3xl font-semibold py-5">Top Rated Lawyers</h1>
       </div>
+      <UserFooter/>
     </div>
   );
 }
