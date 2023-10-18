@@ -34,7 +34,6 @@ function Register() {
       setError("Invalid email");
     } else {
       const res = await LawyerLogin(data);
-      console.log('thid ',res);
       if (res.data.access) {
         localStorage.setItem("currentLawyer",res.data.token);
         const detail = res.data.info;

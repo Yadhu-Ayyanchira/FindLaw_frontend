@@ -71,7 +71,7 @@ console.log("jyfxdxjexg", name);
           Sign out
         </MenuItem>
         <MenuItem
-          key="Sign out"
+          key="Sign out profile"
           onClick={()=>navigate('/userProfile')}
           className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
         >

@@ -125,7 +125,7 @@ function LawyerProfile() {
             </h2>
             <button
               className=" text-black px-4 py-2 absolute top-0 right-0 m-4"
-              onClick="editContent()"
+              //onClick="editContent()"
             >
               <PencilSquareIcon className="h-8 w-8" />
             </button>

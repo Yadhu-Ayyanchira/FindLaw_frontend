@@ -139,15 +139,7 @@ function LawyerRequests() {
                         {email}
                       </Typography>
                     </td>
-                    {/* <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
-                    </td> */}
+                   
                     <td className={classes}>
                       <div className="w-max">
                         <Chip
@@ -166,7 +158,7 @@ function LawyerRequests() {
                         {(mobile = mobile ?? "00000")}
                       </Typography>
                     </td>
-                    <td>
+                    {/* <td> */}
                       {is_approved === false ? (
                         <td className={classes}>
                           <Tooltip content="Approve Lawyer">
@@ -201,7 +193,7 @@ function LawyerRequests() {
                           </Tooltip>
                         </td>
                       )}
-                    </td>
+                    {/* </td> */}
                   </tr>
                 );
               }

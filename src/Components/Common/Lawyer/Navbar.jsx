@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Navbar, // Update the component name to use an uppercase "N"
+  navbar, // Update the component name to use an uppercase "N"
   MobileNav,
   Typography,
   Button,
@@ -78,7 +78,7 @@ function ProfileMenu() {
           Sign out
         </MenuItem>
         <MenuItem
-          key="Sign out"
+          key="Sign out profile"
           onClick={() => navigate("/lawyer/lawyerProfile")}
           className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
         >

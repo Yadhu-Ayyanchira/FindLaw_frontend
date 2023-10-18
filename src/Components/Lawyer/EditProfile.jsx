@@ -58,10 +58,8 @@ const handleChange = ({ currentTarget: input }) => {
         setError("Mobile Number Required")
       }else{
         const response = await LawyerProfileEdit(data,id)
-        console.log("fuck uu",response);
         if(response.data.updated){
           const detail = response.data.data
-          console.log("name is",detail.name);
           dispatch(
             setlawyerDetails({
               id: detail?._id,
