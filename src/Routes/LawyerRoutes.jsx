@@ -9,13 +9,7 @@ import Register from '../Pages/Lawyer/Register'
 import LawyerProfile from '../Components/Lawyer/LawyerProfile';
 
 function LawyerRoutes() {
-  // return (
-  //   <Routes>
-  //     <Route path="/" element={<LawyerProtected><Dashboard/></LawyerProtected>}/>
-  //     <Route path="/login" element={<Login/>}/>
-  //     <Route path="/register" element={<Register/>}/>
-  //   </Routes>
-  // )
+  
   return (
     <Routes>
       <Route element={<LawyerPublic />}>

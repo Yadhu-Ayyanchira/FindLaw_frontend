@@ -1,12 +1,14 @@
 import React from "react";
-import { Navigate,Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 function UserPublic(props) {
   if (localStorage.getItem("currentUser")) {
+    console.log("the public route console");
     return <Navigate to="/" />;
   }
   <Navigate to="/login" />;
-  return <Outlet/>
+  console.log("return case ");
+  return props.children;
 }
 
 export default UserPublic;

@@ -1,9 +1,9 @@
 import React from "react";
-import { Navigate,Outlet } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
-function UserProtected() {
+function UserProtected(props) {
   if (localStorage.getItem("currentUser")) {
-    return <Outlet/>
+    return props.children;
   }
   return <Navigate to="/" />;
 }
