@@ -27,7 +27,7 @@ function Sidebar() {
   };
   return (
     <Card className="h-[calc(100vh-2rem)] w-full fixed bg-[#0a2125] rounded-none max-w-[18.7rem] p-4 text-red shadow-xl shadow-blue-gray-900/5">
-      <List className="text-white mt-8">
+      <List className="text-white text-base font-medium mt-8">
         <ListItem onClick={() => navigate("/admin")}>
           <ListItemPrefix>
             <PresentationChartBarIcon className="h-5 w-5" />

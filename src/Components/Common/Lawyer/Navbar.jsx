@@ -44,8 +44,8 @@ function ProfileMenu() {
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
         <Button
-          variant="outlined"
-          color="blue-gray"
+          variant="text"
+          color="amber"
           className="flex items-center gap-1 rounded-full py-0.5 pr-2 me-8 pl-0.5 lg:ml-auto"
         >
           <Avatar

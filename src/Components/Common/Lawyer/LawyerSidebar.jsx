@@ -106,7 +106,7 @@ function DefaultSidebar() {
   };
   return (
     <Card className="h-[calc(100vh-2rem)] w-full fixed bg-[#1d6143] rounded-none max-w-[18.7rem] p-4 text-red shadow-xl shadow-blue-gray-900/5">
-      <List className="text-black mt-8">
+      <List className="text-blue-gray-100 text-lg font-bold mt-8">
         <ListItem onClick={() => navigate("/lawyer")}>
           <ListItemPrefix>
             <PresentationChartBarIcon className="h-5 w-5" />
