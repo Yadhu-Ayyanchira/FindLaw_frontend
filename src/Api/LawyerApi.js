@@ -20,8 +20,9 @@ export async function LawyerRegisterWithGoogle(data) {
 }
 export async function LawyerLogin(data) {
   try {
-    console.log("lawlog disp");
+    console.log("object");
     const response = await LawyerRequest.post("/login",data);
+    console.log("law resp",response);
     return response 
   } catch (error) {
     return error;
@@ -29,7 +30,6 @@ export async function LawyerLogin(data) {
 }
 export async function LawyerProfileEdit(data,id){
   try {
-    console.log("LawyerProfileEdit",id,data);
     const response = await LawyerRequest.post(`/profileEdit/${id}`,data);
     console.log("resp is",response);
     return response;
