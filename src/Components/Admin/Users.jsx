@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PencilIcon, NoSymbolIcon } from "@heroicons/react/24/solid";
 import {
@@ -20,6 +20,7 @@ import {
   Tooltip,
   Input,
 } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { manageUser } from "../../Api/AdminApi";
 import EmptyPage from "../EmptyPage/EmptyPage";
 
@@ -28,16 +29,38 @@ const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
 
 function Users() {
+ const [active, setActive] = useState(1);
+
+ const getItemProps = (index) => ({
+   variant: active === index ? "filled" : "text",
+   color: "gray",
+   onClick: () => {setActive(index)},
+ });
+
+ const next = () => {
+   if (active === 5) return;
+
+   setActive(active + 1);
+ };
+
+ const prev = () => {
+   if (active === 1) return;
+
+   setActive(active - 1);
+ };
   const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => AdminRequest.get("/users").then((res) => res.data),
-  });
+  const { isLoading, error, data } = useQuery(
+    ["users", active], 
+    () => AdminRequest.get(`/users/${active}`).then((res) => res.data),
+    {
+      enabled: true,
+    }
+  );
   console.log('dataaa',data);
-  function formatDate(dateString) {
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  }
+  // function formatDate(dateString) {
+  //   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  //   return new Date(dateString).toLocaleDateString(undefined, options);
+  // }
 
   if (isLoading) {
     return <Loader/>;
@@ -55,11 +78,15 @@ function Users() {
     };
 
   return (
-    <Card className="h-full w-full">
+    <Card className="h-full w-full overflow-hidden">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
           <div>
-            <Typography variant="h5" color="blue-gray" className="text-2xl font-extrabold font-serif">
+            <Typography
+              variant="h5"
+              color="blue-gray"
+              className="text-2xl font-extrabold font-serif"
+            >
               USERS
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
@@ -79,7 +106,7 @@ function Users() {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="overflow-scroll px-0">
+      <CardBody className="overflow-x-hidden px-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -102,15 +129,7 @@ function Users() {
           <tbody>
             {data.data.map(
               (
-                {
-                  image,
-                  name,
-                  mobile,
-                  email,
-                  verified,
-                  is_blocked,
-                  _id
-                },
+                { image, name, mobile, email, verified, is_blocked, _id },
                 index
               ) => {
                 const isLast = index === data.data.length - 1;
@@ -213,7 +232,7 @@ function Users() {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Button variant="outlined" size="sm">
+        {/* <Button variant="outlined" size="sm">
           Previous
         </Button>
         <div className="flex items-center gap-2">
@@ -241,7 +260,37 @@ function Users() {
         </div>
         <Button variant="outlined" size="sm">
           Next
-        </Button>
+        </Button> */}
+        <div
+          style={{ display: "flex", justifyContent: "center", width: "100%" }}
+        >
+           <div className="flex items-center gap-4">
+      <Button
+        variant="text"
+        className="flex items-center gap-2"
+        onClick={prev}
+        disabled={active === 1}
+      >
+        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+      </Button>
+      <div className="flex items-center gap-2">
+        <IconButton {...getItemProps(1)}>1</IconButton>
+        <IconButton {...getItemProps(2)}>2</IconButton>
+        <IconButton {...getItemProps(3)}>3</IconButton>
+        <IconButton {...getItemProps(4)}>4</IconButton>
+        <IconButton {...getItemProps(5)}>5</IconButton>
+      </div>
+      <Button
+        variant="text"
+        className="flex items-center gap-2"
+        onClick={next}
+        disabled={active === 5}
+      >
+        Next
+        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+      </Button>
+    </div>
+        </div>
       </CardFooter>
     </Card>
   );
