@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { NoSymbolIcon } from "@heroicons/react/24/solid";
 import { AiFillCheckCircle } from "react-icons/ai";
@@ -27,16 +27,17 @@ import EmptyPage from "../EmptyPage/EmptyPage";
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
 function LawyerRequests() {
+  const [searchInput, setSearchInput] = useState("");
   const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery({
     queryKey: ["lawyers"],
     queryFn: () => AdminRequest.get("/lawyerRequests").then((res) => res.data),
   });
   console.log("dataaa", data);
-  function formatDate(dateString) {
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  }
+  // function formatDate(dateString) {
+  //   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  //   return new Date(dateString).toLocaleDateString(undefined, options);
+  // }
   const handleAction = async (Id) => {
     await approveLawyer(Id);
     queryClient.invalidateQueries("users");
@@ -55,6 +56,13 @@ function LawyerRequests() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+const requestdata = data.data.filter((user) => {
+  console.log("yes innn");
+  const searchInputLower = searchInput.toLowerCase();
+  const nameMatch = user.name.toLowerCase().includes(searchInputLower);
+  return nameMatch;
+});
+
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -75,6 +83,7 @@ function LawyerRequests() {
             <div className="w-full md:w-72">
               <Input
                 label="Search"
+                onChange={(e) => setSearchInput(e.target.value)}
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
@@ -105,7 +114,7 @@ function LawyerRequests() {
             </tr>
           </thead>
           <tbody>
-            {data.data.map(
+            {requestdata.map(
               (
                 { image, name, mobile, email, verified, is_approved, _id },
                 index
@@ -139,7 +148,7 @@ function LawyerRequests() {
                         {email}
                       </Typography>
                     </td>
-                   
+
                     <td className={classes}>
                       <div className="w-max">
                         <Chip
@@ -159,40 +168,40 @@ function LawyerRequests() {
                       </Typography>
                     </td>
                     {/* <td> */}
-                      {is_approved === false ? (
-                        <td className={classes}>
-                          <Tooltip content="Approve Lawyer">
-                            <Button
-                              size="sm"
-                              color="green"
-                              className="rounded-md flex gap-3"
-                              variant="outlined"
-                              onClick={() => handleAction(_id)}
-                            >
-                              Approve
-                            </Button>
-                          </Tooltip>
-                        </td>
-                      ) : (
-                        <td className={classes}>
-                          <Tooltip content="unblock User">
-                            <Button
-                              size="sm"
-                              color="green"
-                              className="rounded-md flex px-5"
-                              variant="outlined"
-                              onClick={() => handleAction(_id)}
-                            >
-                              <AiFillCheckCircle
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="h-4 w-4"
-                              />
-                              Approved
-                            </Button>
-                          </Tooltip>
-                        </td>
-                      )}
+                    {is_approved === false ? (
+                      <td className={classes}>
+                        <Tooltip content="Approve Lawyer">
+                          <Button
+                            size="sm"
+                            color="green"
+                            className="rounded-md flex gap-3"
+                            variant="outlined"
+                            onClick={() => handleAction(_id)}
+                          >
+                            Approve
+                          </Button>
+                        </Tooltip>
+                      </td>
+                    ) : (
+                      <td className={classes}>
+                        <Tooltip content="unblock User">
+                          <Button
+                            size="sm"
+                            color="green"
+                            className="rounded-md flex px-5"
+                            variant="outlined"
+                            onClick={() => handleAction(_id)}
+                          >
+                            <AiFillCheckCircle
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="h-4 w-4"
+                            />
+                            Approved
+                          </Button>
+                        </Tooltip>
+                      </td>
+                    )}
                     {/* </td> */}
                   </tr>
                 );

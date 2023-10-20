@@ -13,6 +13,7 @@ export async function LawyerRegisterWithGoogle(data) {
   try {
         console.log("lawyer api data disp", data);
     const datas = await LawyerRequest.post("/googleSignup", data);
+    console.log("rwsp data",datas);
     return datas;
   } catch (error) {
     return error;

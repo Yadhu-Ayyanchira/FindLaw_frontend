@@ -26,56 +26,59 @@ import EmptyPage from "../EmptyPage/EmptyPage";
 
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
-
-
 function Users() {
- const [active, setActive] = useState(1);
+  const [searchInput, setSearchInput] = useState("");
+  // <--------------------pagination start------------------------------------>
+  const [active, setActive] = useState(1);
 
- const getItemProps = (index) => ({
-   variant: active === index ? "filled" : "text",
-   color: "gray",
-   onClick: () => {setActive(index)},
- });
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "gray",
+    onClick: () => {
+      setActive(index);
+    },
+  });
 
- const next = () => {
-   if (active === 5) return;
+  const next = () => {
+    if (active === 5) return;
+    setActive(active + 1);
+  };
 
-   setActive(active + 1);
- };
-
- const prev = () => {
-   if (active === 1) return;
-
-   setActive(active - 1);
- };
+  const prev = () => {
+    if (active === 1) return;
+    setActive(active - 1);
+  };
+  // <---------------------pagination end------------------------------->
   const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery(
-    ["users", active], 
+    ["users", active],
     () => AdminRequest.get(`/users/${active}`).then((res) => res.data),
     {
       enabled: true,
     }
   );
-  console.log('dataaa',data);
-  // function formatDate(dateString) {
-  //   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-  //   return new Date(dateString).toLocaleDateString(undefined, options);
-  // }
+  //<-------------------------------------------------------------------->
 
   if (isLoading) {
-    return <Loader/>;
+    return <Loader />;
   }
-  
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
   if (!data || data.data.length === 0) {
     return <EmptyPage />;
   }
-    const handleAction = async (userId) => {
-      await manageUser(userId);
-      queryClient.invalidateQueries("users");
-    };
+  const handleAction = async (userId) => {
+    await manageUser(userId);
+    queryClient.invalidateQueries("users");
+  };
+
+const userdata = data.data.filter((user) => {
+  const searchInputLower = searchInput.toLowerCase();
+  const nameMatch = user.name.toLowerCase().includes(searchInputLower);
+  return nameMatch;
+});
 
   return (
     <Card className="h-full w-full overflow-hidden">
@@ -97,12 +100,13 @@ function Users() {
             <div className="w-full md:w-72">
               <Input
                 label="Search"
+                onChange={(e) => setSearchInput(e.target.value)}
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
-            <Button className="flex items-center gap-3" size="sm">
+            {/* <Button className="flex items-center gap-3" size="sm">
               <ArrowDownTrayIcon strokeWidth={2} className="h-4 w-4" /> Download
-            </Button>
+            </Button> */}
           </div>
         </div>
       </CardHeader>
@@ -127,7 +131,7 @@ function Users() {
             </tr>
           </thead>
           <tbody>
-            {data.data.map(
+            {userdata.map(
               (
                 { image, name, mobile, email, verified, is_blocked, _id },
                 index
@@ -232,64 +236,35 @@ function Users() {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        {/* <Button variant="outlined" size="sm">
-          Previous
-        </Button>
-        <div className="flex items-center gap-2">
-          <IconButton variant="outlined" size="sm">
-            1
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            2
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            3
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            ...
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            8
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            9
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            10
-          </IconButton>
-        </div>
-        <Button variant="outlined" size="sm">
-          Next
-        </Button> */}
         <div
           style={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
-           <div className="flex items-center gap-4">
-      <Button
-        variant="text"
-        className="flex items-center gap-2"
-        onClick={prev}
-        disabled={active === 1}
-      >
-        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-      </Button>
-      <div className="flex items-center gap-2">
-        <IconButton {...getItemProps(1)}>1</IconButton>
-        <IconButton {...getItemProps(2)}>2</IconButton>
-        <IconButton {...getItemProps(3)}>3</IconButton>
-        <IconButton {...getItemProps(4)}>4</IconButton>
-        <IconButton {...getItemProps(5)}>5</IconButton>
-      </div>
-      <Button
-        variant="text"
-        className="flex items-center gap-2"
-        onClick={next}
-        disabled={active === 5}
-      >
-        Next
-        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-      </Button>
-    </div>
+          <div className="flex items-center gap-4">
+            <Button
+              variant="text"
+              className="flex items-center gap-2"
+              onClick={prev}
+              disabled={active === 1}
+            >
+              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            </Button>
+            <div className="flex items-center gap-2">
+              <IconButton {...getItemProps(1)}>1</IconButton>
+              <IconButton {...getItemProps(2)}>2</IconButton>
+              <IconButton {...getItemProps(3)}>3</IconButton>
+              <IconButton {...getItemProps(4)}>4</IconButton>
+              <IconButton {...getItemProps(5)}>5</IconButton>
+            </div>
+            <Button
+              variant="text"
+              className="flex items-center gap-2"
+              onClick={next}
+              disabled={active === 5}
+            >
+              Next
+              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </CardFooter>
     </Card>

@@ -93,11 +93,12 @@ function Register() {
         setError("Pasword not match!");
       } else {
         const response = await LawyerRegister(data);
+        console.log("rs is",response);
         if (response.data.created) {
-          const userDetails = {
-            name: response.data.user.name,
-            email: response.data.user.email,
-          };
+          // const userDetails = {
+          //   name: response.data.user.name,
+          //   email: response.data.user.email,
+          // };
           localStorage.setItem("currentLawyer", response.data.token);
           const detail = response.data.user;
           dispatch(

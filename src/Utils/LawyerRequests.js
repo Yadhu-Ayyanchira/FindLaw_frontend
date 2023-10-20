@@ -14,7 +14,7 @@ LawyerRequest.interceptors.request.use((req) => {
 });
 
 LawyerRequest.interceptors.response.use((response) => {
-  if (response.data.message == "User Blocked") {
+  if (response?.data?.message == "User Blocked") {
     localStorage.removeItem("currentLawyer");
     window.location.href = "/lawyer/login";
   }
