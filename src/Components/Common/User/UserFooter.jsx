@@ -2,7 +2,7 @@ import { Typography } from "@material-tailwind/react";
 import { AiOutlineInstagram, AiOutlineYoutube,AiOutlineFacebook,AiOutlineLinkedin } from "react-icons/ai";
 
 
-export function UserFooter() {
+function UserFooter() {
   return (
     <footer className="bg-black flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 px-36 border-t border-blue-gray-50 py-6 text-center md:justify-between">
       <Typography color="blue" className="font-normal">
@@ -53,3 +53,5 @@ export function UserFooter() {
     </footer>
   );
 }
+
+export default UserFooter;

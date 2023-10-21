@@ -22,16 +22,39 @@ import {
   Tooltip,
   Input,
 } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+
 import EmptyPage from "../EmptyPage/EmptyPage";
 
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
 function LawyerRequests() {
   const [searchInput, setSearchInput] = useState("");
+  // <--------------------pagination start------------------------------------>
+  const [active, setActive] = useState(1);
+
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "gray",
+    onClick: () => {
+      setActive(index);
+    },
+  });
+
+  const next = () => {
+    if (active === 5) return;
+    setActive(active + 1);
+  };
+
+  const prev = () => {
+    if (active === 1) return;
+    setActive(active - 1);
+  };
+  // <---------------------pagination end------------------------------->
   const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery({
     queryKey: ["lawyers"],
-    queryFn: () => AdminRequest.get("/lawyerRequests").then((res) => res.data),
+    queryFn: () => AdminRequest.get(`/lawyerRequests/${active}`).then((res) => res.data),
   });
   console.log("dataaa", data);
   // function formatDate(dateString) {
@@ -42,26 +65,23 @@ function LawyerRequests() {
     await approveLawyer(Id);
     queryClient.invalidateQueries("users");
   };
- if (!data || data.data.length === 0) {
-   return (
-     <EmptyPage/>
-   );
- }
-
+  if (!data || data.data.length === 0) {
+    return <EmptyPage />;
+  }
 
   if (isLoading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-const requestdata = data.data.filter((user) => {
-  console.log("yes innn");
-  const searchInputLower = searchInput.toLowerCase();
-  const nameMatch = user.name.toLowerCase().includes(searchInputLower);
-  return nameMatch;
-});
+  const requestdata = data.data.filter((user) => {
+    console.log("yes innn");
+    const searchInputLower = searchInput.toLowerCase();
+    const nameMatch = user.name.toLowerCase().includes(searchInputLower);
+    return nameMatch;
+  });
 
   return (
     <Card className="h-full w-full">
@@ -241,6 +261,34 @@ const requestdata = data.data.filter((user) => {
           Next
         </Button>
       </CardFooter> */}
+      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <div className="flex items-center gap-4">
+          <Button
+            variant="text"
+            className="flex items-center gap-2"
+            onClick={prev}
+            disabled={active === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+          <div className="flex items-center gap-2">
+            <IconButton {...getItemProps(1)}>1</IconButton>
+            <IconButton {...getItemProps(2)}>2</IconButton>
+            <IconButton {...getItemProps(3)}>3</IconButton>
+            <IconButton {...getItemProps(4)}>4</IconButton>
+            <IconButton {...getItemProps(5)}>5</IconButton>
+          </div>
+          <Button
+            variant="text"
+            className="flex items-center gap-2"
+            onClick={next}
+            disabled={active === 5}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
     </Card>
   );
 }

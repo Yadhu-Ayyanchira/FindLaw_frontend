@@ -46,7 +46,6 @@ function Login() {
           name : detail?.name,
           email : detail?.email,
           mobile : detail?.mobile,
-          is_admin : detail?.is_admin,
           image : detail?.image
         }))
         navigate("/");
@@ -83,10 +82,10 @@ useEffect(() => {
               const detail = response.data.info;
               dispatch(
                 setUserDetails({
+                  id: detail?._id,
                   name: detail?.name,
                   email: detail?.email,
                   mobile: detail?.mobile,
-                  is_admin: detail?.is_admin,
                   image: detail?.image,
                 })
               );

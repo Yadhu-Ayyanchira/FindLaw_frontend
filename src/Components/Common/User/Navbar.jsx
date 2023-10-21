@@ -31,12 +31,14 @@ function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch()
+
   const signOut = async () => {
     setIsMenuOpen(false);
     localStorage.removeItem("currentUser");
     dispatch(logoutUser())
     navigate("/login");
   };
+  
 const { name, image } = useSelector((state) => state.user);
 console.log("jyfxdxjexg", name);
 
