@@ -17,8 +17,8 @@ function UserRoutes() {
         <Route index element={<Home />} />
         <Route path="userProfile" element={<UserProtected><Pro /></UserProtected>} />
       </Route>
-        <Route path="login" element={<Login/>} />
-        <Route path="register" element={<Register/>} />
+        <Route path="login" element={<UserPublic><Login/></UserPublic>} />
+        <Route path="register" element={<UserPublic><Register/></UserPublic>} />
         <Route path="verify" element={<Verify/>} />
     </Routes>
   );
