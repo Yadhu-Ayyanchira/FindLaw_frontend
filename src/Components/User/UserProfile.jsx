@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Badge,
   List,
@@ -18,9 +18,39 @@ import {
   BriefcaseIcon,
   BookmarkIcon
 } from "@heroicons/react/24/solid";
+import UserRequests from '../../Utils/UserRequest'
+import { useSelector } from 'react-redux';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import EditProfile from './EditProfile';
+import Loader from '../Loader/Loader';
 
 function UserProfile() {
-    
+   const queryClient = useQueryClient();
+    const {id} = useSelector((state)=>state.user)
+    const {data,isLoading, error, refetch } = useQuery(
+      ["user",id],
+      async () => {
+        const response = UserRequests.get(`/userData/${id}`).then(
+          (res) => res.data
+        )
+        const data = await response
+        return data
+      }
+    )
+    const {name,email,mobile,place,image} = data?data.data : {}
+     useEffect(() => {
+       refetch();
+     }, [id]);
+    const handleEditProfile = () => {
+      console.log("refetch");
+      refetch();
+    };
+    if (isLoading) {
+      return <Loader />;
+    }
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    }
   return (
     <>
       <div className="container mx-auto">
@@ -35,7 +65,7 @@ function UserProfile() {
               >
                 <img
                   size=""
-                  src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436178.jpg?w=740&t=st=1694511037~exp=1694511637~hmac=7afb019f7b279def27b7c8cff245f9ab0ecc12fadc50d085af0db00d777ee63b"
+                  src={image}
                   alt="tania andrew"
                   className="rounded-full mx-8 m-5 lg:w-52 lg:h-52 w-32 h-32"
                 />
@@ -43,30 +73,30 @@ function UserProfile() {
             </div>
             <div className="details m-5 p-5 ms-10 mb-0 h-auto flex flex-col">
               <p className="text-3xl font-bold text-blue-gray-800 font-serif mb-1">
-                Yadhu
+                {name}
               </p>
               <div className="flex items-center mb-1">
                 <MapPinIcon className="h-4 w-4 mr-2" />
-                <p>Calicut</p>
+                <p>{place}</p>
               </div>
-              <div className="flex items-center mb-1">
+              {/* <div className="flex items-center mb-1">
                 <BriefcaseIcon className="h-4 w-4 mr-2" />
                 <p>10 Years</p>
-              </div>
+              </div> */}
               <br />
               <p className="text-base italic text-blue-gray-700">
                 <span className="font-bold">Email:</span>
-                yadhu@gmail.com
+                {email}
               </p>
               <p className="text-base italic text-blue-gray-700">
                 <span className="font-bold">Mobile:</span>
-                9744011366
+                {mobile}
               </p>
             </div>
-            {/* <div className="p-10">
+            <div className="p-10">
               <EditProfile onEdit={handleEditProfile} />
-              {is_approved ? <VerifiedTag /> : <NotVerifiedTag />}
-            </div> */}
+              {/* {is_approved ? <VerifiedTag /> : <NotVerifiedTag />} */}
+            </div>
           </div>
 
           <Card className="flc lg:w-1/3 h-64 m-5 lg:ms-0 shadow-xl rounded-xl">

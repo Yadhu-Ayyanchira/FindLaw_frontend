@@ -41,13 +41,16 @@ function Login() {
       if(res.data.access){
         localStorage.setItem("currentUser", res.data.token);
         const detail = res.data.info;
-        dispatch(setUserDetails({
-          id : detail?._id,
-          name : detail?.name,
-          email : detail?.email,
-          mobile : detail?.mobile,
-          image : detail?.image
-        }))
+        dispatch(
+          setUserDetails({
+            id: detail?._id,
+            name: detail?.name,
+            email: detail?.email,
+            mobile: detail?.mobile,
+            place: detail?.place,
+            image: detail?.image,
+          })
+        );
         navigate("/");
       }else{
         console.log(res.data.message);
@@ -86,6 +89,7 @@ useEffect(() => {
                   name: detail?.name,
                   email: detail?.email,
                   mobile: detail?.mobile,
+                  place: detail?.place,
                   image: detail?.image,
                 })
               );

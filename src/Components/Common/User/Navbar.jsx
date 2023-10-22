@@ -37,10 +37,9 @@ function ProfileMenu() {
     localStorage.removeItem("currentUser");
     dispatch(logoutUser())
     navigate("/login");
-  };
+  }
   
-const { name, image } = useSelector((state) => state.user);
-console.log("jyfxdxjexg", name);
+    const { name, image } = useSelector((state) => state.user);
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">

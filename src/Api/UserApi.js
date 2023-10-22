@@ -33,3 +33,13 @@ try {
   return error
 }
 }
+
+export async function UserProfileEdit(data, id) {
+  try {
+    const response = await UserRequest.post(`/profileEdit/${id}`, data);
+    console.log("resp is", response);
+    return response;
+  } catch (error) {
+    return error;
+  }
+}

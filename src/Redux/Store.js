@@ -24,6 +24,7 @@ const initialState = {
     email: "",
     mobile: "",
     is_admin: "",
+    place: "",
     image: "",
   },
   lawyer: {
