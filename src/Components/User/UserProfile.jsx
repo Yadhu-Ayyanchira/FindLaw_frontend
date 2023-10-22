@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import EditProfile from './EditProfile';
 import Loader from '../Loader/Loader';
+import EditImage from  './EditImage'
 
 function UserProfile() {
    const queryClient = useQueryClient();
@@ -43,6 +44,8 @@ function UserProfile() {
      }, [id]);
     const handleEditProfile = () => {
       console.log("refetch");
+      
+      queryClient.invalidateQueries("user");
       refetch();
     };
     if (isLoading) {
@@ -58,7 +61,7 @@ function UserProfile() {
           <div className="profile lg:w-2/3 h-64 m-5 lg:m-5 shadow-xl rounded-xl flex">
             <div className="image">
               <Badge
-                //content={<EditImage />}
+                content={<EditImage />}
                 overlap="circular"
                 placement="bottom-end"
                 className="h-8 w-8 mb-5 me-2 hover:bg-white hover:text-[#5d7582] bg-[#5d7582] cursor-pointer"

@@ -51,7 +51,7 @@ function Sidebar() {
             <InboxIcon className="h-5 w-5" />
           </ListItemPrefix>
           Lawyer Requests
-          <ListItemSuffix>
+          {/* <ListItemSuffix>
             <Chip
               value="14"
               size="sm"
@@ -59,7 +59,7 @@ function Sidebar() {
               color="deep-orange"
               className="rounded-full"
             />
-          </ListItemSuffix>
+          </ListItemSuffix> */}
         </ListItem>
         <ListItem>
           <ListItemPrefix>

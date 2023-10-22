@@ -53,7 +53,7 @@ function LawyerRequests() {
   // <---------------------pagination end------------------------------->
   const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery({
-    queryKey: ["lawyers"],
+    queryKey: ["lawyers",active],
     queryFn: () => AdminRequest.get(`/lawyerRequests/${active}`).then((res) => res.data),
   });
   console.log("dataaa", data);

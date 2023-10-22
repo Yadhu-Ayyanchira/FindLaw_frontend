@@ -10,19 +10,17 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { UpdateImage } from "../../Api/LawyerApi";
+import { UpdateImage } from "../../Api/UserApi";
 import Loader from "../Loader/Loader";
-import { setlawyerDetails } from "../../Redux/LawyerSlice";
-
-
+import { setUserDetails } from "../../Redux/UserSlice";
 
 function EditImage() {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setisLoading] = useState(false);
-  const { id, image } = useSelector((state) => state.lawyer);
+  const { id, image } = useSelector((state) => state.user);
   const queryClient = useQueryClient();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleOpen = () => setOpen(!open);
 
@@ -35,22 +33,19 @@ function EditImage() {
     try {
       const response = await UpdateImage(id, selectedImage);
       if (response.status === 200) {
-          const detail = response.data.data;
-          dispatch(
-              setlawyerDetails({
-              id: detail?._id,
-              name: detail?.name,
-              email: detail?.email,
-              mobile: detail?.mobile,
-              place: detail?.place,
-              verified: detail?.verified,
-              experience: detail?.experience,
-              about: detail?.about,
-              image: detail?.image,
-            })
-            );
-            handleOpen();
-        }
+        const detail = response.data.data;
+        dispatch(
+          setUserDetails({
+            id: detail?._id,
+            name: detail?.name,
+            email: detail?.email,
+            mobile: detail?.mobile,
+            place: detail?.place,
+            image: detail?.image,
+          })
+        );
+        handleOpen();
+      }
       queryClient.invalidateQueries(["lawyer", id]);
     } catch (error) {
       //setisLoading(false);
