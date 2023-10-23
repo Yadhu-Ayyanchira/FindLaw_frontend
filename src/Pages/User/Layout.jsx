@@ -10,7 +10,7 @@ function Layout() {
         <div>
           <Navbar />
         </div>
-        <div className="h-auto min-h-screen">
+        <div className="h-auto min-h-screen bg-cover bg-center  ">
           <Outlet />
         </div>
         <div>

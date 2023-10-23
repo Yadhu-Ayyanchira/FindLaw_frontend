@@ -13,10 +13,7 @@ import {
 } from "@material-tailwind/react";
 import {
   MapPinIcon,
-  CheckBadgeIcon,
-  PencilSquareIcon,
-  BriefcaseIcon,
-  BookmarkIcon
+ 
 } from "@heroicons/react/24/solid";
 import UserRequests from '../../Utils/UserRequest'
 import { useSelector } from 'react-redux';

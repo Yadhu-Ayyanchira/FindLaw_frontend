@@ -64,3 +64,13 @@ export async function UpdateImage(id, img) {
     console.log(error);
   }
 }
+
+export const allLawyers = async ({ page, filter, search }) => {
+  return UserRequest.get("/lawyerData", {
+    params: {
+      page,
+      filter,
+      search,
+    },
+  });
+};
