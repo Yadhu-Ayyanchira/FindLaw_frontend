@@ -12,15 +12,12 @@ AdminRequest.interceptors.request.use((req) => {
 
 AdminRequest.interceptors.response.use(
   (response) => {
-    if (response?.data?.message === "User Blocked") {
-      localStorage.removeItem("currentLawyer");
-      window.location.href = "/admin/login";
-    }
     return response;
   },
   (error) => {
-    console.error("Request error:", error);
+    console.log("Request error:", error);
     if (error.response && error.response.status === 400) {
+      localStorage.removeItem("currentAdmin");
       window.location.href = "/admin/login";
     }
     return Promise.reject(error);
