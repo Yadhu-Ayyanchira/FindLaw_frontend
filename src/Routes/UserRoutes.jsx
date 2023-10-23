@@ -9,6 +9,7 @@ import Verify from "../Components/Common/User/Verify";
 import Layout from "../Pages/User/Layout";
 import UserProfile from "../Components/User/UserProfile";
 import LawyerFilter from "../Components/User/LawyerFilter";
+import SingleLawyer from "../Components/User/SingleLawyer";
 
 function UserRoutes() {
   return (
@@ -17,6 +18,7 @@ function UserRoutes() {
         <Route index element={<Home />} />
         <Route path="userProfile" element={<UserProtected><UserProfile /></UserProtected>} />
         <Route path="filter" element={<LawyerFilter />} />
+        <Route path="singlelawyer" element={<SingleLawyer />} />
       </Route>
         <Route path="login" element={<UserPublic><Login/></UserPublic>} />
         <Route path="register" element={<UserPublic><Register/></UserPublic>} />
