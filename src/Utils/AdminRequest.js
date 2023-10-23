@@ -5,8 +5,7 @@ const AdminRequest = axios.create({
 
 AdminRequest.interceptors.request.use((req) => {
   if (localStorage.getItem("currentAdmin")) {
-    console.log("have curr admin");
-    req.headers.Authorization = "Bearer " + localStorage.getItem("currentAdmin");
+    req.headers.Authorization = localStorage.getItem("currentAdmin");
   }
   return req;
 });
