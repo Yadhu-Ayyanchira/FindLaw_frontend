@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/Images/Logo.svg";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
 import { setlawyerDetails } from "../../Redux/LawyerSlice";
-import { useGoogleLogin, googleLogout } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { LawyerRegister, LawyerRegisterWithGoogle } from "../../Api/LawyerApi";
 import axios from "axios";
 

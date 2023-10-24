@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "../../Components/Common/Lawyer/Navbar";
 import LawyerSidebar from "../../Components/Common/Lawyer/LawyerSidebar";
 import { Outlet } from "react-router-dom";

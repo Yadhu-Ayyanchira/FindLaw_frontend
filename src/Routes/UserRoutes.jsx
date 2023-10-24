@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import UserProtected from "../Protected/UserProtected";
 import UserPublic from "../Protected/UserPublic";

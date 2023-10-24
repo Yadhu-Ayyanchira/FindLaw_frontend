@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -8,9 +8,6 @@ import {
   DialogBody,
   DialogFooter,
   Input,
-  Select,
-  Option,
-  Spinner,
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import { LawyerProfileEdit } from "../../Api/LawyerApi";
@@ -49,7 +46,7 @@ const handleChange = ({ currentTarget: input }) => {
     e.preventDefault();
     console.log("handle submit");
     try {
-      const {name, mobile, place, experience} = data
+      const {name, mobile, place, } = data
       if(name.trim()== ""){
         setError("Invalid Name");
       }else if(place.trim()==""){
