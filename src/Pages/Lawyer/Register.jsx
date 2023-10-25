@@ -73,7 +73,7 @@ function Register() {
         })
         .catch((err) => console.log(err));
     }
-  }, [guser]);
+  }, [dispatch, guser, navigate]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handle submit");
@@ -93,7 +93,7 @@ function Register() {
         setError("Pasword not match!");
       } else {
         const response = await LawyerRegister(data);
-        console.log("rs is",response);
+        console.log("rs is", response);
         if (response.data.created) {
           // const userDetails = {
           //   name: response.data.user.name,
