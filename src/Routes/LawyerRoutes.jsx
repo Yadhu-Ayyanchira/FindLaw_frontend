@@ -1,4 +1,3 @@
-import React from 'react'
 import { Route,Routes } from 'react-router-dom';
 import LawyerProtected from '../Protected/LawyerProtected';
 import LawyerPublic from '../Protected/LawyerPublic';
@@ -7,6 +6,7 @@ import Login from '../Pages/Lawyer/Login';
 import Layout from '../Pages/Lawyer/Layout';
 import Register from '../Pages/Lawyer/Register'
 import LawyerProfile from '../Components/Lawyer/LawyerProfile';
+import Timeslot from '../Components/Lawyer/Timeslot';
 
 function LawyerRoutes() {
   
@@ -19,7 +19,8 @@ function LawyerRoutes() {
       <Route element={<LawyerProtected />}>
         <Route path="/" element={<Layout></Layout>}>
           <Route index element={<Dashboard />} />
-          <Route path='/lawyerprofile' element={<LawyerProfile />} />
+          <Route path="/lawyerprofile" element={<LawyerProfile />} />
+          <Route path="/timeslot" element={<Timeslot />} />
         </Route>
       </Route>
     </Routes>

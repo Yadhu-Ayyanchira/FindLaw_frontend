@@ -22,7 +22,7 @@ function SingleLawyer() {
           (res) => res.data
         ),
     });
-    const { name, email,image, mobile,place,about,experience } = data ? data.data : {};
+    const { name,image,place,about,experience } = data ? data.data : {};
 
      if (isLoading) {
        return <Loader />;
