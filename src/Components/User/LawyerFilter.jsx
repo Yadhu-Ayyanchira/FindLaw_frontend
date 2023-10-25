@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import {
   Card,
   Input,
@@ -5,16 +6,15 @@ import {
   Button,
   Radio,
 } from "@material-tailwind/react";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MagnifyingGlassIcon, BookmarkIcon } from "@heroicons/react/24/outline";
-import { MapPinIcon, StarIcon } from "@heroicons/react/24/solid";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { MapPinIcon, } from "@heroicons/react/24/solid";
+import { useQuery,  } from "@tanstack/react-query";
 import { allLawyers } from "../../Api/UserApi";
 import Loader from "../Loader/Loader";
-import EmptyPage from "../EmptyPage/EmptyPage";
+// import EmptyPage from "../EmptyPage/EmptyPage";
 
 function LawyerFilter() {
-  const queryClient = useQueryClient();
 
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");

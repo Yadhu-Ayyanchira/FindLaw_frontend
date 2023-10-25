@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Badge } from "@material-tailwind/react";
 import LawyerRequests from "../../Utils/LawyerRequests";
 import {
@@ -8,7 +8,7 @@ import {
   BriefcaseIcon,
 } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/outline";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery,  } from "@tanstack/react-query";
 import EditProfile from "./EditProfile";
 import EditAbout from "./EditAbout";
 import EditImage from "./EditImage";
@@ -34,7 +34,6 @@ function NotVerifiedTag() {
 }
 
 function LawyerProfile() {
-  const queryClient = useQueryClient();
   const { id } = useSelector((state) => state.lawyer);
 
     const { data, isLoading, error, refetch } = useQuery(
@@ -52,7 +51,7 @@ function LawyerProfile() {
 
    useEffect(() => {
      refetch();
-   }, [id]);
+   }, [id, refetch]);
 
   const handleEditProfile = () => {
     console.log("refetch");
