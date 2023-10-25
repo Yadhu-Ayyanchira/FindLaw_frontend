@@ -12,6 +12,7 @@ import { MapPinIcon, } from "@heroicons/react/24/solid";
 import { useQuery,  } from "@tanstack/react-query";
 import { allLawyers } from "../../Api/UserApi";
 import Loader from "../Loader/Loader";
+import { useNavigate } from "react-router-dom";
 // import EmptyPage from "../EmptyPage/EmptyPage";
 
 function LawyerFilter() {
@@ -20,6 +21,7 @@ function LawyerFilter() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -32,6 +34,12 @@ function LawyerFilter() {
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
+
+  const handleLawyerview = (id) =>{
+    //navigate(`/singlelawyer?${id}`);
+    navigate(`/singlelawyer/`, { state: { id } });
+  }
+
   const { isLoading, error, data } = useQuery({
     queryKey: ["lawyers", { page: page, filter, search: debouncedSearch }],
     queryFn: () =>
@@ -39,7 +47,6 @@ function LawyerFilter() {
         (res) => res.data
       ),
   });
-  console.log("jbdjkclljnlsdlsdnlsdns", data);
   if (isLoading) {
     return <Loader />;
   }
@@ -47,9 +54,6 @@ function LawyerFilter() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  //    if (!data || data.data.length === 0) {
-  //      return <EmptyPage />;
-  //    }
   return (
     <>
       <div className="container mx-auto">
@@ -105,7 +109,8 @@ function LawyerFilter() {
               <Card className="h-40 m-3 py-2 bg-blue-gray-50 overflow-hidden">
                 <div className="flex items-center">
                   <img
-                    src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436178.jpg?w=740&t=st=1694511037~exp=1694511637~hmac=7afb019f7b279def27b7c8cff245f9ab0ecc12fadc50d085af0db00d777ee63b"
+                    src={e.image}
+                    onClick={()=>handleLawyerview(e._id)}
                     alt=""
                     className="rounded-lg lg:w-32 lg:h-32 w-36 h-36 m-2"
                   />

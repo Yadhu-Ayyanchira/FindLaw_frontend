@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import {
   Badge,
   List,
@@ -38,7 +38,7 @@ function UserProfile() {
     const {name,email,mobile,place,image} = data?data.data : {}
      useEffect(() => {
        refetch();
-     }, [id]);
+     }, [id, refetch]);
     const handleEditProfile = () => {
       console.log("refetch");
       

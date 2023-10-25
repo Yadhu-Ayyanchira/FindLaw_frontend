@@ -74,3 +74,11 @@ export const allLawyers = async ({ page, filter, search }) => {
     },
   });
 };
+
+export const lawyerView = async ({ id}) => {
+  return UserRequest.get("/lawyerView", {
+    params: {
+      id
+    },
+  });
+};

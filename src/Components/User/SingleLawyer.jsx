@@ -6,9 +6,32 @@ import {
   BriefcaseIcon,
   MapPinIcon,
 } from "@heroicons/react/24/solid";
+import { useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { lawyerView } from "../../Api/UserApi";
+import Loader from "../Loader/Loader";
 
 
 function SingleLawyer() {
+  const location = useLocation()
+  const id = location.state && location.state.id;
+    const { isLoading, error, data } = useQuery({
+      queryKey: ["lawyers", { id }],
+      queryFn: () =>
+        lawyerView({ id }).then(
+          (res) => res.data
+        ),
+    });
+    const { name, email,image, mobile,place,about,experience } = data ? data.data : {};
+
+     if (isLoading) {
+       return <Loader />;
+     }
+
+     if (error) {
+       return <div>Error: {error.message}</div>;
+     }
+
   return (
     <>
       <div className="container mx-auto">
@@ -19,13 +42,13 @@ function SingleLawyer() {
               <div className="row flex flex-row justify-center ">
                 <img
                   size=""
-                  src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436178.jpg?w=740&t=st=1694511037~exp=1694511637~hmac=7afb019f7b279def27b7c8cff245f9ab0ecc12fadc50d085af0db00d777ee63b"
+                  src={image}
                   alt="tania andrew"
                   className="rounded-full mx-8 m-4 lg:w-40 lg:h-40 w-32 h-32"
                 />
               </div>
               <p className="text-3xl font-bold text-blue-gray-500 self-center font-serif mb-1">
-                Yadhu
+                {name}
               </p>
               <div className="self-center flex flex-row ">
                 <p>⭐️⭐️⭐️⭐️⭐️</p>
@@ -62,18 +85,7 @@ function SingleLawyer() {
                 </p>
                 {/* <hr className="border border-solid border-white w-52"></hr> */}
                 <p className="pt-4 text-base text-blue-gray-800 break-words">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui
-                  voluptates quia eaque natus ipsa! Iste, laboriosam? Lorem
-                  ipsum dolor sit amet consectetur adipisicing elit. Qui
-                  voluptates quia eaque natus ipsa! Iste, laboriosam? Lorem
-                  ipsum dolor sit amet consectetur adipisicing elit. Qui
-                  voluptates quia eaque natus ipsa! Iste, laboriosam? Lorem
-                  ipsum dolor sit amet consectetur adipisicing elit. Qui
-                  voluptates quia eaque natus ipsa! Iste, laboriosam? Lorem
-                  ipsum dolor sit amet consectetur adipisicing elit. Qui
-                  voluptates quia eaque natus ipsa! Iste, laboriosam? Lorem
-                  ipsum dolor sit amet consectetur adipisicing elit. Qui
-                  voluptates quia eaque natus ipsa! Iste, laboriosam?
+                  {about}
                 </p>
               </div>
               <div className="mt-9">
@@ -84,14 +96,14 @@ function SingleLawyer() {
                       <BriefcaseIcon className="w-8" />
                       <span className="text-xl">Experience:</span>
                     </p>
-                    <p className="text-xl text-black ps-11">12 Years</p>
+                    <p className="text-xl text-black ps-11">{experience} Years</p>
                   </div>
                   <div className="flex flex-col">
                     <p className="flex flex-row">
                       <MapPinIcon className="w-8" />
                       <span className="text-xl">Location:</span>
                     </p>
-                    <p className="text-xl text-black ps-11">Thrissur</p>
+                    <p className="text-xl text-black ps-11">{place}</p>
                   </div>
                 </div>
                 <div className="m-4 w-3/4 pt-5 flex flex-row justify-between">
