@@ -15,7 +15,7 @@ import { addSlot } from "../../Api/LawyerApi";
 
 function AddSlot() {
   const [open, setOpen] = useState(false);
-  const [error,setError] = useState("")
+  const [error, setError] = useState("");
   const [data, setData] = useState({
     startdate: "",
     enddate: "",
@@ -31,30 +31,30 @@ function AddSlot() {
   const handleOpen = () => setOpen(!open);
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
-    setError("")
+    setError("");
   };
   const setFieldValue = (fieldName, value) => {
     setData({ ...data, [fieldName]: value });
     setError("");
   };
 
-    const constructTime = (hour, minute, amPm) => {
-      let formattedTime = `${hour}:${minute}`;
+  const constructTime = (hour, minute, amPm) => {
+    let formattedTime = `${hour}:${minute}`;
 
-      // Adjust for AM/PM
-      if (amPm === "PM") {
-        const hourInt = parseInt(hour, 10);
-        if (hourInt < 12) {
-          formattedTime = `${hourInt + 12}:${minute}`;
-        }
+    // Adjust for AM/PM
+    if (amPm === "PM") {
+      const hourInt = parseInt(hour, 10);
+      if (hourInt < 12) {
+        formattedTime = `${hourInt + 12}:${minute}`;
       }
+    }
 
-      return formattedTime;
-    };
+    return formattedTime;
+  };
 
-  const handleSubmit = async (e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("time data is",data);
+    console.log("time data is", data);
     const {
       startdate,
       enddate,
@@ -73,23 +73,36 @@ function AddSlot() {
       startTimeAmPm.trim() === "" ||
       endTimeHour.trim() === "" ||
       endTimeMinute.trim() === "" ||
-      endTimeAmPm.trim() === "" 
+      endTimeAmPm.trim() === ""
     ) {
-      setError("Enter all fields")
-    }else{
-      const startTime = constructTime(data.startTimeHour, data.startTimeMinute, data.startTimeAmPm);
-      const endTime = constructTime(data.endTimeHour, data.endTimeMinute, data.endTimeAmPm);
+      setError("Enter all fields");
+    } else {
+      const startTime = constructTime(
+        data.startTimeHour,
+        data.startTimeMinute,
+        data.startTimeAmPm
+      );
+      const endTime = constructTime(
+        data.endTimeHour,
+        data.endTimeMinute,
+        data.endTimeAmPm
+      );
       const slotData = {
         startDate: data.startdate,
         endDate: data.enddate,
         startTime: startTime,
         endTime: endTime,
       };
-      const response = await addSlot(slotData)
-      console.log("resp isssa",response);
+      try {
+        const response = await addSlot(slotData);
+        console.log("resp isssa", response);
+      } catch (error) {
+        if (error.response.status === 409) {
+          alert("oombi");
+        }
+      }
     }
-    
-  }
+  };
 
   return (
     <>
