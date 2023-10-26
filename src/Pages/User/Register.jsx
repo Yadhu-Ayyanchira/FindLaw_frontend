@@ -70,7 +70,7 @@ function Register() {
               handleLoad();
               navigate("/");
             } else {
-               handleLoad();
+              handleLoad();
               setError(response.data.message);
             }
           });

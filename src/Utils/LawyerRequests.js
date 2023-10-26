@@ -6,20 +6,11 @@ const LawyerRequest = axios.create({
 
 LawyerRequest.interceptors.request.use((req) => {
   if (localStorage.getItem("currentLawyer")) {
-    console.log("setting head");
-    req.headers.Authorization =
-       localStorage.getItem("currentLawyer");
+    req.headers.Authorization = localStorage.getItem("currentLawyer");
   }
   return req;
 });
 
-// LawyerRequest.interceptors.response.use((response) => {
-//   if (response?.data?.message == "User Blocked") {
-//     localStorage.removeItem("currentLawyer");
-//     window.location.href = "/lawyer/login";
-//   }
-//    return response;
-// });
 LawyerRequest.interceptors.response.use(
   (response) => {
     if (response?.data?.message === "User Blocked") {

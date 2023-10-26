@@ -1,7 +1,3 @@
-import React from "react";
-import Navbar from "../Common/Lawyer/Navbar";
-import SideBar from "../Common/Lawyer/LawyerSidebar";
-import EditProfile from "./EditProfile";
 // import { ToastContainer } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 // import { toast } from "react-toastify";
@@ -17,7 +13,6 @@ function Dashboard() {
   // };
   return (
     <>
-      <EditProfile />
       {/* <ToastContainer />
       <button onClick={showToast("ljdnwd")}>Show Toast</button> */}
       <h1>Hey There,............</h1>

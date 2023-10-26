@@ -69,5 +69,17 @@ export async function UpdateImage(id,img){
   }
 }
 
+export async function addSlot(data){
+  try {
+    console.log("add slot",data);
+    const response=await LawyerRequest.post('/addSlot',data,{
+      WithCreadentials:true
+    })
+    return response
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 
