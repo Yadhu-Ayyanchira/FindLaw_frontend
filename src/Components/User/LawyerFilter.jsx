@@ -17,8 +17,10 @@ import { useNavigate } from "react-router-dom";
 
 function LawyerFilter() {
 
+  // eslint-disable-next-line no-unused-vars
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(1);
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const navigate = useNavigate()

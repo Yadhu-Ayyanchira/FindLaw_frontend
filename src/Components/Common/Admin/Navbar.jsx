@@ -1,27 +1,17 @@
 import React from "react";
 import {
-  Navbar, // Update the component name to use an uppercase "N"
-  MobileNav,
-  Typography,
   Button,
   Menu,
   MenuHandler,
   MenuList,
   MenuItem,
   Avatar,
-  Card,
   IconButton,
   Drawer,
 } from "@material-tailwind/react";
 import {
-  UserCircleIcon,
-  Square3Stack3DIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
   PowerIcon,
-  RocketLaunchIcon,
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 import Sidebar from "./Sidebar";
@@ -81,6 +71,7 @@ function ProfileMenu() {
 // nav list menu
 
 function NavBar() {
+  // eslint-disable-next-line no-unused-vars
   const [isNavOpen, setIsNavOpen] = React.useState(false);
 
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);

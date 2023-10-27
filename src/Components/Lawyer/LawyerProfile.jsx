@@ -76,7 +76,7 @@ function LawyerProfile() {
               <Badge
                 content={<EditImage />}
                 overlap="circular"
-                placement="bottom-end"
+                Placement="bottom-end"
                 className="h-8 w-8 mb-5 me-2 hover:bg-white hover:text-[#5d7582] bg-[#5d7582] cursor-pointer"
               >
                 <img
