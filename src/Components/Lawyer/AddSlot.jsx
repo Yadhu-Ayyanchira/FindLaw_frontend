@@ -9,9 +9,11 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
+import { ToastContainer } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { addSlot } from "../../Api/LawyerApi";
+import { GenerateError, GenerateSuccess } from "../../Toast/GenerateError";
 
 function AddSlot() {
   const [open, setOpen] = useState(false);
@@ -51,7 +53,6 @@ function AddSlot() {
 
     return formattedTime;
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("time data is", data);
@@ -76,6 +77,10 @@ function AddSlot() {
       endTimeAmPm.trim() === ""
     ) {
       setError("Enter all fields");
+      GenerateError("Enter all fields");
+    }else if (new Date(enddate) < new Date(startdate)) {
+      setError("Invalid date selection")
+      GenerateError("invalid date selection");
     } else {
       const startTime = constructTime(
         data.startTimeHour,
@@ -95,10 +100,10 @@ function AddSlot() {
       };
       try {
         const response = await addSlot(slotData);
-        console.log("resp isssa", response);
+        console.log("resp isssa", response.response);
       } catch (error) {
         if (error.response.status === 409) {
-          alert("oombi");
+          GenerateError("Time already exist");
         }
       }
     }
@@ -110,6 +115,7 @@ function AddSlot() {
         add slot
       </Button>
       <Dialog open={open} handler={handleOpen}>
+        <ToastContainer />
         <DialogHeader>ADD SLOTS</DialogHeader>
         <Card className="">
           <CardBody>

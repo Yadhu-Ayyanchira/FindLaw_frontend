@@ -1,7 +1,6 @@
-import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-function LawyerProtected(props) {
+function LawyerProtected() {
   if (localStorage.getItem("currentLawyer")) {
     return <Outlet />;
   }
