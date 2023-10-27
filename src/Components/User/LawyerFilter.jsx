@@ -106,7 +106,7 @@ function LawyerFilter() {
 
           <div className="max-h-screen overflow-y-scroll">
             {data?.data.map((e) => (
-              <Card className="h-40 m-3 py-2 bg-blue-gray-50 overflow-hidden">
+              <Card key={e._id} className="h-40 m-3 py-2 bg-blue-gray-50 overflow-hidden">
                 <div className="flex items-center">
                   <img
                     src={e.image}

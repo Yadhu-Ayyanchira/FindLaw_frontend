@@ -6,7 +6,7 @@ import {
   BriefcaseIcon,
   MapPinIcon,
 } from "@heroicons/react/24/solid";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate,  } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { lawyerView } from "../../Api/UserApi";
 import Loader from "../Loader/Loader";
@@ -14,6 +14,7 @@ import Loader from "../Loader/Loader";
 
 function SingleLawyer() {
   const location = useLocation()
+ const navigate = useNavigate()
   const id = location.state && location.state.id;
     const { isLoading, error, data } = useQuery({
       queryKey: ["lawyers", { id }],
@@ -22,6 +23,9 @@ function SingleLawyer() {
           (res) => res.data
         ),
     });
+    if (!data) {
+      return <div>Data is not available</div>;
+    }
     const { name,image,place,about,experience } = data ? data.data : {};
 
      if (isLoading) {
@@ -69,7 +73,7 @@ function SingleLawyer() {
                 </button>
               </div>
               <div className="self-center pt-6">
-                <button className="flex flex-row rounded-md  bg-gradient-to-br from-[#00C9FF] to-[#92FE9D] px-5 py-2 text-base font-medium text-white transition duration-200 hover:shadow-lg hover:shadow-[#00C9FF]/50">
+                <button onClick={()=>navigate("/bookslot",{state:{ data }})} className="flex flex-row rounded-md  bg-gradient-to-br from-[#00C9FF] to-[#92FE9D] px-5 py-2 text-base font-medium text-white transition duration-200 hover:shadow-lg hover:shadow-[#00C9FF]/50">
                   <VideoCameraIcon className="w-6 me-2" />
                   Schedule a consultaoin
                 </button>
