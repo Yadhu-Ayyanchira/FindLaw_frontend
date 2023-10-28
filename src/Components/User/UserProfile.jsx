@@ -35,7 +35,7 @@ function UserProfile() {
         return data
       }
     )
-    const {name,email,mobile,place,image} = data?data.data : {}
+    const {name,email,mobile,place,image,flc} = data?data.data : {}
      useEffect(() => {
        refetch();
      }, [id, refetch]);
@@ -108,7 +108,7 @@ function UserProfile() {
                 className="text-7xl font-semibold"
                 color="light-green"
               >
-                1000
+                {flc}
               </Typography>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">

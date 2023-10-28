@@ -23,11 +23,8 @@ export async function UserRegister(user) {
 
 export async function UserRegisterWithGoogle(data){
 try {
-  // console.log(object);
   const datas= await UserRequest.post("/googleSignup",data)
-  // ,{
-  //   withCredentials:true
-  // })
+
   return datas
 } catch (error) {
   return error
