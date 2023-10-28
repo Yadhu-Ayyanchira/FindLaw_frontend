@@ -13,7 +13,6 @@ import UserRequest from "../../Utils/UserRequest";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import Loader from "../Loader/Loader";
-import BookingImg from "../../Assets/Images/lawyerbooking.svg";
 import { useState } from "react";
 
 function BookSlot() {
@@ -34,7 +33,7 @@ function BookSlot() {
     enabled: !!selectedDate,
   });
   if (slotData){
-    console.log("slot is",slotData);
+    console.log("slot is",slotData.data);
   }
     if (dateIsLoading) {
       return <Loader />;
@@ -116,8 +115,8 @@ function BookSlot() {
             </div> */}
           </div>
             <Card className=" shadow-2xl m-5 p-5 grid grid-cols-3 gap-x-8">
-                {slotData?
-              (<Card className="mt-6  mx-2 min-w-min bg-blue-gray-50/30 rounded-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                {slotData?slotData.data.map((slot,i)=>
+              (<Card key={i} className="mt-6  mx-2 min-w-min bg-blue-gray-50/30 rounded-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
                 <CardBody>
                   <Typography
                     variant="h4"
@@ -129,11 +128,11 @@ function BookSlot() {
                   <div>
                     <Typography>
                       <span className="font-serif text-xl">Time:</span>
-                      <span className="text-green-700 font-bold">10.30</span>
+                      <span className="text-green-700 font-bold">{slot.slotTime}</span>
                     </Typography>
                     <Typography>
                         <span className="font-serif text-xl">Date:</span>
-                        <span className="text-green-700 font-bold">28-10-2023</span>
+                        <span className="text-green-700 font-bold">{new Date(slot.slotDate).toLocaleDateString('en-GB')}</span>
                     </Typography>
                   </div>
                   <Typography color="gray">
@@ -147,7 +146,7 @@ function BookSlot() {
                     Book now
                   </button>
                 </CardFooter>
-              </Card>):(
+              </Card>)):(
                 <h1>Select a date to show available slots</h1>
               )
 }
