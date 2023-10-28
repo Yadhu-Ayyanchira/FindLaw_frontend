@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { NoSymbolIcon } from "@heroicons/react/24/solid";
-import {
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Loader from "../Loader/Loader";
 import AdminRequest from "../../Utils/AdminRequest";
 import {
@@ -20,42 +18,48 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { manageUser } from "../../Api/AdminApi";
+import { getUsers, manageUser } from "../../Api/AdminApi";
 import EmptyPage from "../EmptyPage/EmptyPage";
 
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
 function Users() {
   const [searchInput, setSearchInput] = useState("");
-  // <--------------------pagination start------------------------------------>
-  const [active, setActive] = useState(1);
+  const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  const getItemProps = (index) => ({
-    variant: active === index ? "filled" : "text",
-    color: "gray",
-    onClick: () => {
-      setActive(index);
-    },
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, [search]);
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const handlePageChange = (newPage) => {
+    const totalPages = Math.ceil(data.count / data.pageSize);
+    if (newPage < 1 || newPage > totalPages) {
+      return;
+    }
+    setPage(newPage);
+  };
+  // <------------------------------------------------------------------->
+  const queryClient = useQueryClient();
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["users", { page: page, filter, search: debouncedSearch }],
+    queryFn: () =>
+      getUsers({ page: page, filter, search: debouncedSearch }).then(
+        (res) => res.data
+      ),
+    enabled: true,
   });
 
-  const next = () => {
-    if (active === 5) return;
-    setActive(active + 1);
-  };
-
-  const prev = () => {
-    if (active === 1) return;
-    setActive(active - 1);
-  };
-  // <---------------------pagination end------------------------------->
-  const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery(
-    ["users", active],
-    () => AdminRequest.get(`/users/${active}`).then((res) => res.data),
-    {
-      enabled: true,
-    }
-  );
   //<-------------------------------------------------------------------->
 
   if (isLoading) {
@@ -73,11 +77,11 @@ function Users() {
     queryClient.invalidateQueries("users");
   };
 
-const userdata = data.data.filter((user) => {
-  const searchInputLower = searchInput.toLowerCase();
-  const nameMatch = user.name.toLowerCase().includes(searchInputLower);
-  return nameMatch;
-});
+  // const userdata = data.data.filter((user) => {
+  //   const searchInputLower = searchInput.toLowerCase();
+  //   const nameMatch = user.name.toLowerCase().includes(searchInputLower);
+  //   return nameMatch;
+  // });
 
   return (
     <Card className="h-full w-full overflow-hidden">
@@ -99,7 +103,8 @@ const userdata = data.data.filter((user) => {
             <div className="w-full md:w-72">
               <Input
                 label="Search"
-                onChange={(e) => setSearchInput(e.target.value)}
+                value={search}
+                onChange={handleSearchChange}
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
@@ -130,7 +135,7 @@ const userdata = data.data.filter((user) => {
             </tr>
           </thead>
           <tbody>
-            {userdata.map(
+            {data.data.map(
               (
                 { image, name, mobile, email, verified, is_blocked, _id },
                 index
@@ -164,15 +169,7 @@ const userdata = data.data.filter((user) => {
                         {email}
                       </Typography>
                     </td>
-                    {/* <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
-                    </td> */}
+
                     <td className={classes}>
                       <div className="w-max">
                         <Chip
@@ -234,36 +231,35 @@ const userdata = data.data.filter((user) => {
           </tbody>
         </table>
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <div
-          style={{ display: "flex", justifyContent: "center", width: "100%" }}
-        >
-          <div className="flex items-center gap-4">
-            <Button
-              variant="text"
-              className="flex items-center gap-2"
-              onClick={prev}
-              disabled={active === 1}
-            >
-              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-            </Button>
-            <div className="flex items-center gap-2">
-              <IconButton {...getItemProps(1)}>1</IconButton>
-              <IconButton {...getItemProps(2)}>2</IconButton>
-              <IconButton {...getItemProps(3)}>3</IconButton>
-              <IconButton {...getItemProps(4)}>4</IconButton>
-              <IconButton {...getItemProps(5)}>5</IconButton>
-            </div>
-            <Button
-              variant="text"
-              className="flex items-center gap-2"
-              onClick={next}
-              disabled={active === 5}
-            >
-              Next
-              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-            </Button>
-          </div>
+      <CardFooter className="self-center">
+        <div className="flex items-center gap-2 text-black">
+          <Button
+            variant="text"
+            className="flex items-center gap-2 text-black text-base"
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+          <Typography color="gray" className="font-normal text-black">
+            Page{" "}
+            <strong className="text-black mx-4 font-serif text-lg">
+              {page}
+            </strong>{" "}
+            of{" "}
+            <strong className="text-black mx-4">
+              {Math.ceil(data.count / data.pageSize)}
+            </strong>
+          </Typography>
+          <Button
+            variant="text"
+            className="flex items-center gap-2 text-black text-base"
+            onClick={() => handlePageChange(page + 1)}
+            disabled={page === Math.ceil(data.count / data.pageSize)}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
         </div>
       </CardFooter>
     </Card>

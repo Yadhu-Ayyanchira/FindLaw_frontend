@@ -26,3 +26,13 @@ export async function logout(){
   console.log('admin logout');
   return  AdminRequest.get('/logout');
 }
+
+export const getUsers = async ({ page, filter, search }) => {
+  return AdminRequest.get("/users", {
+    params: {
+      page,
+      filter,
+      search,
+    },
+  });
+};
