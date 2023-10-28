@@ -1,10 +1,19 @@
-import { Card, Typography, Select, Option } from "@material-tailwind/react";
+import {
+  Card,
+  Typography,
+  Select,
+  Option,
+  CardBody,
+  CardFooter,
+  Button,
+} from "@material-tailwind/react";
 import { useLocation } from "react-router-dom";
-import { GlobeAltIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
+import { GlobeAltIcon, EnvelopeIcon, BookmarkSquareIcon } from "@heroicons/react/24/solid";
 import UserRequest from "../../Utils/UserRequest";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import Loader from "../Loader/Loader";
+import BookingImg from "../../Assets/Images/lawyerbooking.svg";
 import { useState } from "react";
 
 function BookSlot() {
@@ -73,7 +82,7 @@ function BookSlot() {
           </Card>
         </aside>
         <div className="p-4 pb-0 ps-0 ">
-          <div className=" flex items-center justify-between gap-8 bg-[#e4ebe7] shadow-xl rounded-md p-3 mb-7">
+          <div className=" flex items-center justify-between gap-8 bg-[#e4ebe7] shadow-xl rounded-md p-5 m-5 mb-7">
             <div>
               <Typography variant="h5" color="blue-gray">
                 SLOTS AND BOOKINGS
@@ -95,7 +104,7 @@ function BookSlot() {
                 {dateData.data.map((dates, index) => (
                   <Option
                     key={index}
-                    value={moment(dates).format("DD-MM-YYYY")}
+                    value={moment(dates).format("YYYY-MM-DD")}
                   >
                     {moment(dates).format("DD-MM-YYYY")}
                   </Option>
@@ -106,15 +115,44 @@ function BookSlot() {
               <AddSlot />
             </div> */}
           </div>
-          {slotData ? (
-            <Card className=" shadow-2xl m-5 p-5">
-              <h1>fefefefefeeefef</h1>
+            <Card className=" shadow-2xl m-5 p-5 grid grid-cols-3 gap-x-8">
+                {slotData?
+              (<Card className="mt-6  mx-2 min-w-min bg-blue-gray-50/30 rounded-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                <CardBody>
+                  <Typography
+                    variant="h4"
+                    color="green"
+                    className="mb-2 font-serif"
+                  >
+                    Available
+                  </Typography>
+                  <div>
+                    <Typography>
+                      <span className="font-serif text-xl">Time:</span>
+                      <span className="text-green-700 font-bold">10.30</span>
+                    </Typography>
+                    <Typography>
+                        <span className="font-serif text-xl">Date:</span>
+                        <span className="text-green-700 font-bold">28-10-2023</span>
+                    </Typography>
+                  </div>
+                  <Typography color="gray">
+                    maximum of 30 minutes
+                    <span className="font-serif text-blue-700">*</span>
+                  </Typography>
+                </CardBody>
+                <CardFooter className="pt-0">
+                  <button className="flex flex-row rounded-lg border-2 border-blue-500 px-5 py-1 text-base font-medium text-blue-500 transition duration-200 hover:bg-blue-100 active:bg-green-700/5 dark:border-green-400 dark:bg-green-400/10 dark:text-white dark:hover:bg-green-300/10 dark:active:bg-green-200/10">
+                    <BookmarkSquareIcon className="w-6 me-2" />
+                    Book now
+                  </button>
+                </CardFooter>
+              </Card>):(
+                <h1>Select a date to show available slots</h1>
+              )
+}
             </Card>
-          ) : (
-            <Card className=" shadow-2xl m-5 p-5">
-              <h1>flknlnlnlkn</h1>
-            </Card>
-          )}
+         
         </div>
       </div>
     </>
