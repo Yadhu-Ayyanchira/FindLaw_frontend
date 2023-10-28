@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { PencilIcon, NoSymbolIcon } from "@heroicons/react/24/solid";
+import { NoSymbolIcon } from "@heroicons/react/24/solid";
 import {
-  ArrowDownTrayIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import Loader from "../Loader/Loader";
