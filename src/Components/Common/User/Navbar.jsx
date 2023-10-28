@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
-  MobileNav,
   Collapse ,
   Typography,
   Button,
@@ -146,6 +145,16 @@ function NavbarDefault() {
           className="p-1 font-bold"
         >
             About
+        </Typography>
+      </Link>
+      <Link to="/filter">
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-bold"
+        >
+            Filter
         </Typography>
       </Link>
       <Typography

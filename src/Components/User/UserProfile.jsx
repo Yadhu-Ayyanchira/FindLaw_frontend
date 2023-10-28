@@ -112,12 +112,12 @@ function UserProfile() {
               </Typography>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button className='bg-green-700'>Add FLC</Button>
+              <Button className="bg-green-700">Add FLC</Button>
             </CardFooter>
           </Card>
         </div>
-        <div className="flex flex-col lg:flex-row w-full">
-          <div className="saved  lg:w-2/3 h-64 m-5 lg:m-5 shadow-xl rounded-xl flex-col overflow-y-scroll ">
+        <div className="flex flex-col lg:flex-row w-full no-scrollbar">
+          <div className="saved  lg:w-2/3 h-64 m-5 lg:m-5 shadow-xl rounded-xl flex-col overflow-y-scroll no-scrollbar ">
             <h2 className="text-lg font-semibold font-serif mb-2 p-4 pb-0 flex-col">
               Saved Lawyers
             </h2>
