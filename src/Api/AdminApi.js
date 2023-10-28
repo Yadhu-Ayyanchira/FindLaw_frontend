@@ -36,3 +36,23 @@ export const getUsers = async ({ page, filter, search }) => {
     },
   });
 };
+
+export const getLawyers = async ({ page, filter, search }) => {
+  return AdminRequest.get("/lawyers", {
+    params: {
+      page,
+      filter,
+      search,
+    },
+  });
+};
+
+export const getLawyerRequests = async ({ page, filter, search }) => {
+  return AdminRequest.get("/lawyerRequests", {
+    params: {
+      page,
+      filter,
+      search,
+    },
+  });
+};

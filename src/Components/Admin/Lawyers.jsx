@@ -1,12 +1,11 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { NoSymbolIcon } from "@heroicons/react/24/solid";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { manageLawyer } from "../../Api/AdminApi";
-import AdminRequest from "../../Utils/AdminRequest";
+import { getLawyers, manageLawyer } from "../../Api/AdminApi";
 import Loader from "../Loader/Loader";
 import {
   Card,
@@ -17,7 +16,6 @@ import {
   Chip,
   CardFooter,
   Avatar,
-  IconButton,
   Tooltip,
   Input,
 } from "@material-tailwind/react";
@@ -28,43 +26,43 @@ import EmptyPage from "../EmptyPage/EmptyPage";
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
 function Lawyers() {
-  const [searchInput, setSearchInput] = useState("");
-  // <--------------------pagination start------------------------------------>
-  const [active, setActive] = useState(1);
+    // eslint-disable-next-line no-unused-vars
+    const [filter, setFilter] = useState("");
+    const [search, setSearch] = useState("");
+    const [page, setPage] = useState(1);
+    const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  const getItemProps = (index) => ({
-    variant: active === index ? "filled" : "text",
-    color: "gray",
-    onClick: () => {
-      setActive(index);
-    },
+      useEffect(() => {
+        const timeoutId = setTimeout(() => {
+          setDebouncedSearch(search);
+        }, 1000);
+
+        return () => clearTimeout(timeoutId);
+      }, [search]);
+
+        const handleSearchChange = (event) => {
+          setSearch(event.target.value);
+        };
+
+        const handlePageChange = (newPage) => {
+          const totalPages = Math.ceil(data.count / data.pageSize);
+          if (newPage < 1 || newPage > totalPages) {
+            return;
+          }
+          setPage(newPage);
+        };
+  // <---------------------query----------------------------------------->
+  
+ const queryClient = useQueryClient();
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["lawyers", { page: page, filter, search: debouncedSearch }],
+    queryFn: () =>
+      getLawyers({ page: page, filter, search: debouncedSearch }).then(
+        (res) => res.data
+      ),
+    enabled: true,
   });
-
-  const next = () => {
-    if (active === 5) return;
-    setActive(active + 1);
-  };
-
-  const prev = () => {
-    if (active === 1) return;
-    setActive(active - 1);
-  };
-  // <---------------------pagination end------------------------------->
-  const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery(
-    ["lawyers", active],
-    () => AdminRequest.get(`/lawyers/${active}`).then((res) => res.data),
-    {
-      enabled: true,
-    }
-  );
-
   //<-------------------------------------------------------------------->
-  console.log("dataaa", data);
-  // function formatDate(dateString) {
-  //   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-  //   return new Date(dateString).toLocaleDateString(undefined, options);
-  // }
   const handleAction = async (userId) => {
     await manageLawyer(userId);
     queryClient.invalidateQueries("lawyers");
@@ -77,15 +75,10 @@ function Lawyers() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  if (!data || data.data.length === 0) {
+  if (!data || data.data.length < 0) {
     return <EmptyPage />;
   }
 
-  const lawyerdata = data.data.filter((user) => {
-    const searchInputLower = searchInput.toLowerCase();
-    const nameMatch = user.name.toLowerCase().includes(searchInputLower);
-    return nameMatch;
-  });
 
   return (
     <Card className="h-full w-full">
@@ -107,7 +100,8 @@ function Lawyers() {
             <div className="w-full md:w-72">
               <Input
                 label="Search"
-                onChange={(e) => setSearchInput(e.target.value)}
+                value={search}
+                onChange={handleSearchChange}
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
@@ -138,7 +132,7 @@ function Lawyers() {
             </tr>
           </thead>
           <tbody>
-            {lawyerdata.map(
+            {data.data.map(
               (
                 { image, name, mobile, email, verified, is_blocked, _id },
                 index
@@ -172,15 +166,6 @@ function Lawyers() {
                         {email}
                       </Typography>
                     </td>
-                    {/* <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
-                    </td> */}
                     <td className={classes}>
                       <div className="w-max">
                         <Chip
@@ -242,36 +227,35 @@ function Lawyers() {
           </tbody>
         </table>
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <div
-          style={{ display: "flex", justifyContent: "center", width: "100%" }}
-        >
-          <div className="flex items-center gap-4">
-            <Button
-              variant="text"
-              className="flex items-center gap-2"
-              onClick={prev}
-              disabled={active === 1}
-            >
-              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-            </Button>
-            <div className="flex items-center gap-2">
-              <IconButton {...getItemProps(1)}>1</IconButton>
-              <IconButton {...getItemProps(2)}>2</IconButton>
-              <IconButton {...getItemProps(3)}>3</IconButton>
-              <IconButton {...getItemProps(4)}>4</IconButton>
-              <IconButton {...getItemProps(5)}>5</IconButton>
-            </div>
-            <Button
-              variant="text"
-              className="flex items-center gap-2"
-              onClick={next}
-              disabled={active === 5}
-            >
-              Next
-              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-            </Button>
-          </div>
+      <CardFooter className="self-center">
+        <div className="flex items-center gap-2 text-black">
+          <Button
+            variant="text"
+            className="flex items-center gap-2 text-black text-base"
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+          <Typography color="gray" className="font-normal text-black">
+            Page{" "}
+            <strong className="text-black mx-4 font-serif text-lg">
+              {page}
+            </strong>{" "}
+            of{" "}
+            <strong className="text-black mx-4">
+              {Math.ceil(data.count / data.pageSize)}
+            </strong>
+          </Typography>
+          <Button
+            variant="text"
+            className="flex items-center gap-2 text-black text-base"
+            onClick={() => handlePageChange(page + 1)}
+            disabled={page === Math.ceil(data.count / data.pageSize)}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
         </div>
       </CardFooter>
     </Card>

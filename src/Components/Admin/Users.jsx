@@ -3,7 +3,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { NoSymbolIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Loader from "../Loader/Loader";
-import AdminRequest from "../../Utils/AdminRequest";
 import {
   Card,
   CardHeader,
@@ -13,7 +12,6 @@ import {
   Chip,
   CardFooter,
   Avatar,
-  IconButton,
   Tooltip,
   Input,
 } from "@material-tailwind/react";
@@ -24,7 +22,6 @@ import EmptyPage from "../EmptyPage/EmptyPage";
 const TABLE_HEAD = ["Name", "Email", "Status", "Mobile", ""];
 
 function Users() {
-  const [searchInput, setSearchInput] = useState("");
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -69,7 +66,7 @@ function Users() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  if (!data || data.data.length === 0) {
+  if (!data || data.data.length < 0) {
     return <EmptyPage />;
   }
   const handleAction = async (userId) => {
