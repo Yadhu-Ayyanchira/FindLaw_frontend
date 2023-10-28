@@ -27,6 +27,7 @@ function Register() {
   const handleLoad = () => setLoad((cur) => !cur);
 
   const handleChange = ({ currentTarget: input }) => {
+    setError("")
     setData({ ...data, [input.name]: input.value });
   };
 
@@ -87,16 +88,17 @@ function Register() {
     console.log("handle submit");
     try {
       const { email, password, name, mobile, confirmPassword } = data;
-      let validRegex =
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      if (email.trim() == "" && !email.match(validRegex)) {
+      let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      const mobileRegex = /^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[789]\d{9}|(\d[ -]?){10}\d)$/;
+
+      if (email.trim() == "" || !email.match(validRegex)) {
         setError("Invalid Email");
       } else if (password.trim() == "") {
         setError("Password is required");
       } else if (name.trim() == "") {
         setError("Name is required");
-      } else if (mobile.trim() == "") {
-        setError("Number is required");
+      } else if (mobile.trim() == "" || !mobile.match(mobileRegex)) {
+        setError("Invalid number");
       } else if (confirmPassword !== password) {
         setError("Pasword not match!");
       } else {
