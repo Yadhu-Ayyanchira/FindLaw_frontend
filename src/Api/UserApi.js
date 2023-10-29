@@ -9,6 +9,17 @@ export async function UserLogin(user) {
     return error;
   }
 }
+export async function forgotPassword(email) {
+  console.log("forget api", email);
+  const data = await UserRequest.get("/forgotpassword", { params: { email } });
+  console.log("ing",data);
+  return data;
+}
+export async function changePassword(datas) {
+  console.log("change password", datas);
+  const data = await UserRequest.post("/changepassword", datas);
+  return data;
+}
 
 
 export async function UserRegister(user) {
