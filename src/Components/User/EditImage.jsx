@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -21,15 +21,42 @@ function EditImage() {
   const { id, image } = useSelector((state) => state.user);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  const [error, setError] = useState(null);
 
-  const handleOpen = () => setOpen(!open);
+  const handleOpen = () => {
+    setError(null);
+    setOpen(!open);
+  };
 
   const handleImageChange = (e) => {
     setSelectedImage(e.target.files[0]);
   };
 
+  const validateImage = (file) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (!allowedTypes.includes(file.type)) {
+      setError("Invalid file type. Please choose a JPEG, PNG, or GIF image.");
+      return false;
+    }
+
+    if (file.size > maxSize) {
+      setError("Image size is too large. Please choose a smaller image.");
+      return false;
+    }
+
+    setError(null);
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateImage(selectedImage)) {
+      return; // Don't proceed if the image is not valid
+    }
+
     try {
       const response = await UpdateImage(id, selectedImage);
       if (response.status === 200) {
@@ -48,7 +75,6 @@ function EditImage() {
       }
       queryClient.invalidateQueries(["lawyer", id]);
     } catch (error) {
-      //setisLoading(false);
       console.error("Error uploading image:", error);
     }
   };
@@ -74,7 +100,7 @@ function EditImage() {
           <div className="w-20 h-20 me-6">
             <img
               size=""
-              src={selectedImage ? selectedImage : image}
+              src={selectedImage ? URL.createObjectURL(selectedImage) : image}
               alt="tania andrew"
               className="rounded-full  m-5 lg:w-20 lg:h-20 w-20 h-20 me-10"
             />
@@ -87,6 +113,7 @@ function EditImage() {
                 label="Choose Image"
                 onChange={handleImageChange}
               />
+              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
 
             <DialogFooter className="flex justify-between">

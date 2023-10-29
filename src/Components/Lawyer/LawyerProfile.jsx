@@ -76,14 +76,14 @@ function LawyerProfile() {
               <Badge
                 content={<EditImage />}
                 overlap="circular"
-                Placement="bottom-end"
+                placement="bottom-end"
                 className="h-8 w-8 mb-5 me-2 hover:bg-white hover:text-[#5d7582] bg-[#5d7582] cursor-pointer"
               >
                 <img
                   size=""
                   src={image}
                   alt="tania andrew"
-                  className="rounded-full mx-8 m-5 lg:w-52 lg:h-52 w-32 h-32"
+                  className="rounded-full mx-8 m-5 lg:w-52 lg:h-52 w-32 h-32 relative"
                 />
               </Badge>
             </div>
