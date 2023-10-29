@@ -22,6 +22,7 @@ LawyerRequest.interceptors.response.use(
   (error) => {
     console.error("Request error:", error);
     if (error.response && error.response.status === 400) {
+      console.log("error 400");
       window.location.href = "/lawyer/login";
     }
     return Promise.reject(error);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
 import logo from "../../Assets/Images/Logo.svg";
@@ -7,6 +7,8 @@ import { UserLogin } from "../../Api/UserApi";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../Redux/UserSlice";
+import { GenerateError } from "../../Toast/GenerateError";
+import { ToastContainer } from "react-toastify";
 
 
 
@@ -26,7 +28,7 @@ function Login() {
 
   const navigate = useNavigate();
   const handleSubmit = async (e)=>{
-    e.preventDefault()
+    e.preventDefault();
     let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     const {email, password} = data
     if(email.trim()===""){
@@ -53,7 +55,7 @@ function Login() {
         );
         navigate("/");
       }else{
-        console.log(res.data.message);
+        GenerateError("jdwwdwd");
         setError(res.data.message)
       }
     }
@@ -96,6 +98,7 @@ useEffect(() => {
               localStorage.setItem("currentUser", response.data.token);
               navigate("/");
             } else {
+              GenerateError(response.data.message);
               setError(response.data.message);
             }
           }
@@ -108,6 +111,7 @@ useEffect(() => {
 
   return (
     <>
+      <ToastContainer />
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
         <div className="LoginContainer bg-[#1c1c1d] shadow-lg opacity-70 md:flex md:h-3/4 rounded-xl">
           <div className="LoginLeft bg-[#111827] text-white py-8 px-4 text-center md:w-1/2 rounded-tl-xl md:rounded-bl-xl">
@@ -150,7 +154,9 @@ useEffect(() => {
                 <a href="" className="text-blue-700">
                   Forgot password?
                 </a>
-                <a className="ps-8" onClick={() => navigate("/lawyer/login")}>Are you a Lawyer?</a>
+                <a className="ps-8" onClick={() => navigate("/lawyer/login")}>
+                  Are you a Lawyer?
+                </a>
               </div>
             </form>
             <div className="flex items-center justify-center py-6">

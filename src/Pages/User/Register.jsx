@@ -90,12 +90,12 @@ function Register() {
       const { email, password, name, mobile, confirmPassword } = data;
       let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       const mobileRegex = /^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[789]\d{9}|(\d[ -]?){10}\d)$/;
-
+      const nameRegex = /^[A-Za-z\s\-]+$/;
       if (email.trim() == "" || !email.match(validRegex)) {
         setError("Invalid Email");
       } else if (password.trim() == "") {
         setError("Password is required");
-      } else if (name.trim() == "") {
+      } else if (name.trim() == "" || !name.match(nameRegex)) {
         setError("Name is required");
       } else if (mobile.trim() == "" || !mobile.match(mobileRegex)) {
         setError("Invalid number");

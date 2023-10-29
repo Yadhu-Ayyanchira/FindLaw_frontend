@@ -37,22 +37,26 @@ useEffect(() => {
   });
 }, [name, place, mobile, experience]);
 
-  const handleOpen = () => setOpen(!open);
+   const handleOpen = () => {
+     setError("");
+     setOpen(!open);
+   };
   
-const handleChange = ({ currentTarget: input }) => {
-  setData({ ...data, [input.name]: input.value });
-};
+  const handleChange = ({ currentTarget: input }) => {
+    setError("");
+    setData({ ...data, [input.name]: input.value });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("handle submit");
-    try {
+    const mobileRegex = /^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[789]\d{9}|(\d[ -]?){10}\d)$/;
+    const placeRegex = /^[A-Za-z\s\-]+$/;    try {
       const {name, mobile, place, } = data
-      if(name.trim()== ""){
+      if(name.trim()== "" || !name.match(placeRegex)){
         setError("Invalid Name");
-      }else if(place.trim()==""){
+      }else if(place.trim()=="" || !place.match(placeRegex)){
         setError("Invalid Place")
-      }else if(mobile.trim()==""){
-        setError("Mobile Number Required")
+      }else if(mobile.trim()=="" || !mobile.match(mobileRegex)){
+        setError("Invalid number")
       }else{
         const response = await LawyerProfileEdit(data,id)
         if(response.data.updated){

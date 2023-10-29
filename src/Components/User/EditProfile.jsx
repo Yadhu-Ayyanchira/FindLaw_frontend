@@ -39,25 +39,30 @@ function EditProfile() {
     });
   }, [name, place, mobile]);
 
-  const handleOpen = () => setOpen(!open);
+ const handleOpen = () => {
+   setError("");
+   setOpen(!open);
+ };
 
   const handleChange = ({ currentTarget: input }) => {
+    setError("")
     setData({ ...data, [input.name]: input.value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("handle submit");
+    const mobileRegex = /^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[789]\d{9}|(\d[ -]?){10}\d)$/;
+    const placeRegex = /^[A-Za-z\s\-]+$/;
     try {
       const { name, mobile, place } = data;
-      if (!name || name.trim() == "") {
+      if (!name || name.trim() == "" || !name.match(placeRegex)) {
         setError("Invalid Name");
-      } else if (!place || place.trim() == "") {
+      } else if (!place || place.trim() == "" || !place.match(placeRegex)) {
         setError("Invalid Place");
-      } else if (!mobile || mobile.trim() == "") {
-        setError("Mobile Number Required");
+      } else if (!mobile || mobile.trim() == "" || !mobile.match(mobileRegex)) {
+        setError("Invalid mobile number");
       } else {
         const response = await UserProfileEdit(data, id);
-        console.log("rseppo is",response);
+        console.log("rseppo is", response);
         if (response.data.updated) {
           const detail = response.data.data;
           dispatch(
