@@ -134,6 +134,7 @@ useEffect(() => {
               </a>
             </div>
           </div>
+          {/* <-----------------------------------LOGIN-----------------------------------------------------> */}
           <div className="LoginForm bg-gray-200 p-6 md:p-16 md:w-1/2 rounded-xl">
             <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
               <input
@@ -183,6 +184,7 @@ useEffect(() => {
               </a>
             </div>
           </div>
+  {/* <-----------------------------------LOGIN-----------------------------------------------------> */}
         </div>
       </div>
     </>

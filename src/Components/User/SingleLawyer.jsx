@@ -39,7 +39,6 @@ function SingleLawyer() {
   return (
     <>
       <div className="container mx-auto">
-        {/* <div className="h-16 flex items-center justify-around "></div> */}
         <div className="grid grid-cols-[26rem,1fr]  m-3">
           <aside className=" rounded  p-4 pb-0 grid grid-rows-[28rem,1fr]">
             <Card className="shadow-2xl m-5">

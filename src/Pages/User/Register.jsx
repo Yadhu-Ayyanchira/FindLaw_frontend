@@ -112,7 +112,7 @@ function Register() {
         console.log("wtf");
         const response = await UserRegister(data);
         if (response.data.created) {
-          localStorage.setItem("currentUser", response.data.token);
+          //localStorage.setItem("currentUser", response.data.token);
           const detail = response.data.user;
           dispatch(
             setUserDetails({
