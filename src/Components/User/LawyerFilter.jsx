@@ -13,7 +13,7 @@ import { MapPinIcon, } from "@heroicons/react/24/solid";
 import { useQuery,  } from "@tanstack/react-query";
 import { allLawyers } from "../../Api/UserApi";
 import Loader from "../Loader/Loader";
-import { useNavigate } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 // import EmptyPage from "../EmptyPage/EmptyPage";
 
 function LawyerFilter() {
@@ -25,6 +25,23 @@ function LawyerFilter() {
   const [page, setPage] = useState(1);
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const navigate = useNavigate()
+  const location =useLocation()
+  const searching = location.state && location.state.search;
+  // if(searching){
+  //   setTimeout(() => {
+  //     setSearch(searching)
+  //   }, 1500);
+  // }
+
+   useEffect(() => {
+     if (searching) {
+       const timeoutId = setTimeout(() => {
+         setSearch(searching);
+       }, 100);
+
+       return () => clearTimeout(timeoutId);
+     }
+   }, [searching]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -32,7 +49,7 @@ function LawyerFilter() {
     }, 1000);
 
     return () => clearTimeout(timeoutId);
-  }, [search]);
+  }, [search,searching]);
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);

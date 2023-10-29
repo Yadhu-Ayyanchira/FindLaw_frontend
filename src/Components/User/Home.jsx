@@ -8,18 +8,31 @@ import {
   TimelineConnector,
   TimelineHeader,
   TimelineIcon,
-  TimelineBody,
 } from "@material-tailwind/react";
 import banner from "../../Assets/Images/hero.jpg";
-import {
-  BellIcon,
-  CurrencyDollarIcon,
-  HomeIcon,
-  MapPinIcon,
-  CheckIcon,
-  CheckCircleIcon
-} from "@heroicons/react/24/solid";
+import { CheckCircleIcon, MapPinIcon,} from "@heroicons/react/24/solid";
+import fillform from "../../Assets/Images/fillform.svg"
+import call from "../../Assets/Images/call.svg"
+import schedule from "../../Assets/Images/schedule.svg"
+import payment from "../../Assets/Images/payment.svg"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 function Home() {
+    const [search, setSearch] = useState();
+  const navigate =useNavigate()
+    const handleSearchChange = (event) => {
+      setSearch(event.target.value);
+    };
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    if(!search){
+      alert("Please enter a valid search")
+      }else{
+        navigate("/filter", { state: { search } });
+        }
+    
+  }
   return (
     <>
       {/* <---------------------------------BANNER-------------------------------------------------> */}
@@ -42,11 +55,14 @@ function Home() {
             </div>
             <div className="flex flex-col">
               <Typography variant="h6">FIND A LAWYER HERE</Typography>
-              <form action="">
+              <form onSubmit={handleSubmit}>
                 <div className="flex flex-row">
                   <Input
-                    type="search"
+                     type="search"
                     placeholder="Search"
+                    //label="Search"
+                    value={search}
+                    onChange={handleSearchChange}
                     containerProps={{
                       className: "min-w-[288px]",
                     }}
@@ -55,7 +71,11 @@ function Home() {
                       className: "before:content-none after:content-none",
                     }}
                   />
-                  <Button size="md" className="mt-1 rounded-lg sm:mt-0">
+                  <Button
+                    type="submit"
+                    size="md"
+                    className="mt-1 rounded-lg sm:mt-0"
+                  >
                     Search
                   </Button>
                 </div>
@@ -267,8 +287,8 @@ function Home() {
           {/* <-----------------------------------------------------one card-----------------------------------------------> */}
         </div>
         <hr className="border border-solid border-black w-3/4 self-center"></hr>
-        <div className="row flex flex-row w-full justify-center p-10">
-          <div className="left w-[30%] border-b-2 border-black ">
+        <div className="row flex flex-row w-full justify-evenly p-10 py-20">
+          <div className="left w-[30%] border-b-2 border-blue-500 ">
             <p className="text-5xl font-bold font-serif pb-5">
               Legal Advice Online From Top Lawyers
             </p>
@@ -280,7 +300,7 @@ function Home() {
                     <TimelineIcon variant="ghost" className="p-2">
                       <CheckCircleIcon className="h-4 w-4 text-blue-500" />
                     </TimelineIcon>
-                    <Typography variant="h5" color="blue-gray" >
+                    <Typography variant="h5" color="blue-gray">
                       Affordable legal solutions from senior lawyers
                     </Typography>
                   </TimelineHeader>
@@ -309,9 +329,33 @@ function Home() {
               </Timeline>
             </div>
           </div>
-          <div className="right">
-            <div className="fillform">
-                    <img src="" alt="" />
+          <div className="right border-t-2 border-blue-700 flex flex-row justify-evenly w-[55%] ">
+            <div className="fillform w-[15%] flex flex-col justify-center ">
+              <img src={fillform} alt="fill form" className="w-24 pb-4" />
+              <p className="text-xl font-bold self-center text-blue-500">
+                FILL THE FORM
+              </p>
+            </div>
+            <hr className="border border-solid border-black w-14 h-1 bg-black self-center"></hr>
+            <div className="fillform w-[15%] flex flex-col justify-center align-middle">
+              <img src={schedule} alt="fill form" className="w-24 pb-4 " />
+              <p className="text-xl font-bold self-center text-blue-500">
+                SCHEDULE AN APPOINTMENT
+              </p>
+            </div>
+            <hr className="border border-solid border-black w-14 h-1 bg-black self-center"></hr>
+            <div className="fillform w-[15%] flex flex-col justify-center align-middle">
+              <img src={payment} alt="fill form" className="w-24 pb-4" />
+              <p className="text-xl font-bold self-center text-blue-500">
+                MAKE A PAYMENT
+              </p>
+            </div>
+            <hr className="border border-solid border-black w-14 h-1 bg-black self-center"></hr>
+            <div className="fillform w-[15%] flex flex-col justify-center align-middle">
+              <img src={call} alt="fill form" className="w-24 pb-4" />
+              <p className="text-xl font-bold self-center text-blue-500">
+                CALL THE LAWYER
+              </p>
             </div>
           </div>
         </div>

@@ -186,7 +186,7 @@ function NavbarDefault() {
         </div>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center justify-between">
-          <div className="hidden md:flex md:items-center md:ml-6 mr-5 justify-normal">
+          {/* <div className="hidden md:flex md:items-center md:ml-6 mr-5 justify-normal">
             <Badge
               content={1}
               color="red"
@@ -194,20 +194,14 @@ function NavbarDefault() {
             >
               <BiMessageAltDetail className="h-7 w-7" />
             </Badge>
-          </div>
+          </div> */}
           <div className="hidden md:flex md:items-center md:ml-6 mr-5 justify-normal">
             <button className="focus:outline-none">
               <div
                 className="relative inline-block "
                 style={{ boxShadow: "0 0 0 2px white", borderRadius: "50%" }}
               >
-                {/* <img
-                  className="w-8 h-8 rounded-full cursor-pointer"
-                  src={
-                    "https://res.cloudinary.com/dvprhxg7x/image/upload/v1692803989/asset/noavatar_vhrf74.jpg"
-                  }
-                  alt="User Photo"
-                /> */}
+               
                 {token ? <ProfileMenu /> : <LoginBtn/>}
               </div>
             </button>
