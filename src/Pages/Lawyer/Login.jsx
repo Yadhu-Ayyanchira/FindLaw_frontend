@@ -89,7 +89,7 @@ function Register() {
                 <a href="" className="text-blue-700">
                   Forgot password?
                 </a>
-                <a className="ps-10" onClick={() => navigate("/login")}>
+                <a className="ps-10 cursor-pointer" onClick={() => navigate("/login")}>
                   Are you a Client?
                 </a>
               </div>
@@ -115,6 +115,9 @@ function Register() {
             >
               Sign up
             </button>
+            <div className="mt-4">
+              <a onClick={() => navigate("/")}>or go to <span className="text-blue-500 hover:underline cursor-pointer">Home</span>?</a>
+            </div>
           </div>
         </div>
       </div>

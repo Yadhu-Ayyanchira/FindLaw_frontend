@@ -124,6 +124,15 @@ useEffect(() => {
             >
               Sign up
             </button>
+            <div className="mt-4">
+              <a onClick={() => navigate("/")}>
+                or go to{" "}
+                <span className="text-blue-500 hover:underline cursor-pointer">
+                  Home
+                </span>
+                ?
+              </a>
+            </div>
           </div>
           <div className="LoginForm bg-gray-200 p-6 md:p-16 md:w-1/2 rounded-xl">
             <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
@@ -154,7 +163,10 @@ useEffect(() => {
                 <a href="" className="text-blue-700">
                   Forgot password?
                 </a>
-                <a className="ps-8" onClick={() => navigate("/lawyer/login")}>
+                <a
+                  className="ps-8 cursor-pointer"
+                  onClick={() => navigate("/lawyer/login")}
+                >
                   Are you a Lawyer?
                 </a>
               </div>
@@ -166,7 +178,7 @@ useEffect(() => {
             </div>
             <div className="flex justify-center">
               <FcGoogle className="w-6 h-6" />
-              <a onClick={() => Glogin()} className="px-2">
+              <a onClick={() => Glogin()} className="px-2 cursor-pointer">
                 login with Google
               </a>
             </div>

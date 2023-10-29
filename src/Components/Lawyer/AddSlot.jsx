@@ -55,7 +55,6 @@ function AddSlot() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("time data is", data);
     const {
       startdate,
       enddate,
@@ -78,10 +77,13 @@ function AddSlot() {
     ) {
       setError("Enter all fields");
       GenerateError("Enter all fields");
+    }else if (new Date(startdate) < new Date()) {
+      setError("Cannot select past dates");
+      GenerateError("cannot select past dates");
     }else if (new Date(enddate) < new Date(startdate)) {
-      setError("Invalid date selection")
-      GenerateError("invalid date selection");
-    } else {
+      setError("Invalid date selection");
+      GenerateError("invalid End date");
+    }else{
       const startTime = constructTime(
         data.startTimeHour,
         data.startTimeMinute,
@@ -97,9 +99,22 @@ function AddSlot() {
         endDate: data.enddate,
         startTime: startTime,
         endTime: endTime,
-      };
+      }
+      if (
+        new Date(startdate).toDateString() === new Date(enddate).toDateString()
+        ) {
+         console.log("fuk time", startTime, endTime);
+         // Compare the times if the dates are the same
+         if (startTime >= endTime) {
+           setError("Invalid time selection");
+           GenerateError("Invalid time");
+           return;
+         }
+       }
       try {
         const response = await addSlot(slotData);
+        handleOpen();
+        GenerateSuccess("Slot added");
         console.log("resp isssa", response.response);
       } catch (error) {
         if (error.response.status === 409) {

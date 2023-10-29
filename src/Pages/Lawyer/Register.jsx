@@ -6,7 +6,9 @@ import { useDispatch } from "react-redux";
 import { setlawyerDetails } from "../../Redux/LawyerSlice";
 import { useGoogleLogin } from "@react-oauth/google";
 import { LawyerRegister, LawyerRegisterWithGoogle } from "../../Api/LawyerApi";
+import {GenerateError} from "../../Toast/GenerateError"
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
 
 function Register() {
   const [data, setData] = useState({
@@ -85,14 +87,19 @@ function Register() {
       const nameRegex = /^[A-Za-z\s\-]+$/;
       if (email.trim() == "" || !email.match(validRegex)) {
         setError("Invalid Email");
+        GenerateError("Invalid Email");
       } else if (password.trim() == "") {
         setError("Password is required");
+        GenerateError("Password is required");
       } else if (name.trim() == "" || !name.match(nameRegex)) {
         setError("Invalid name");
+        GenerateError("Invalid name");
       } else if (mobile.trim() == "" || !mobile.match(mobileRegex)) {
         setError("Invalid number");
+        GenerateError("Invalid number");
       } else if (confirmPassword !== password) {
         setError("Pasword not match!");
+        GenerateError("Pasword not match!");
       } else {
         const response = await LawyerRegister(data);
         console.log("rs is", response);
@@ -128,6 +135,7 @@ function Register() {
 
   return (
     <>
+      <ToastContainer />
       <div className="bg-[url('https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover min-h-screen flex flex-col items-center justify-center">
         <div className="LoginContainer bg-[#1c1c1d] shadow-lg opacity-70 md:flex md:h-3/4 rounded-xl">
           <div className="LoginLeft bg-[#cf983b] text-white py-8 px-4 text-center md:w-1/2 rounded-tl-xl md:rounded-bl-xl">
@@ -140,6 +148,15 @@ function Register() {
             >
               Login
             </button>
+            <div className="mt-4">
+              <a onClick={() => navigate("/")}>
+                or go to{" "}
+                <span className="text-blue-500 hover:underline cursor-pointer">
+                  Home
+                </span>
+                ?
+              </a>
+            </div>
           </div>
           <div className="LoginForm bg-gray-200 p-6 md:p-16 md:w-1/2 rounded-tr-xl rounded-br-xl">
             <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
@@ -191,7 +208,12 @@ function Register() {
               >
                 Sign up
               </button>
-              <a onClick={() => navigate("/register")}>Are you a Client?</a>
+              <a
+                className="cursor-pointer"
+                onClick={() => navigate("/register")}
+              >
+                Are you a Client?
+              </a>
             </form>
             <div className="flex items-center justify-center py-6">
               <div className="border-t border-gray-700 flex-grow h-0"></div>
@@ -200,7 +222,7 @@ function Register() {
             </div>
             <div className="flex justify-center">
               <FcGoogle className="w-6 h-6" />
-              <a onClick={() => Gsignup()} className="px-2">
+              <a onClick={() => Gsignup()} className="px-2 cursor-pointer">
                 Signin with Google
               </a>
             </div>
