@@ -7,6 +7,7 @@ const initialState = {
   mobile: "",
   place: "",
   image: "",
+  flc: 0,
 };
 
 const userSlice = createSlice({
@@ -14,7 +15,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserDetails: (state, action) => {
-      const { id, name, email, mobile, place, image } = action.payload;
+      const { id, name, email, mobile, place, image, flc } = action.payload;
       return {
         ...state,
         id: id || state.id,
@@ -23,6 +24,7 @@ const userSlice = createSlice({
         mobile: mobile || state.mobile,
         place: place || state.place,
         image: image || state.image,
+        flc: flc || state.flc,
       };
     },
     logoutUser: (state, action) => {
@@ -34,6 +36,7 @@ const userSlice = createSlice({
         mobile: "",
         place: "",
         image: "",
+        flc: 0,
       };
     },
   },

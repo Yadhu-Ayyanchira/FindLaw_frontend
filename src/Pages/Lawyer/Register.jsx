@@ -85,11 +85,12 @@ function Register() {
       let validRegex =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       const mobileRegex = /^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[789]\d{9}|(\d[ -]?){10}\d)$/;
       const nameRegex = /^[A-Za-z\s\-]+$/;
+      const passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
       if (email.trim() == "" || !email.match(validRegex)) {
         setError("Invalid Email");
         GenerateError("Invalid Email");
-      } else if (password.trim() == "") {
-        setError("Password is required");
+      } else if (password.trim() == "" || !password.match(passRegex)) {
+        setError("Invalid password");
         GenerateError("Password is required");
       } else if (name.trim() == "" || !name.match(nameRegex)) {
         setError("Invalid name");
@@ -108,7 +109,7 @@ function Register() {
           //   name: response.data.user.name,
           //   email: response.data.user.email,
           // };
-          localStorage.setItem("currentLawyer", response.data.token);
+          // localStorage.setItem("currentLawyer", response.data.token);
           const detail = response.data.user;
           dispatch(
             setlawyerDetails({

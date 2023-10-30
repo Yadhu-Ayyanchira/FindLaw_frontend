@@ -18,6 +18,7 @@ import { useState } from "react";
 function BookSlot() {
   const location = useLocation();
   const [selectedDate, setSelectedDate] = useState("");
+  const [booking,setBooking]=useState(false)
   const data = location.state && location.state.data.data;
   const { image, name, _id } = data;
 
@@ -32,8 +33,8 @@ function BookSlot() {
     queryFn: () => UserRequest.get(`/slotsuser?date=${selectedDate}&lawyerId=${_id}`).then((res) => res.data),
     enabled: !!selectedDate,
   });
-  if (slotData){
-    console.log("slot is",slotData.data);
+  if (dateData) {
+    console.log("slot is", dateData.data);
   }
     if (dateIsLoading) {
       return <Loader />;

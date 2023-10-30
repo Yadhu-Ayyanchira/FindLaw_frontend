@@ -59,6 +59,7 @@ function Login() {
             mobile: detail?.mobile,
             place: detail?.place,
             image: detail?.image,
+            flc: detail?.flc
           })
         );
         navigate("/");
@@ -101,6 +102,7 @@ function Login() {
                     mobile: detail?.mobile,
                     place: detail?.place,
                     image: detail?.image,
+                    flc: detail?.flc
                   })
                 );
                 localStorage.setItem("currentUser", response.data.token);
@@ -141,7 +143,11 @@ function Login() {
   const handleForgot = async (e) => {
     const { email, password } = data;
     e.preventDefault();
+    const passRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
     try {
+      if (password.trim() == "" || !password.match(passRegex)) {
+        GenerateError('Please enter a valid Password');
+      }else{
       let response = await changePassword({ email, password, otp });
       setOtp("");
       setData("");
@@ -153,6 +159,7 @@ function Login() {
       } else {
         setSentOtp(false);
       }
+    }
     } catch (error) {
       if(error.response.status == 403){
         GenerateError(error.response.data.message);

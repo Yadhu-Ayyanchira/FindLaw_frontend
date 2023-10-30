@@ -26,6 +26,7 @@ const initialState = {
     is_admin: "",
     place: "",
     image: "",
+    flc: 0,
   },
   lawyer: {
     id: "",

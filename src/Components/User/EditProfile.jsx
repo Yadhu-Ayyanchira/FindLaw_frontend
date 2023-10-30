@@ -73,6 +73,7 @@ function EditProfile() {
               mobile: detail?.mobile,
               place: detail?.place,
               image: detail?.image,
+              flc: detail?.flc
             })
           );
         }
