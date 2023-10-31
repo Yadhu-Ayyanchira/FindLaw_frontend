@@ -5,7 +5,6 @@ import {
   Option,
   CardBody,
   CardFooter,
-  Button,
 } from "@material-tailwind/react";
 import { useLocation } from "react-router-dom";
 import { GlobeAltIcon, EnvelopeIcon, BookmarkSquareIcon } from "@heroicons/react/24/solid";
@@ -20,6 +19,12 @@ function BookSlot() {
   const location = useLocation();
   const [selectedDate, setSelectedDate] = useState("");
   const [booking,setBooking]=useState(false)
+  const [slotId,setSlotId] = useState({
+    slId:"",
+    slTime:"",
+    slDate:"",
+    lawyerId:""
+  })
   const data = location.state && location.state.data.data;
   const { image, name, _id } = data;
 
@@ -44,7 +49,13 @@ function BookSlot() {
   if (dateError ) {
     return <div>Error: {dateError.message}</div>;
   }
- const handleBooking = ()=>{
+ const handleBooking = (id,slotTime,_id,slDate)=>{
+  setSlotId({
+    slId: id,
+    slTime: slotTime,
+    lawyerId : _id,
+    slDate: slDate
+  })
   setBooking(!booking)
  }
 
@@ -101,7 +112,6 @@ function BookSlot() {
                 label="Choose date"
                 value={selectedDate}
                 onChange={(newSelectedDate) => {
-                  // handleBooking();s
                   setBooking(false)
                   setSelectedDate(newSelectedDate);
                 }}
@@ -116,13 +126,10 @@ function BookSlot() {
                 ))}
               </Select>
             </div>
-            {/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <AddSlot />
-            </div> */}
           </div>
           {booking ? (
             <>
-            <Booking/>
+            <Booking value={slotId} />
             </>
           ) : (
             <>
@@ -166,7 +173,7 @@ function BookSlot() {
                       </CardBody>
                       <CardFooter className="pt-0">
                         {slot.isBooked == false ? (
-                          <button onClick={handleBooking} className="flex flex-row rounded-lg border-2 border-blue-500 px-5 py-1 text-base font-medium text-blue-500 transition duration-200 hover:bg-blue-100 active:bg-green-700/5 dark:border-green-400 dark:bg-green-400/10 dark:text-white dark:hover:bg-green-300/10 dark:active:bg-green-200/10">
+                          <button onClick={()=>handleBooking(slot._id,slot.slotTime,_id,slot.slotDate)} className="flex flex-row rounded-lg border-2 border-blue-500 px-5 py-1 text-base font-medium text-blue-500 transition duration-200 hover:bg-blue-100 active:bg-green-700/5 dark:border-green-400 dark:bg-green-400/10 dark:text-white dark:hover:bg-green-300/10 dark:active:bg-green-200/10">
                             <BookmarkSquareIcon className="w-6 me-2" />
                             Book now
                           </button>

@@ -10,6 +10,7 @@ import UserProfile from "../Components/User/UserProfile";
 import LawyerFilter from "../Components/User/LawyerFilter";
 import SingleLawyer from "../Components/User/SingleLawyer";
 import BookSlot from "../Components/User/BookSlot";
+import Appointments from "../Components/User/Appointments";
 
 function UserRoutes() {
   return (
@@ -20,6 +21,7 @@ function UserRoutes() {
         <Route path="filter" element={<LawyerFilter />} />
         <Route path="singlelawyer" element={<SingleLawyer />} />
         <Route path="bookslot" element={<UserProtected><BookSlot /></UserProtected>} />
+        <Route path="appointments" element={<UserProtected><Appointments /></UserProtected>} />
       </Route>
         <Route path="login" element={<UserPublic><Login/></UserPublic>} />
         <Route path="register" element={<UserPublic><Register/></UserPublic>} />

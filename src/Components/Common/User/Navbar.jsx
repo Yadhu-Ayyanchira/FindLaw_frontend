@@ -20,7 +20,8 @@ import logo from "../../../Assets/Images/Logo.svg";
 import {
   PowerIcon,
   ChevronDownIcon,
-  UserIcon
+  UserIcon,
+  ClipboardDocumentCheckIcon
 } from "@heroicons/react/24/outline";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -49,7 +50,7 @@ function ProfileMenu() {
             size="sm"
             alt="tania andrew"
             className="border border-gray-900 p-0.5"
-            src= {image}
+            src={image}
           />
           <Typography color="black">{name}</Typography>
           <ChevronDownIcon
@@ -66,17 +67,24 @@ function ProfileMenu() {
           onClick={signOut}
           className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
         >
-        
-          <PowerIcon className= "h-5 w-5 text-red-500"/>
+          <PowerIcon className="h-5 w-5 text-red-500" />
           Sign out
         </MenuItem>
         <MenuItem
           key="Sign out profile"
-          onClick={()=>navigate('/userProfile')}
-          className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+          onClick={() => navigate("/userProfile")}
+          className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-green-500/10 active:bg-red-500/10"
         >
-          <UserIcon className="h-5 w-5 text-green-500"/>
+          <UserIcon className="h-5 w-5 text-green-500" />
           Profile
+        </MenuItem>
+        <MenuItem
+          key="Sign out profile"
+          onClick={() => navigate("/appointments")}
+          className="flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-blue-500/10 active:bg-red-500/10"
+        >
+          <ClipboardDocumentCheckIcon className="h-5 w-5 text-blue-500" />
+          Appointments
         </MenuItem>
       </MenuList>
     </Menu>
@@ -107,36 +115,7 @@ function NavbarDefault() {
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      {/* <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-bold"
-      >
-        <Menu>
-          <MenuHandler>
-            <p className="flex items-center">
-              Lawyer directory
-              <BiArrowFromTop className="ml-1 text-blue-gray-400 pointer-events-auto" />
-            </p>
-          </MenuHandler>
-          <MenuList>
-            <MenuItem>Menu Item 1</MenuItem>
-            <MenuItem>Menu Item 2</MenuItem>
-            <Menu placement="right-start" offset={15}>
-              <MenuHandler>
-                <MenuItem>Nested Item</MenuItem>
-              </MenuHandler>
-              <MenuList>
-                <MenuItem>Nested Item 1</MenuItem>
-                <MenuItem>Nested Item 2</MenuItem>
-                <MenuItem>Nested Item 3</MenuItem>
-              </MenuList>
-            </Menu>
-            <MenuItem>Menu Item 3</MenuItem>
-          </MenuList>
-        </Menu>
-      </Typography> */}
+      
       <Link to="/filter">
         <Typography
           as="li"

@@ -90,3 +90,8 @@ export const lawyerView = async ({ id}) => {
     },
   });
 };
+
+
+export const addAppointment = async (data) => {
+  return UserRequest.post("/addappointment",{data});
+};

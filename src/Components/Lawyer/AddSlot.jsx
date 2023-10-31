@@ -14,6 +14,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { addSlot } from "../../Api/LawyerApi";
 import { GenerateError, GenerateSuccess } from "../../Toast/GenerateError";
+import moment from "moment";
 
 function AddSlot() {
   const [open, setOpen] = useState(false);
@@ -77,13 +78,16 @@ function AddSlot() {
     ) {
       setError("Enter all fields");
       GenerateError("Enter all fields");
-    }else if (new Date(startdate) < new Date()) {
-      setError("Cannot select past dates");
+    }else if (moment(startdate).isBefore(moment(), "day")) {
+      //new Date(startdate) < new Date()
+      console.log("start is", new Date(startdate), new Date());
+      console.log("momm", moment(startdate));
+      setError("Cannot select past dates or today's date");
       GenerateError("cannot select past dates");
-    }else if (new Date(enddate) < new Date(startdate)) {
+    } else if (new Date(enddate) < new Date(startdate)) {
       setError("Invalid date selection");
       GenerateError("invalid End date");
-    }else{
+    } else {
       const startTime = constructTime(
         data.startTimeHour,
         data.startTimeMinute,
@@ -99,22 +103,22 @@ function AddSlot() {
         endDate: data.enddate,
         startTime: startTime,
         endTime: endTime,
-      }
+      };
       if (
         new Date(startdate).toDateString() === new Date(enddate).toDateString()
-        ) {
-         console.log("fuk time", startTime, endTime);
-         // Compare the times if the dates are the same
-         if (startTime >= endTime) {
-           setError("Invalid time selection");
-           GenerateError("Invalid time");
-           return;
-         }
-       }
+      ) {
+        console.log("im fin");
+        //  Compare the times if the dates are the same
+        if (constructTime(startTime) >= constructTime(endTime)) {
+          setError("Invalid time selection");
+          GenerateError("Invalid time");
+          return;
+        }
+      }
       try {
         const response = await addSlot(slotData);
-        handleOpen();
         GenerateSuccess("Slot added");
+        setTimeout(() => handleOpen(), 2000);
         console.log("resp isssa", response.response);
       } catch (error) {
         if (error.response.status === 409) {
