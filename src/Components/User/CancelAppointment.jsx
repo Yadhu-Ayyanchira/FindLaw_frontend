@@ -7,10 +7,29 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-function CancelAppointment() {
-     const [open, setOpen] = useState(false);
-
-     const handleOpen = () => setOpen(!open);
+import { GenerateError, GenerateSuccess } from "../../Toast/GenerateError";
+import { cancelAppointment } from "../../Api/UserApi";
+function CancelAppointment({ id, refetch, slotId, slotTime }) {
+  const [open, setOpen] = useState(false);
+  const handleCancel = async () => {
+    try {
+         const response = await cancelAppointment({ id, slotId, slotTime });
+         console.log(response);
+         if (response.data.updated) {
+           refetch();
+           GenerateSuccess(response.data.message);
+           setOpen(!open);
+         } else {
+           GenerateError(response.data.message);
+           setOpen(!open);
+         }
+    } catch (error) {
+        alert(error)
+        console.log(error)
+    }
+   
+  };
+  const handleOpen = () => setOpen(!open);
   return (
     <>
       <Button
@@ -40,7 +59,7 @@ function CancelAppointment() {
             variant="filled"
             size="sm"
             color="green"
-            //onClick={handleCancel}
+            onClick={handleCancel}
           >
             <span>Yes</span>
           </Button>

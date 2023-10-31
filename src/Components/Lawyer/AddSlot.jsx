@@ -107,9 +107,9 @@ function AddSlot() {
       if (
         new Date(startdate).toDateString() === new Date(enddate).toDateString()
       ) {
-        console.log("im fin");
+        console.log(constructTime(startTime), "im fin", constructTime(endTime));
         //  Compare the times if the dates are the same
-        if (constructTime(startTime) >= constructTime(endTime)) {
+        if (constructTime(startTime) <= constructTime(endTime)) {
           setError("Invalid time selection");
           GenerateError("Invalid time");
           return;

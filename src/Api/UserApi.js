@@ -93,5 +93,10 @@ export const lawyerView = async ({ id}) => {
 
 
 export const addAppointment = async (data) => {
+  console.log("objecadat",data);
   return UserRequest.post("/addappointment",{data});
 };
+
+export const cancelAppointment = async ({id,slotId,slotTime})=>{
+  return UserRequest.put("/cancelappointment", { id, slotId, slotTime });
+}
