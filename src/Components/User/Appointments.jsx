@@ -14,6 +14,26 @@ function Appointments() {
     }
   );
 if(data) console.log("dsssds",data);
+
+const constructTime = (time) => {
+  const timeArray=time.split(':')
+  const minArray=timeArray[1].split(' ')
+  const hour=timeArray[0]
+  const minute=minArray[0]
+  const amPm = minArray[1]
+  console.log("array is",hour,minute,amPm);
+  let formattedTime = `${hour}:${minute}`;
+
+  // Adjust for AM/PM
+  if (amPm === "PM") {
+    const hourInt = parseInt(hour, 10);
+    if (hourInt < 12) {
+      formattedTime = `${hourInt + 12}:${minute}`;
+    }
+  }
+
+  return formattedTime;
+};
  
  
 
@@ -61,19 +81,34 @@ if(data) console.log("dsssds",data);
                   <p className="text-red-800 self-center">
                     Appointment cancelled
                   </p>
+                ) : appointment.AppoinmentStatus == "expired" ? (
+                  <p className="text-red-800 self-center">
+                    Appointment Expired
+                  </p>
+                ) : appointment.AppoinmentStatus == "rejected" ? (
+                  <p className="text-red-800 self-center">
+                    Rejected by lawyer
+                  </p>
                 ) : (
                   <div className="flex flex-row justify-evenly pt-3">
-                    {/* <button onClick={()=>handleCancel()} className="rounded-lg bg-gradient-to-br from-[#FF416C] to-[#FF4B2B] ps-2 px-5 py-1 text-base font-medium text-white transition duration-200 hover:shadow-lg hover:shadow-[#FF416C]/50">
-                  Cancel
-                </button> */}
                     <CancelAppointment
                       id={appointment._id}
                       slotId={appointment.slotId}
                       slotTime={appointment.scheduledAt.slotTime}
                       refetch={refetch}
                     />
-
+                    {constructTime(appointment.scheduledAt.slotTime) >=
+                      moment().format("HH:mm") &&
+                    constructTime(appointment.scheduledAt.slotTime) <=
+                      moment(appointment.scheduledAt.slotTime)
+                        .add(30, "minutes")
+                        .format("HH:mm")
+                      ? "call time"
+                      : "nop"}
                     <Button
+                      onClick={() =>
+                        alert(constructTime(appointment.scheduledAt.slotTime))
+                      }
                       size="sm"
                       className="my-1  bg-green-500 shadow-none "
                       variant="filled"

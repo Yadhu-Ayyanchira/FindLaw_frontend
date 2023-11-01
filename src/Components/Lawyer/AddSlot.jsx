@@ -54,6 +54,26 @@ function AddSlot() {
 
     return formattedTime;
   };
+
+  const constructedTime = (time) => {
+    const timeArray = time.split(":");
+    const minArray = timeArray[1].split(" ");
+    const hour = timeArray[0];
+    const minute = minArray[0];
+    const amPm = minArray[1];
+    console.log("array is", hour, minute, amPm);
+    let formattedTime = `${hour}:${minute}`;
+
+    // Adjust for AM/PM
+    if (amPm === "PM") {
+      const hourInt = parseInt(hour, 10);
+      if (hourInt < 12) {
+        formattedTime = `${hourInt + 12}:${minute}`;
+      }
+    }
+
+    return formattedTime;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {
@@ -103,11 +123,10 @@ function AddSlot() {
         endTime: endTime,
       };
       if (
-        new Date(startdate).toDateString() === new Date(enddate).toDateString()
+        new Date(startdate).toDateString() === new Date().toDateString()
       ) {
-        console.log(constructTime(startTime), "im fin", constructTime(endTime));
-        //  Compare the times if the dates are the same
-        if (constructTime(startTime) <= constructTime(endTime)) {
+        console.log(constructedTime(startTime), "im fin", constructedTime(endTime));
+        if (constructedTime(startTime) >= constructedTime(endTime) || constructedTime(startTime)<moment().format('HH:mm')) {
           setError("Invalid time selection");
           GenerateError("Invalid time");
           return;
@@ -120,7 +139,7 @@ function AddSlot() {
         console.log("resp isssa", response.response);
       } catch (error) {
         if (error.response.status === 409) {
-          GenerateError("Time already exist");
+          GenerateError("Time or date already exist");
         }
       }
     }

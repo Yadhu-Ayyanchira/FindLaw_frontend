@@ -42,7 +42,7 @@ function DefaultSidebar() {
           </ListItemPrefix>
           Time Slot
         </ListItem>
-        <ListItem>
+        <ListItem onClick={() => navigate("/lawyer/appointmentrequest")}>
           <ListItemPrefix>
             <InboxIcon className="h-5 w-5" />
           </ListItemPrefix>

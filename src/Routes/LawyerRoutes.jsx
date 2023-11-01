@@ -7,6 +7,7 @@ import Layout from '../Pages/Lawyer/Layout';
 import Register from '../Pages/Lawyer/Register'
 import LawyerProfile from '../Components/Lawyer/LawyerProfile';
 import Timeslot from '../Components/Lawyer/Timeslot';
+import AppointmentsRequests from '../Components/Lawyer/AppointmentsRequests';
 
 function LawyerRoutes() {
   
@@ -21,6 +22,7 @@ function LawyerRoutes() {
           <Route index element={<Dashboard />} />
           <Route path="/lawyerprofile" element={<LawyerProfile />} />
           <Route path="/timeslot" element={<Timeslot />} />
+          <Route path="/appointmentrequest" element={<AppointmentsRequests />} />
         </Route>
       </Route>
     </Routes>
