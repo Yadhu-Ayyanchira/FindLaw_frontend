@@ -2,7 +2,6 @@ import UserRequest from "../Utils/UserRequest";
 
 export async function UserLogin(user) {
   try {
-    console.log("api data disp", user);
     const data = await UserRequest.post("/login", user);
     return data;
   } catch (error) {
@@ -10,13 +9,10 @@ export async function UserLogin(user) {
   }
 }
 export async function forgotPassword(email) {
-  console.log("forget api", email);
   const data = await UserRequest.get("/forgotpassword", { params: { email } });
-  console.log("ing",data);
   return data;
 }
 export async function changePassword(datas) {
-  console.log("change password", datas);
   const data = await UserRequest.post("/changepassword", datas);
   return data;
 }
@@ -24,7 +20,6 @@ export async function changePassword(datas) {
 
 export async function UserRegister(user) {
   try {
-    console.log("sign api");
     const data = await UserRequest.post("/signup", user);
     return data;
   } catch (error) {
@@ -45,7 +40,6 @@ try {
 export async function UserProfileEdit(data, id) {
   try {
     const response = await UserRequest.post(`/profileEdit/${id}`, data);
-    console.log("resp is", response);
     return response;
   } catch (error) {
     return error;
@@ -54,7 +48,6 @@ export async function UserProfileEdit(data, id) {
 
 export async function UpdateImage(id, img) {
   try {
-    console.log("imgg", id, img);
     const formData = new FormData();
     formData.append("image", img);
     formData.append("userId", id);
@@ -66,7 +59,6 @@ export async function UpdateImage(id, img) {
       WithCreadentials: true,
     };
     const res = await UserRequest.post("/imgupdate", formData, config);
-    console.log("res is",res)
     return res;
   } catch (error) {
     console.log(error);
@@ -93,7 +85,6 @@ export const lawyerView = async ({ id}) => {
 
 
 export const addAppointment = async (data) => {
-  console.log("objecadat",data);
   return UserRequest.post("/addappointment",{data});
 };
 

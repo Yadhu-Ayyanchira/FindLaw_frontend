@@ -14,7 +14,6 @@ function CancelAppointment({ id, refetch, slotId, slotTime }) {
   const handleCancel = async () => {
     try {
          const response = await cancelAppointment({ id, slotId, slotTime });
-         console.log(response);
          if (response.data.updated) {
            refetch();
            GenerateSuccess(response.data.message);

@@ -16,12 +16,9 @@ function Booking(props) {
   const handleBook = async (e) =>{
     e.preventDefault();
     try {
-      console.log("prop value",props.value);
       const response = await addAppointment(props.value);
       if (response.data.created) {
-        console.log("have resp",response);
         const detail = response.data.data;
-        console.log("resp data is",detail);
         dispatch(
           setUserDetails({
             id: detail?._id,
@@ -39,7 +36,7 @@ function Booking(props) {
     } catch (error) {
       if(error){
         console.log("err",error);
-        GenerateError("No flc")
+        GenerateError("You dont have enough flc")
       }
     }
     

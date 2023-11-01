@@ -80,8 +80,6 @@ function AddSlot() {
       GenerateError("Enter all fields");
     }else if (moment(startdate).isBefore(moment(), "day")) {
       //new Date(startdate) < new Date()
-      console.log("start is", new Date(startdate), new Date());
-      console.log("momm", moment(startdate));
       setError("Cannot select past dates or today's date");
       GenerateError("cannot select past dates");
     } else if (new Date(enddate) < new Date(startdate)) {
