@@ -58,7 +58,7 @@ function Home() {
               <form onSubmit={handleSubmit}>
                 <div className="flex flex-row">
                   <Input
-                     type="search"
+                    type="search"
                     placeholder="Search"
                     //label="Search"
                     value={search}
@@ -85,7 +85,7 @@ function Home() {
         </figcaption>
       </figure>
       {/* <---------------------------------BANNER-------------------------------------------------> */}
-      <div className="flex flex-col py-9 bg-blue-gray-100">
+      <div className="flex flex-col py-9 pb-0 bg-blue-gray-100">
         <Typography
           variant="h2"
           className="self-center font-serif text-gray-900"
@@ -358,6 +358,54 @@ function Home() {
               </p>
             </div>
           </div>
+        </div>
+        <Typography
+          variant="h2"
+          className="self-center font-serif text-gray-900"
+        >
+          WHY FIND LAW ?
+        </Typography>
+        <div className="flex flex-row justify-center h-96 w-full ">
+          <Card className="shadow-2xl m-5 w-[20%] bg-transparent p-3">
+            <div className="self-center py-4">
+              <img src="src/Assets/Images/COMPUTER.svg" className="w-20" />
+            </div>
+            <div className="self-center pt-3">
+              <p className="text-2xl font-semibold pb-3">COMPLETELY ONLINE</p>
+              <p className="text-lg f">
+                Our team of advisors will provide you with sound advice based on
+                your needs. The entire procedure is very smooth and worry free.
+              </p>
+            </div>
+          </Card>
+          <Card className="shadow-2xl m-5 w-[20%] bg-transparent p-3">
+            <div className="self-center py-4">
+              <img src="src/Assets/Images/VIDEO.svg" className="w-20" />
+            </div>
+            <div className="pt-3">
+              <div className="flex justify-center">
+                <p className="text-2xl font-semibold pb-3">VIDEO CALL</p>
+              </div>
+              <p className="text-lg f">
+                We provide quick fixes to busy clients through video calls.
+                While maintaining their privacy over the phone or via email.
+              </p>
+            </div>
+          </Card>
+          <Card className="shadow-2xl m-5 w-[20%] bg-transparent p-3">
+            <div className="self-center py-4">
+              <img src="src/Assets/Images/MONEY.svg" className="w-20" />
+            </div>
+            <div className="self-center pt-3">
+              <div className="flex justify-center">
+                <p className="text-2xl font-semibold pb-3">SAVE MONEY</p>
+              </div>
+              <p className="text-lg f">
+                No extra fees will be charged. Change lawyers quickly without
+                having to pay more. While saving money, get excellent guidance
+              </p>
+            </div>
+          </Card>
         </div>
       </div>
     </>

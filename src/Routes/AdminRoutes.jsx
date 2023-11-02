@@ -1,4 +1,3 @@
-import React from 'react'
 import { Route, Routes } from "react-router-dom";
 import AdminProtected from '../Protected/AdminProtected';
 import AdminPublic from '../Protected/AdminPublic';
@@ -8,6 +7,7 @@ import Layout from '../Pages/Admin/Layout';
 import Users from '../Components/Admin/Users';
 import Lawyers from '../Components/Admin/Lawyers';
 import LawyerRequests from '../Components/Admin/LawyerRequests';
+import NotFound from "../Components/NotFound/NotFound";
 
 function AdminRoutes() {
   return (
@@ -23,6 +23,7 @@ function AdminRoutes() {
           <Route path="/lawyerRequests" element={<LawyerRequests />} />
         </Route>
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

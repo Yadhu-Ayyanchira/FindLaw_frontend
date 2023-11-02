@@ -8,6 +8,7 @@ import Register from '../Pages/Lawyer/Register'
 import LawyerProfile from '../Components/Lawyer/LawyerProfile';
 import Timeslot from '../Components/Lawyer/Timeslot';
 import AppointmentsRequests from '../Components/Lawyer/AppointmentsRequests';
+import NotFound from "../Components/NotFound/NotFound";
 
 function LawyerRoutes() {
   
@@ -25,6 +26,7 @@ function LawyerRoutes() {
           <Route path="/appointmentrequest" element={<AppointmentsRequests />} />
         </Route>
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
