@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import LawyerRequest from '../../Utils/LawyerRequests';
 import Loader from '../Loader/Loader'
 import moment from 'moment/moment';
+import RejectAppointment from './RejectAppointment';
 
 function AppointmentsRequests() {
     const [selectedDate,setSelectedDate]= useState("12")
@@ -12,7 +13,7 @@ function AppointmentsRequests() {
         queryFn: () => LawyerRequest.get(`/appointmentDate`).then((res) => res.data)
     })
 
-    const { isLoading: appointmentDataLoading, error: appointmentDataError, data: appointmentData } = useQuery(
+    const { isLoading: appointmentDataLoading, error: appointmentDataError, data: appointmentData,refetch } = useQuery(
         ['appointments', selectedDate],
         () => LawyerRequest.get(`/appointmentrequest?date=${selectedDate}`).then((res) => res.data),
         { retry: false }
@@ -24,16 +25,19 @@ function AppointmentsRequests() {
      }
   return (
     <>
-      <h4 className="text-2xl font-bold text-center pb-6 pt-8">Appointments</h4>
       <div className=" flex items-center justify-between gap-8 bg-[#e4ebe7] shadow-xl rounded-md p-5 m-5 mb-7">
         <div>
           <Typography variant="h5" color="blue-gray">
-           BOOKINGS
+            BOOKINGS
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
-           Bookings
+            Bookings
           </Typography>
         </div>
+        <h4 className="text-2xl font-bold text-center pb-6 pt-8">
+          Appointments
+        </h4>
+
         <div className="my-2">
           <Select
             size="md"
@@ -52,7 +56,7 @@ function AppointmentsRequests() {
           </Select>
         </div>
       </div>
-     
+
       {appointmentData && (
         <Card className="container mx-auto w-full h-auto  grid grid-cols-4 bg-white shadow-2xl p-4">
           {appointmentData.data.map((appointment, index) => (
@@ -84,7 +88,8 @@ function AppointmentsRequests() {
                   </span>
                 </p>
               </div>
-              <div className="flex flex-row justify-evenly pt-3">
+             {appointment.AppoinmentStatus=="rejected" ? (<p className='text-red-800 self-center'>Rejected</p>):(<div className="flex flex-row justify-evenly pt-3">
+                <RejectAppointment id={appointment._id} refetch={refetch} />
                 <Button
                   size="sm"
                   className="my-1 bg-green-500 shadow-none"
@@ -92,7 +97,7 @@ function AppointmentsRequests() {
                 >
                   Share link
                 </Button>
-              </div>
+              </div>)}
             </Card>
           ))}
         </Card>
