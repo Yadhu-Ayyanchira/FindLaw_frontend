@@ -97,24 +97,21 @@ const constructTime = (time) => {
                       slotTime={appointment.scheduledAt.slotTime}
                       refetch={refetch}
                     />
-                    {constructTime(appointment.scheduledAt.slotTime) >=
+                    {/* {constructTime(appointment.scheduledAt.slotTime) >=
                       moment().format("HH:mm") &&
                     constructTime(appointment.scheduledAt.slotTime) <=
                       moment(appointment.scheduledAt.slotTime)
                         .add(30, "minutes")
                         .format("HH:mm")
                       ? "call time"
-                      : "nop"}
-                    <Button
-                      onClick={() =>
-                        alert(constructTime(appointment.scheduledAt.slotTime))
-                      }
+                      : "nop"} */}
+                    {appointment.callId==""?null:<Button
                       size="sm"
                       className="my-1  bg-green-500 shadow-none "
                       variant="filled"
                     >
                       Call
-                    </Button>
+                    </Button>}
                   </div>
                 )}
                 <span className="text-xs self-center pt-2">Reviews</span>
