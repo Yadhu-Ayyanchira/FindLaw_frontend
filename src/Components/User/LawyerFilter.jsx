@@ -37,7 +37,7 @@ function LawyerFilter() {
      if (searching) {
        const timeoutId = setTimeout(() => {
          setSearch(searching);
-       }, 100);
+       }, 10);
 
        return () => clearTimeout(timeoutId);
      }

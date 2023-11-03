@@ -83,7 +83,7 @@ function EditAbout() {
         className="flex items-center hover:border-1 hover:text-black me-10 cursor-pointer rounded-xl text-[#5d7582] text-xs"
       >
         <PencilSquareIcon className="w-8 h-8 m-3" />
-        <span className="ml-1">Edit About</span>
+        {/* <span className="ml-1">Edit About</span> */}
       </p>
 
       <Dialog
@@ -92,7 +92,7 @@ function EditAbout() {
         size="sm"
         className="rounded-none"
       >
-        <DialogHeader>EDIT PROFILE</DialogHeader>
+        <DialogHeader>EDIT SPECIALISED AREAS</DialogHeader>
         <DialogBody className="flex justify-center ">
           <form onSubmit={handleSubmit}>
             <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">

@@ -15,25 +15,25 @@ function Appointments() {
   );
 if(data) console.log("dsssds",data);
 
-const constructTime = (time) => {
-  const timeArray=time.split(':')
-  const minArray=timeArray[1].split(' ')
-  const hour=timeArray[0]
-  const minute=minArray[0]
-  const amPm = minArray[1]
-  console.log("array is",hour,minute,amPm);
-  let formattedTime = `${hour}:${minute}`;
+// const constructTime = (time) => {
+//   const timeArray=time.split(':')
+//   const minArray=timeArray[1].split(' ')
+//   const hour=timeArray[0]
+//   const minute=minArray[0]
+//   const amPm = minArray[1]
+//   console.log("array is",hour,minute,amPm);
+//   let formattedTime = `${hour}:${minute}`;
 
-  // Adjust for AM/PM
-  if (amPm === "PM") {
-    const hourInt = parseInt(hour, 10);
-    if (hourInt < 12) {
-      formattedTime = `${hourInt + 12}:${minute}`;
-    }
-  }
+//   // Adjust for AM/PM
+//   if (amPm === "PM") {
+//     const hourInt = parseInt(hour, 10);
+//     if (hourInt < 12) {
+//       formattedTime = `${hourInt + 12}:${minute}`;
+//     }
+//   }
 
-  return formattedTime;
-};
+//   return formattedTime;
+// };
  
  
 
@@ -114,7 +114,7 @@ const constructTime = (time) => {
                     </Button>}
                   </div>
                 )}
-                <span className="text-xs self-center pt-2">Reviews</span>
+                {/* <span className="text-xs self-center pt-2">Reviews</span> */}
               </Card>
             ))}
         </Card>

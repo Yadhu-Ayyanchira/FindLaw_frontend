@@ -14,6 +14,7 @@ import EditAbout from "./EditAbout";
 import EditImage from "./EditImage";
 import { useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
+import EditSpecialised from "./EditSpecialised";
 
 
 function VerifiedTag() {
@@ -119,15 +120,20 @@ function LawyerProfile() {
         </div>
         <div className="flex flex-col lg:flex-row w-full">
           <div className="about lg:w-full h-auto p-5 m-5 lg:m-5 shadow-xl rounded-xl flex-col relative">
-            <h2 className="text-lg font-semibold mb-2 p-4 pb-0">
-              Practiced areas
-            </h2>
-            <button
+            <div className="w-full flex flex-row">
+              <h2 className="text-lg font-semibold mb-2 p-4 pb-0">
+                Practiced areas
+              </h2>
+              {/* <button
               className=" text-black px-4 py-2 absolute top-0 right-0 m-4"
               //onClick="editContent()"
             >
               <PencilSquareIcon className="h-8 w-8" />
-            </button>
+            </button> */}
+              <div className=" text-black px-4 py-2 absolute top-0 right-0 m-4">
+                <EditSpecialised />
+              </div>
+            </div>
             <div className="flex flex-wrap">
               <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
                 <p>Family</p>

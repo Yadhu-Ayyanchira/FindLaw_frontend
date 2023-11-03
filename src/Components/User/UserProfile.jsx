@@ -13,8 +13,8 @@ import {
 } from "@material-tailwind/react";
 import {
   MapPinIcon,
- 
 } from "@heroicons/react/24/solid";
+import AddFlc from './AddFlc'
 import UserRequests from '../../Utils/UserRequest'
 import { useSelector } from 'react-redux';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -112,7 +112,8 @@ function UserProfile() {
               </Typography>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button className="bg-green-700">Add FLC</Button>
+              {/* <Button className="bg-green-700">Add FLC</Button> */}
+              <AddFlc id={id} />
             </CardFooter>
           </Card>
         </div>
@@ -123,7 +124,7 @@ function UserProfile() {
             </h2>
             <div>
               <List>
-                <ListItem>
+                <ListItem key="0">
                   <ListItemPrefix>
                     <Avatar
                       variant="circular"
@@ -144,7 +145,7 @@ function UserProfile() {
                     </Typography>
                   </div>
                 </ListItem>
-                <ListItem>
+                <ListItem key="1">
                   <ListItemPrefix>
                     <Avatar
                       variant="circular"
@@ -165,7 +166,7 @@ function UserProfile() {
                     </Typography>
                   </div>
                 </ListItem>
-                <ListItem>
+                <ListItem key="2">
                   <ListItemPrefix>
                     <Avatar
                       variant="circular"
@@ -186,7 +187,7 @@ function UserProfile() {
                     </Typography>
                   </div>
                 </ListItem>
-                <ListItem>
+                <ListItem key="3">
                   <ListItemPrefix>
                     <Avatar
                       variant="circular"
