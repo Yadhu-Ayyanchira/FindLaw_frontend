@@ -17,7 +17,7 @@ import Booking from "./Booking";
 
 function BookSlot() {
   const location = useLocation();
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
   const [booking,setBooking]=useState(false)
   const [slotId,setSlotId] = useState({
     slId:"",

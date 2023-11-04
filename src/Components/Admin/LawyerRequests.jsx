@@ -69,7 +69,7 @@ function LawyerRequests() {
     await approveLawyer(Id);
     queryClient.invalidateQueries("lawyers");
   };
-  if (!data || data.data.length < 0) {
+  if (!data || data.data.length <= 0) {
     return <EmptyPage />;
   }
 

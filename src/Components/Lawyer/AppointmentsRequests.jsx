@@ -7,7 +7,7 @@ import moment from 'moment/moment';
 import RejectAppointment from './RejectAppointment';
 
 function AppointmentsRequests() {
-    const [selectedDate,setSelectedDate]= useState("12")
+    const [selectedDate,setSelectedDate]= useState(moment().format('YYYY-MM-DD'))
       const { isLoading: dateisLoading, error: dateError, data: dateData } = useQuery({
         queryKey: ['appointmentsLawyer'],
         queryFn: () => LawyerRequest.get(`/appointmentDate`).then((res) => res.data)

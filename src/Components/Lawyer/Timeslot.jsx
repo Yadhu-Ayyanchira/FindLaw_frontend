@@ -16,7 +16,7 @@ import Loader from "../Loader/Loader";
 import moment from "moment";
 
 function Timeslot() {
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
 
   const {
     isLoading: dateisLoading,

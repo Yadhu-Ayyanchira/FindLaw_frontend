@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -10,52 +10,18 @@ import {
 } from "@material-tailwind/react";
 import logo from '../../Assets/Images/logo.svg'
 import Payment from "./Payment";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import UserRequest from "../../Utils/UserRequest";
-const stripeKey = import.meta.env.VITE_STRIPE_KEY;
-const stripePromise = loadStripe(stripeKey);
-function AddFlc(id) {
+
+function AddFlc() {
   const [open, setOpen] = React.useState(false);
   const [amount,setAmount] = useState(null)
-  const [debouncedAmount, setDebouncedAmount] = useState("");
-const [clientSecret, setClientSecret] = useState();
+
   const handleOpen = () => setOpen(!open);
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
   };
 
-   useEffect(() => {
-     const timeoutId = setTimeout(() => {
-       setDebouncedAmount(amount);
-     }, 1000);
 
-     return () => clearTimeout(timeoutId);
-   }, [amount]);
 
-  useEffect(() => {
-    if (id) {
-        if(debouncedAmount){
-      const makeRequest = async () => {
-        try {
-          const res = await UserRequest.post(`/paymentrequest/${id.id}/${debouncedAmount}`);
-          setClientSecret(res.data.clientSecret);
-          console.log("secret",clientSecret);
-        } catch (error) {
-          console.error("Error while making the request:", error);
-        }
-      };
-
-      makeRequest();
-    }}
-  }, [id, debouncedAmount]);
-   const appearance = {
-     theme: "stripe",
-   };
-   const options = {
-     clientSecret,
-     appearance,
-   };
 
   return (
     <>
@@ -100,14 +66,10 @@ const [clientSecret, setClientSecret] = useState();
           <Button variant="text" color="gray" onClick={handleOpen}>
             cancel
           </Button>
+          {amount>=100&&<Payment amount={amount} />}
           {/* <Button variant="gradient" color="green" onClick={handleOpen}>
             Confirm
           </Button> */}
-          {clientSecret ? (
-            <Elements options={options} stripe={stripePromise}>
-              <Payment Secret={clientSecret} artistId={id} />
-            </Elements>
-          ) : null}
         </DialogFooter>
       </Dialog>
     </>

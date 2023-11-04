@@ -66,7 +66,7 @@ function Users() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  if (!data || data.data.length < 0) {
+  if (!data || data.data.length <= 0) {
     return <EmptyPage />;
   }
   const handleAction = async (userId) => {
