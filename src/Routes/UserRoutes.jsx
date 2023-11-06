@@ -13,6 +13,7 @@ import BookSlot from "../Components/User/BookSlot";
 import Appointments from "../Components/User/Appointments";
 import NotFound from "../Components/NotFound/NotFound";
 import PaymentSuccess from "../Components/User/PaymentSuccess";
+import Room from "../Components/Room/Room";
 
 function UserRoutes() {
   return (
@@ -30,6 +31,7 @@ function UserRoutes() {
       <Route path="register" element={<UserPublic><Register /></UserPublic>} />
       <Route path="verify" element={<Verify />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/room/:roomId" element={<Room />} />
     </Routes>
   );
 }

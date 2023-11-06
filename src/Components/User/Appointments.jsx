@@ -4,7 +4,9 @@ import UserRequest from "../../Utils/UserRequest";
 import EmptyPage from "../EmptyPage/EmptyPage"
 import moment from "moment";
 import CancelAppointment from "./CancelAppointment";
+import { useNavigate } from "react-router-dom";
 function Appointments() {
+  const navigate = useNavigate()
   const { data, isLoading, error, refetch } = useQuery(
     ["appointment"],
     async () => {
@@ -15,26 +17,6 @@ function Appointments() {
   );
 if(data) console.log("dsssds",data);
 
-// const constructTime = (time) => {
-//   const timeArray=time.split(':')
-//   const minArray=timeArray[1].split(' ')
-//   const hour=timeArray[0]
-//   const minute=minArray[0]
-//   const amPm = minArray[1]
-//   console.log("array is",hour,minute,amPm);
-//   let formattedTime = `${hour}:${minute}`;
-
-//   // Adjust for AM/PM
-//   if (amPm === "PM") {
-//     const hourInt = parseInt(hour, 10);
-//     if (hourInt < 12) {
-//       formattedTime = `${hourInt + 12}:${minute}`;
-//     }
-//   }
-
-//   return formattedTime;
-// };
- 
  
 
   return (
@@ -86,9 +68,7 @@ if(data) console.log("dsssds",data);
                     Appointment Expired
                   </p>
                 ) : appointment.AppoinmentStatus == "rejected" ? (
-                  <p className="text-red-800 self-center">
-                    Rejected by lawyer
-                  </p>
+                  <p className="text-red-800 self-center">Rejected by lawyer</p>
                 ) : (
                   <div className="flex flex-row justify-evenly pt-3">
                     <CancelAppointment
@@ -105,13 +85,16 @@ if(data) console.log("dsssds",data);
                         .format("HH:mm")
                       ? "call time"
                       : "nop"} */}
-                    {appointment.callId==""?null:<Button
-                      size="sm"
-                      className="my-1  bg-green-500 shadow-none "
-                      variant="filled"
-                    >
-                      Call
-                    </Button>}
+                    {appointment.callId == "" ? null : (
+                      <Button
+                        onClick={() => navigate(`/room/${appointment.callId}`)}
+                        size="sm"
+                        className="my-1  bg-green-500 shadow-none "
+                        variant="filled"
+                      >
+                        Join
+                      </Button>
+                    )}
                   </div>
                 )}
                 {/* <span className="text-xs self-center pt-2">Reviews</span> */}

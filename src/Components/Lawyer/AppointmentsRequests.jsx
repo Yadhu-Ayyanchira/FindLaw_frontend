@@ -5,9 +5,12 @@ import LawyerRequest from '../../Utils/LawyerRequests';
 import Loader from '../Loader/Loader'
 import moment from 'moment/moment';
 import RejectAppointment from './RejectAppointment';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function AppointmentsRequests() {
     const [selectedDate,setSelectedDate]= useState(moment().format('YYYY-MM-DD'))
+    const navigate = useNavigate()
       const { isLoading: dateisLoading, error: dateError, data: dateData } = useQuery({
         queryKey: ['appointmentsLawyer'],
         queryFn: () => LawyerRequest.get(`/appointmentDate`).then((res) => res.data)
@@ -18,10 +21,26 @@ function AppointmentsRequests() {
         () => LawyerRequest.get(`/appointmentrequest?date=${selectedDate}`).then((res) => res.data),
         { retry: false }
     );
+    //fetch lawyer details from redux
+      const { name } = useSelector((state) => state.lawyer);
+
 
     if (appointmentData) console.log("date data is", appointmentData);
      if (dateisLoading ) {
        return <Loader />;
+     }
+
+     const  handleSharelink = async (userName,id) => {
+       try {
+        const response = await LawyerRequest.get('/createroom',{params:{userName,name,id}})
+        if(response){
+          console.log(response)
+          navigate(`/room/${response.data.url}`);
+         
+        }
+      } catch (error) {
+        console.log(error);
+      }
      }
   return (
     <>
@@ -88,16 +107,21 @@ function AppointmentsRequests() {
                   </span>
                 </p>
               </div>
-             {appointment.AppoinmentStatus=="rejected" ? (<p className='text-red-800 self-center'>Rejected</p>):(<div className="flex flex-row justify-evenly pt-3">
-                <RejectAppointment id={appointment._id} refetch={refetch} />
-                <Button
-                  size="sm"
-                  className="my-1 bg-green-500 shadow-none"
-                  variant="filled"
-                >
-                  Share link
-                </Button>
-              </div>)}
+              {appointment.AppoinmentStatus == "rejected" ? (
+                <p className="text-red-800 self-center">Rejected</p>
+              ) : (
+                <div className="flex flex-row justify-evenly pt-3">
+                  <RejectAppointment id={appointment._id} refetch={refetch} />
+                  <Button
+                    onClick={()=>handleSharelink(appointment.user.name,appointment._id)}
+                    size="sm"
+                    className="my-1 bg-green-500 shadow-none"
+                    variant="filled"
+                  >
+                    Share link
+                  </Button>
+                </div>
+              )}
             </Card>
           ))}
         </Card>

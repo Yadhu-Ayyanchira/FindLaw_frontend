@@ -9,6 +9,7 @@ import LawyerProfile from '../Components/Lawyer/LawyerProfile';
 import Timeslot from '../Components/Lawyer/Timeslot';
 import AppointmentsRequests from '../Components/Lawyer/AppointmentsRequests';
 import NotFound from "../Components/NotFound/NotFound";
+import Room from '../Components/Room/Room';
 
 function LawyerRoutes() {
   
@@ -24,6 +25,7 @@ function LawyerRoutes() {
           <Route path="/lawyerprofile" element={<LawyerProfile />} />
           <Route path="/timeslot" element={<Timeslot />} />
           <Route path="/appointmentrequest" element={<AppointmentsRequests />} />
+          <Route path="/room/:roomId" element={<Room />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />
