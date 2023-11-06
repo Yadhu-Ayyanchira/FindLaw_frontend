@@ -17,7 +17,6 @@ export async function changePassword(datas) {
   return data;
 }
 
-
 export async function UserRegister(user) {
   try {
     const data = await UserRequest.post("/signup", user);
@@ -27,14 +26,14 @@ export async function UserRegister(user) {
   }
 }
 
-export async function UserRegisterWithGoogle(data){
-try {
-  const datas= await UserRequest.post("/googleSignup",data)
+export async function UserRegisterWithGoogle(data) {
+  try {
+    const datas = await UserRequest.post("/googleSignup", data);
 
-  return datas
-} catch (error) {
-  return error
-}
+    return datas;
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function UserProfileEdit(data, id) {
@@ -75,24 +74,31 @@ export const allLawyers = async ({ page, filter, search }) => {
   });
 };
 
-export const lawyerView = async ({ id}) => {
+export const lawyerView = async ({ id }) => {
   return UserRequest.get("/lawyerView", {
     params: {
-      id
+      id,
     },
   });
 };
 
-
 export const addAppointment = async (data) => {
-  return UserRequest.post("/addappointment",{data});
+  return UserRequest.post("/addappointment", { data });
 };
 
-export const cancelAppointment = async ({id,slotId,slotTime})=>{
+export const cancelAppointment = async ({ id, slotId, slotTime }) => {
   return UserRequest.put("/cancelappointment", { id, slotId, slotTime });
-}
+};
 
-export const addReview = async (rating,review, id) => {
+export const addReview = async (rating, review, id) => {
   console.log("add rviw api", rating);
   return UserRequest.post("/addreview", { review, rating, id });
+};
+
+export const getReviews = async (id) => {
+  return UserRequest.get("/getreviews", {
+    params: {
+      id,
+    },
+  });
 };

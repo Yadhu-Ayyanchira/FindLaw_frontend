@@ -6,32 +6,50 @@ import {
   BriefcaseIcon,
   MapPinIcon,
 } from "@heroicons/react/24/solid";
-import { useLocation, useNavigate, } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { addReview, lawyerView } from "../../Api/UserApi";
+import { addReview, getReviews, lawyerView } from "../../Api/UserApi";
 import Loader from "../Loader/Loader";
 import { FaStar } from "react-icons/fa";
-import { useState } from "react";
-import {GenerateError,GenerateSuccess} from "../../Toast/GenerateError"
+import { useEffect, useState } from "react";
+import { GenerateError, GenerateSuccess } from "../../Toast/GenerateError";
 import { ToastContainer } from "react-toastify";
 
 function SingleLawyer() {
-  const location = useLocation()
-  const navigate = useNavigate()
+  const location = useLocation();
+  const navigate = useNavigate();
   const [rating, setRating] = useState(0);
-  const [review,setReview] = useState("")
+  const [review, setReview] = useState("");
+  // const [reviewData, setReviewData] = useState();
+
   const id = location.state && location.state.id;
   const { isLoading, error, data } = useQuery({
     queryKey: ["lawyers", { id }],
-    queryFn: () =>
-      lawyerView({ id }).then(
-        (res) => res.data
-      ),
+    queryFn: () => lawyerView({ id }).then((res) => res.data),
   });
-  if (!data) {
-    return <div>Data is not available</div>;
-  }
-  const {_id ,name, image, place, about, experience } = data ? data.data : {};
+
+
+  const { _id, name, image, place, about, experience } = data ? data.data : {};
+
+  const { isLoading:reviewLoading, error:reviewError, data:reviewData } = useQuery({
+    queryKey: ["reviewData", { _id }],
+    queryFn: () => getReviews(_id).then((res) => res.data),
+  });
+
+  // useEffect(() => {
+  //   getReviews(_id)
+  //     .then((data) => {
+  //       setReviewData(data.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error getting reviews:", error);
+  //     });
+  // }, [_id]);
+
+if(reviewData) console.log("revw data",reviewData);
+    // if (!data) {
+    //   return <div>Data is not available</div>;
+    // }
 
   if (isLoading) {
     return <Loader />;
@@ -43,21 +61,21 @@ function SingleLawyer() {
   const handleStarClick = (selectedRating) => {
     setRating(selectedRating);
   };
-   const handleReviewChange = (event) => {
-     setReview(event.target.value);
-   };
+  const handleReviewChange = (event) => {
+    setReview(event.target.value);
+  };
 
-   const handleSubmit = async () => {
-    console.log("rating is",rating);
+  const handleSubmit = async () => {
+    console.log("rating is", rating);
     try {
-     const response = await addReview(rating,review,_id)
-     if(response.data.created){
-      GenerateSuccess(response.data.message);
-     }
+      const response = await addReview(rating, review, _id);
+      if (response.data.created) {
+        GenerateSuccess(response.data.message);
+      }
     } catch (error) {
       console.log(error);
     }
-   }
+  };
   return (
     <>
       <ToastContainer />
@@ -94,9 +112,11 @@ function SingleLawyer() {
                   ))}
                 </div>
                 <p className="ms-2">
-                  <span className="font-bold text-black">5</span>
+                  <span className="font-bold text-black">
+                    {reviewData?.count}
+                  </span>
 
-                  <span className="text-xs">Reviews</span>
+                  <span className="text-xs ps-1">Reviews</span>
                 </p>
               </div>
               <div className="flex flex-row justify-evenly pt-3">
@@ -228,54 +248,50 @@ function SingleLawyer() {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="flex flex-col">
-                    <p className="flex flex-row">
-                      <MapIcon className="w-8" />
-                      <span className="text-xl">Experience:</span>
-                    </p>
-                    <p className="text-xl ps-11">12 Years</p>
-                  </div> */}
                 </div>
               </div>
             </Card>
           </div>
         </div>
-        <div className="p-4 pt-0 ">
-          <Card className="  m-5 h-80 p-3 px-20 shadow-2xl overflow-y-scroll no-scrollbar">
+        <div className="p-4 pt-0">
+          <Card className="m-5 h-80 p-3 px-20 shadow-2xl overflow-y-scroll no-scrollbar">
             <div className="self-center mt-2 mb-6">
               <p className="text-black text-3xl font-semibold">
                 Reviews and Ratings
               </p>
             </div>
-            <div className="w-full flex justify-between">
-              <div>
-                {/* rating and review */}
-                <div className="rating pb-2">
-                  <p>⭐️⭐️⭐️⭐️⭐️</p>
+            {reviewData && reviewData.data &&
+              reviewData.data.map((rev) => (
+                <div
+                  key={rev._id}
+                  className="w-full flex justify-between border-b border-black"
+                >
+                  <div className="w-2/3">
+                    {/* rating and review */}
+                    <div className="rating pb-2">
+                      <p>⭐️⭐️⭐️⭐️⭐️</p>
+                    </div>
+                    <div className="review ">
+                      <p>{rev.reviewText}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-row  w-96 h-20">
+                    {/* name image date */}
+                    <div className="row flex flex-row ">
+                      <img
+                        size=""
+                        src={rev.user.image}
+                        alt="tania andrew"
+                        className="rounded-md mx-8 m-4 lg:w-12 lg:h-12 w-12 h-12"
+                      />
+                    </div>
+                    <div className="flex flex-col self-center">
+                      <p>{rev.user.name}</p>
+                      <p>{rev.updatedAt}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="review">
-                  <p>
-                    hello this is review and rating and iam here to rate you
-                    fucking bitch.....!
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-row">
-                {/* name image date */}
-                <div className="row flex flex-row ">
-                  <img
-                    size=""
-                    src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436178.jpg?w=740&t=st=1694511037~exp=1694511637~hmac=7afb019f7b279def27b7c8cff245f9ab0ecc12fadc50d085af0db00d777ee63b"
-                    alt="tania andrew"
-                    className="rounded-md mx-8 m-4 lg:w-12 lg:h-12 w-12 h-12"
-                  />
-                </div>
-                <div className="flex flex-col self-center">
-                  <p>Yadhu</p>
-                  <p>28-10-1997</p>
-                </div>
-              </div>
-            </div>
+              ))}
             <hr className="w-full bg-black" />
           </Card>
         </div>
