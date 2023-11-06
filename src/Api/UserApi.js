@@ -91,3 +91,8 @@ export const addAppointment = async (data) => {
 export const cancelAppointment = async ({id,slotId,slotTime})=>{
   return UserRequest.put("/cancelappointment", { id, slotId, slotTime });
 }
+
+export const addReview = async (rating,review, id) => {
+  console.log("add rviw api", rating);
+  return UserRequest.post("/addreview", { review, rating, id });
+};
