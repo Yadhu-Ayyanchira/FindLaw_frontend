@@ -158,24 +158,24 @@ function AddSlot() {
             <form onSubmit={handleSubmit}>
               <p>Start Date</p>
               <Input
-                className=""
                 variant="standard"
                 label=""
                 type="date"
                 name="startdate"
                 onChange={handleChange}
                 value={data.startdate}
+                className="font-serif"
               />
 
               <p>End Date</p>
               <Input
-                className=""
                 variant="standard"
                 label=""
                 type="date"
                 name="enddate"
                 onChange={handleChange}
                 value={data.enddate}
+                className="font-serif"
               />
               <p>Start Time</p>
               <div className="grid grid-cols-3 my-3">
@@ -187,6 +187,7 @@ function AddSlot() {
                     onChange={(selectedValue) => {
                       setFieldValue("startTimeHour", selectedValue);
                     }}
+                    className="font-serif"
                   >
                     <Option value="1"> 1</Option>
                     <Option value="2"> 2</Option>
@@ -210,6 +211,7 @@ function AddSlot() {
                     onChange={(selectedValue) => {
                       setFieldValue("startTimeMinute", selectedValue);
                     }}
+                    className="font-serif"
                   >
                     <Option value="00"> 00</Option>
                     <Option value="30"> 30</Option>
@@ -223,6 +225,7 @@ function AddSlot() {
                     onChange={(selectedValue) => {
                       setFieldValue("startTimeAmPm", selectedValue);
                     }}
+                    className="font-serif"
                   >
                     <Option value="AM"> AM</Option>
                     <Option value="PM"> PM</Option>
@@ -239,6 +242,7 @@ function AddSlot() {
                     onChange={(selectedValue) => {
                       setFieldValue("endTimeHour", selectedValue);
                     }}
+                    className="font-serif"
                   >
                     <Option value="1"> 1</Option>
                     <Option value="2"> 2</Option>
@@ -262,6 +266,7 @@ function AddSlot() {
                     onChange={(selectedValue) => {
                       setFieldValue("endTimeMinute", selectedValue);
                     }}
+                    className="font-serif"
                   >
                     <Option value="00"> 00</Option>
                     <Option value="30"> 30</Option>
@@ -275,6 +280,7 @@ function AddSlot() {
                     onChange={(selectedValue) => {
                       setFieldValue("endTimeAmPm", selectedValue);
                     }}
+                    className="font-serif"
                   >
                     <Option value="AM"> AM</Option>
                     <Option value="PM"> PM</Option>

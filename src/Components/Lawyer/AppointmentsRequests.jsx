@@ -7,6 +7,7 @@ import moment from 'moment/moment';
 import RejectAppointment from './RejectAppointment';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import EmptyPage from '../EmptyPage/EmptyPage'
 
 function AppointmentsRequests() {
     const [selectedDate,setSelectedDate]= useState(moment().format('YYYY-MM-DD'))
@@ -29,6 +30,10 @@ function AppointmentsRequests() {
      if (dateisLoading ) {
        return <Loader />;
      }
+
+    //  if(appointmentData){
+    //   return <EmptyPage/>
+    //  }
 
      const  handleSharelink = async (userName,id) => {
        try {
@@ -66,9 +71,10 @@ function AppointmentsRequests() {
             onChange={(newSelectedDate) => {
               setSelectedDate(newSelectedDate);
             }}
+            className="font-serif"
           >
             {dateData.data.map((dates, index) => (
-              <Option key={index} value={moment(dates).format("YYYY-MM-DD")}>
+              <Option className="font-serif text-black" key={index} value={moment(dates).format("YYYY-MM-DD")}>
                 {moment(dates).format("DD-MM-YYYY")}
               </Option>
             ))}
@@ -113,7 +119,9 @@ function AppointmentsRequests() {
                 <div className="flex flex-row justify-evenly pt-3">
                   <RejectAppointment id={appointment._id} refetch={refetch} />
                   <Button
-                    onClick={()=>handleSharelink(appointment.user.name,appointment._id)}
+                    onClick={() =>
+                      handleSharelink(appointment.user.name, appointment._id)
+                    }
                     size="sm"
                     className="my-1 bg-green-500 shadow-none"
                     variant="filled"

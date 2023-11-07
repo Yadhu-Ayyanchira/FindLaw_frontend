@@ -18,8 +18,8 @@ function DefaultSidebar() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    localStorage.removeItem("currentAdmin");
-    navigate("/admin/login");
+    localStorage.removeItem("currentLawyer");
+    navigate("/lawyer/login");
   };
   return (
     <Card className="h-[calc(100vh-2rem)] w-full fixed bg-[#1d6143] rounded-none max-w-[18.7rem] p-4 text-red shadow-xl shadow-blue-gray-900/5">

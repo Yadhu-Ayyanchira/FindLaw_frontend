@@ -69,9 +69,14 @@ function Timeslot() {
                 const newSelectedDate = val;
                 setSelectedDate(newSelectedDate);
               }}
+              className="font-serif text-black"
             >
               {dateData.data.map((dates, index) => (
-                <Option key={index} value={dates}>
+                <Option
+                  className="font-serif text-black"
+                  key={index}
+                  value={dates}
+                >
                   {moment(dates).format("DD-MM-YYYY")}{" "}
                   {/* Format the date with moment.js */}
                 </Option>
