@@ -85,7 +85,7 @@ function Home() {
         </figcaption>
       </figure>
       {/* <---------------------------------BANNER-------------------------------------------------> */}
-      <div className="flex flex-col py-9 pb-0 bg-blue-gray-100">
+      <div className="flex flex-col py-9 pb-0 bg-gray-100">
         <Typography
           variant="h2"
           className="self-center font-serif text-gray-900"

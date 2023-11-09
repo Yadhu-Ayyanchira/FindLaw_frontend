@@ -14,6 +14,7 @@ import { FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { GenerateError, GenerateSuccess } from "../../Toast/GenerateError";
 import { ToastContainer } from "react-toastify";
+import Stars from "./Stars";
 
 function SingleLawyer() {
   const location = useLocation();
@@ -31,7 +32,7 @@ function SingleLawyer() {
 
   const { _id, name, image, place, about, experience } = data ? data.data : {};
 
-  const { isLoading:reviewLoading, error:reviewError, data:reviewData } = useQuery({
+  const { isLoading:reviewLoading, error:reviewError, data:reviewData, refetch } = useQuery({
     queryKey: ["reviewData", { _id }],
     queryFn: () => getReviews(_id).then((res) => res.data),
   });
@@ -72,6 +73,7 @@ if(reviewData) console.log("revw data",reviewData);
       if (response.data.created) {
         GenerateSuccess(response.data.message);
       }
+      refetch()
     } catch (error) {
       console.log(error);
     }
@@ -94,31 +96,10 @@ if(reviewData) console.log("revw data",reviewData);
               <p className="text-3xl font-bold text-blue-gray-500 self-center font-serif mb-1">
                 {name}
               </p>
-              <div className="self-center flex flex-row ">
-                {/* <p>⭐️⭐️⭐️⭐️⭐️</p>
-                <p><FaStar className="text-yellow-700" /></p> */}
-
-                <div className="flex items-center space-x-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <span
-                      key={star}
-                      onClick={() => handleStarClick(star)}
-                      className={`cursor-pointer text-xl ${
-                        star <= rating ? "text-yellow-500" : "text-gray-300"
-                      } material-icons`}
-                    >
-                      <FaStar />
-                    </span>
-                  ))}
-                </div>
-                <p className="ms-2">
-                  <span className="font-bold text-black">
-                    {reviewData?.count}
-                  </span>
-
-                  <span className="text-xs ps-1">Reviews</span>
-                </p>
-              </div>
+              <Stars
+                stars={reviewData ? reviewData.avgRating : 0}
+                count={reviewData ? reviewData.count : 0}
+              />
               <div className="flex flex-row justify-evenly pt-3">
                 <button className="flex flex-row rounded-lg bg-gradient-to-br from-[#FF416C] to-[#FF4B2B] ps-2 px-5 py-1 text-base font-medium text-white transition duration-200 hover:shadow-lg hover:shadow-[#FF416C]/50">
                   <GlobeAltIcon className="w-6 me-2" />
@@ -260,7 +241,8 @@ if(reviewData) console.log("revw data",reviewData);
                 Reviews and Ratings
               </p>
             </div>
-            {reviewData && reviewData.data &&
+            {reviewData &&
+              reviewData.data &&
               reviewData.data.map((rev) => (
                 <div
                   key={rev._id}
@@ -269,7 +251,10 @@ if(reviewData) console.log("revw data",reviewData);
                   <div className="w-2/3">
                     {/* rating and review */}
                     <div className="rating pb-2">
-                      <p>⭐️⭐️⭐️⭐️⭐️</p>
+                      <Stars
+                        stars={rev.rating}
+                        count={0}
+                      />
                     </div>
                     <div className="review ">
                       <p>{rev.reviewText}</p>

@@ -74,11 +74,7 @@ function Users() {
     queryClient.invalidateQueries("users");
   };
 
-  // const userdata = data.data.filter((user) => {
-  //   const searchInputLower = searchInput.toLowerCase();
-  //   const nameMatch = user.name.toLowerCase().includes(searchInputLower);
-  //   return nameMatch;
-  // });
+ 
 
   return (
     <Card className="h-full w-full overflow-hidden">
@@ -105,9 +101,6 @@ function Users() {
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
-            {/* <Button className="flex items-center gap-3" size="sm">
-              <ArrowDownTrayIcon strokeWidth={2} className="h-4 w-4" /> Download
-            </Button> */}
           </div>
         </div>
       </CardHeader>

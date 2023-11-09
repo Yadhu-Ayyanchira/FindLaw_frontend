@@ -14,6 +14,7 @@ import Appointments from "../Components/User/Appointments";
 import NotFound from "../Components/NotFound/NotFound";
 import PaymentSuccess from "../Components/User/PaymentSuccess";
 import Room from "../Components/Room/Room";
+import About from "../Pages/User/About";
 
 function UserRoutes() {
   return (
@@ -26,6 +27,7 @@ function UserRoutes() {
         <Route path="bookslot" element={<UserProtected><BookSlot /></UserProtected>} />
         <Route path="appointments" element={<UserProtected><Appointments /></UserProtected>} />
         <Route path="bookingsuccess" element={<UserProtected><PaymentSuccess /></UserProtected>} />
+        <Route path="about" element={<About />} />
       </Route>
       <Route path="login" element={<UserPublic><Login /></UserPublic>} />
       <Route path="register" element={<UserPublic><Register /></UserPublic>} />

@@ -129,7 +129,7 @@ function NavbarDefault() {
           </p>
         </Typography>
       </Link>
-      <Link to="/login">
+      <Link to="/about">
         <Typography
           as="li"
           variant="small"
@@ -139,7 +139,7 @@ function NavbarDefault() {
           About
         </Typography>
       </Link>
-      <Typography
+      {/* <Typography
         as="li"
         variant="small"
         color="blue-gray"
@@ -156,7 +156,7 @@ function NavbarDefault() {
         className="p-1 font-bold"
       >
         Contact
-      </Typography>
+      </Typography> */}
     </ul>
   );
 

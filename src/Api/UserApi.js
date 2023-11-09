@@ -64,12 +64,13 @@ export async function UpdateImage(id, img) {
   }
 }
 
-export const allLawyers = async ({ page, filter, search }) => {
+export const allLawyers = async ({ page, filter, search, starRating }) => {
   return UserRequest.get("/lawyerData", {
     params: {
       page,
       filter,
       search,
+      starRating,
     },
   });
 };

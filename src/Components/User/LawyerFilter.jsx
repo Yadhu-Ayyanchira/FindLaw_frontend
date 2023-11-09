@@ -14,13 +14,15 @@ import { useQuery,  } from "@tanstack/react-query";
 import { allLawyers } from "../../Api/UserApi";
 import Loader from "../Loader/Loader";
 import { useLocation,useNavigate } from "react-router-dom";
+import Stars from "./Stars";
 // import EmptyPage from "../EmptyPage/EmptyPage";
 
 function LawyerFilter() {
 
   // eslint-disable-next-line no-unused-vars
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState(0);
   const [search, setSearch] = useState("");
+  const [starRating,setStarRating] = useState(0)
   // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(1);
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -68,9 +70,9 @@ function LawyerFilter() {
     };
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ["lawyers", { page: page, filter, search: debouncedSearch }],
+    queryKey: ["lawyers", { page: page, filter, search: debouncedSearch,starRating }],
     queryFn: () =>
-      allLawyers({ page: page, filter, search: debouncedSearch }).then(
+      allLawyers({ page: page, filter, search: debouncedSearch, starRating }).then(
         (res) => res.data
       ),
   });
@@ -83,6 +85,11 @@ function LawyerFilter() {
 
   if (error) {
     return <div>Error: {error.message}</div>;
+  }
+  const handleClear = () =>{
+    setFilter(0)
+    setSearch("")
+    setStarRating(0)
   }
   return (
     <>
@@ -105,31 +112,64 @@ function LawyerFilter() {
         </div>
         <div className="grid grid-cols-[20rem,1fr] h-screen m-3">
           <div>
+            <p
+              onClick={() => handleClear()}
+              className="m-3 hover:underline cursor-pointer hover:text-blue-700"
+            >
+              clear all filters
+            </p>
             <Card className="h-auto m-3 bg-blue-gray-50">
               <Radio
                 name="rating"
                 label="⭐️⭐️⭐️⭐️⭐️"
-                onChange={() => alert("Clicked ⭐️⭐️⭐️⭐️⭐️")}
+                onChange={() => setStarRating(5)}
               />
               <Radio
                 name="rating"
                 label="⭐️⭐️⭐️⭐️"
-                onChange={() => alert("Clicked ⭐️⭐️⭐️⭐️")}
+                onChange={() => setStarRating(4)}
               />
               <Radio
                 name="rating"
                 label="⭐️⭐️⭐️"
-                onChange={() => alert("Clicked ⭐️⭐️⭐️")}
+                onChange={() => setStarRating(3)}
               />
               <Radio
                 name="rating"
                 label="⭐️⭐️"
-                onChange={() => alert("Clicked ⭐️⭐️")}
+                onChange={() => setStarRating(2)}
               />
               <Radio
                 name="rating"
                 label="⭐️"
-                onChange={() => alert("Clicked ⭐️")}
+                onChange={() => setStarRating(1)}
+              />
+            </Card>
+            <Card className="h-auto m-3 bg-blue-gray-50">
+              <Radio
+                name="rating"
+                label="2 Year and above"
+                onChange={() => setFilter(2)}
+              />
+              <Radio
+                name="rating"
+                label="4 Year and above"
+                onChange={() => setFilter(4)}
+              />
+              <Radio
+                name="rating"
+                label="6 Year and above"
+                onChange={() => setFilter(6)}
+              />
+              <Radio
+                name="rating"
+                label="8 Year and above"
+                onChange={() => setFilter(8)}
+              />
+              <Radio
+                name="rating"
+                label="10 Year and above"
+                onChange={() => setFilter(10)}
               />
             </Card>
           </div>
@@ -183,12 +223,12 @@ function LawyerFilter() {
                       </Typography>
                     </div>
                     <div className="h-full ps-24 flex items-center  border-e-2">
-                      <Typography className="mx-2">⭐️⭐️⭐️⭐️⭐️</Typography>
+                      <Stars stars={e.rating} count={0} />
                     </div>
                     <div className="w-72 h-full flex flex-col justify-center items-center">
                       <Button className="flex items-center gap-3 bg-green-600  my-2">
                         <BookmarkIcon className="h-5 text-white" />
-                        save
+                        
                       </Button>
                       <Typography
                         color="blue-gray"
@@ -197,10 +237,10 @@ function LawyerFilter() {
                       >
                         {e.experience} Years of experience
                       </Typography>
-                      <Button className="flex items-center gap-3 bg-green-600">
+                      {/* <Button className="flex items-center gap-3 bg-green-600">
                         <BookmarkIcon className="h-5 text-white" />
                         save
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                   <CardFooter className="self-center">
@@ -223,7 +263,10 @@ function LawyerFilter() {
                         color="gray"
                         className="font-normal text-black"
                       >
-                        Page <strong className="text-black mx-4 font-serif text-lg">{page}</strong>{" "}
+                        Page{" "}
+                        <strong className="text-black mx-4 font-serif text-lg">
+                          {page}
+                        </strong>{" "}
                         of{" "}
                         <strong className="text-black mx-4">
                           {Math.ceil(data.count / data.pageSize)}

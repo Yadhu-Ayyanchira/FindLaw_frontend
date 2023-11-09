@@ -4,7 +4,6 @@ import LawyerRequests from "../../Utils/LawyerRequests";
 import {
   MapPinIcon,
   CheckBadgeIcon,
-  PencilSquareIcon,
   BriefcaseIcon,
 } from "@heroicons/react/24/solid";
 import { XCircleIcon } from "@heroicons/react/24/outline";
