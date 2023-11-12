@@ -10,29 +10,47 @@ import {
   TimelineIcon,
 } from "@material-tailwind/react";
 import banner from "../../Assets/Images/hero.jpg";
-import { CheckCircleIcon, MapPinIcon,} from "@heroicons/react/24/solid";
-import fillform from "../../Assets/Images/fillform.svg"
-import call from "../../Assets/Images/call.svg"
-import schedule from "../../Assets/Images/schedule.svg"
-import payment from "../../Assets/Images/payment.svg"
+import { CheckCircleIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import fillform from "../../Assets/Images/fillform.svg";
+import call from "../../Assets/Images/call.svg";
+import schedule from "../../Assets/Images/schedule.svg";
+import payment from "../../Assets/Images/payment.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getHomedata } from "../../Api/UserApi";
+import Loader from "../Loader/Loader";
+import Stars from "./Stars";
 function Home() {
-    const [search, setSearch] = useState();
-  const navigate =useNavigate()
-    const handleSearchChange = (event) => {
-      setSearch(event.target.value);
-    };
+  const [search, setSearch] = useState();
+  const navigate = useNavigate();
+  // <---------------------------------------------data fetch-------------------------------------->
 
-  const handleSubmit = (e)=>{
+  const {isLoading, error, data} = useQuery({
+    queryKey: ['getHomeData'], 
+    queryFn : ()=>getHomedata().then((res)=>res.data)
+  })
+  
+  if(data) data.topLawyers.map((elem)=>console.log(elem.name))
+  if(isLoading) return <Loader/>
+  if(error) return error
+
+  // <---------------------------------------------data fetch-------------------------------------->
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(!search){
-      alert("Please enter a valid search")
-      }else{
-        navigate("/filter", { state: { search } });
-        }
-    
-  }
+    if (!search) {
+      alert("Please enter a valid search");
+    } else {
+      navigate("/filter", { state: { search } });
+    }
+  };
+   const handleLawyerview = (id) => {
+     navigate(`/singlelawyer/`, { state: { id } });
+   };
   return (
     <>
       {/* <---------------------------------BANNER-------------------------------------------------> */}
@@ -94,196 +112,78 @@ function Home() {
         </Typography>
         <div className="flex flex-row justify-center">
           {/* <-----------------------------------------------------one card-----------------------------------------------> */}
-          <Card className="shadow-2xl m-5 w-[27%] p-2">
-            <div className="flex flex-row">
-              <div className="row flex flex-row">
-                <img
-                  size=""
-                  src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436178.jpg?w=740&t=st=1694511037~exp=1694511637~hmac=7afb019f7b279def27b7c8cff245f9ab0ecc12fadc50d085af0db00d777ee63b"
-                  alt="tania andrew"
-                  className="  m-4 me-8 lg:w-32 lg:h-40 w-32 h-32 rounded-xl"
-                />
-              </div>
-              <Card className="flex flex-col mx-8 m-4 lg:w-72 lg:h-40 w-32 h-32 bg-blue-gray-50 p-3">
-                <p className="text-2xl font-bold text-black self-center font-serif mb-1">
-                  Yadhu
-                </p>
-                <div className="self-center flex flex-row ">
-                  <p>⭐️⭐️⭐️⭐️⭐️</p>
-                  <p className="ms-2">
-                    <span className="font-bold text-black">5</span>
-                    <span className="text-xs">Reviews</span>
+          {data &&
+            data.topLawyers.map((elem, index) => (
+              <Card key={index} className="shadow-2xl m-5 w-[27%] p-2 ">
+                <div className="flex flex-row">
+                  <div className="row flex flex-row">
+                    <img
+                      size=""
+                      src={elem.image}
+                      alt={elem.name}
+                      className="  m-4 me-8 lg:w-32 lg:h-40 w-32 h-32 rounded-xl"
+                    />
+                  </div>
+                  <Card className="flex flex-col mx-8 m-4 lg:w-72 lg:h-40 w-32 h-32 bg-blue-gray-50 p-3">
+                    <p className="text-2xl font-bold text-black self-center font-serif mb-1">
+                      {elem.name}
+                    </p>
+                    <div className="flex flex-row justify-center items-center ">
+                      <Stars stars={elem.rating} count={0} />
+                      <p className="ms-2">
+                        <span className="font-bold text-black">5</span>
+                        <span className="text-xs">Reviews</span>
+                      </p>
+                    </div>
+                    <p className="self-center">
+                      Avarage rating{" "}
+                      <span className="text-black">{elem.rating}</span>
+                    </p>
+                    <p className="self-center">Location</p>
+                    <p className="flex flex-row self-center">
+                      <MapPinIcon className="w-5" />
+                      <span className="text-black">{elem.place}</span>
+                    </p>
+                  </Card>
+                </div>
+                <Typography
+                  variant="h5"
+                  color="black"
+                  className="ps-8 font-semibold"
+                >
+                  Practiced areas
+                </Typography>
+                <Typography variant="h6" className="ps-8">
+                  Adoption,Criminal Defence,Juvenile Law,Tax,GST,Family...
+                </Typography>
+
+                <hr className="border border-solid border-black w-96 self-center"></hr>
+                {/* <---------------------------------------REVIEW---------------------------------------------> */}
+
+                <div className="pt-3">
+                  <p className="text-xl font-semibold">Top Notch</p>
+                  <div className="self-center flex flex-row ">
+                    <p className="text-sm">⭐️⭐️⭐️⭐️⭐️</p>
+                    <p className="ms-2">
+                      <span className="text-xs">By yadhu</span>
+                    </p>
+                  </div>
+                  <p className="mt-2">
+                    Attorney Clint Wilson was referred to us by another
+                    attorney. He came highly recommended as the most qualified
+                    for the property issues we were dealing with at the
+                    time...Read more
                   </p>
                 </div>
-                <p className="self-center">
-                  Avarage rating <span className="text-black">4.9</span>
-                </p>
-                <p className="self-center">Location</p>
-                <p className="flex flex-row self-center">
-                  <MapPinIcon className="w-5" />
-                  <span className="text-black">Thrissur</span>
-                </p>
+                <Button
+                  onClick={() => handleLawyerview(elem._id)}
+                  variant="outlined"
+                >
+                  Profile
+                </Button>
+                {/* <---------------------------------------REVIEW---------------------------------------------> */}
               </Card>
-            </div>
-            <Typography
-              variant="h5"
-              color="black"
-              className="ps-8 font-semibold"
-            >
-              Practiced areas
-            </Typography>
-            <Typography variant="h6" className="ps-8">
-              Adoption,Criminal Defence,Juvenile Law,Tax,GST,Family...
-            </Typography>
-
-            <hr className="border border-solid border-black w-96 self-center"></hr>
-            {/* <---------------------------------------REVIEW---------------------------------------------> */}
-
-            <div className="pt-3">
-              <p className="text-xl font-semibold">Top Notch</p>
-              <div className="self-center flex flex-row ">
-                <p className="text-sm">⭐️⭐️⭐️⭐️⭐️</p>
-                <p className="ms-2">
-                  <span className="text-xs">By yadhu</span>
-                </p>
-              </div>
-              <p className="mt-2">
-                Attorney Clint Wilson was referred to us by another attorney. He
-                came highly recommended as the most qualified for the property
-                issues we were dealing with at the time...Read more
-              </p>
-            </div>
-            <Button variant="outlined">Profile</Button>
-            {/* <---------------------------------------REVIEW---------------------------------------------> */}
-          </Card>
-          {/* <-----------------------------------------------------one card-----------------------------------------------> */}
-          {/* <-----------------------------------------------------one card-----------------------------------------------> */}
-          <Card className="shadow-2xl m-5 w-[27%] p-2">
-            <div className="flex flex-row">
-              <div className="row flex flex-row">
-                <img
-                  size=""
-                  src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436178.jpg?w=740&t=st=1694511037~exp=1694511637~hmac=7afb019f7b279def27b7c8cff245f9ab0ecc12fadc50d085af0db00d777ee63b"
-                  alt="tania andrew"
-                  className="  m-4 me-8 lg:w-32 lg:h-40 w-32 h-32 rounded-xl"
-                />
-              </div>
-              <Card className="flex flex-col mx-8 m-4 lg:w-72 lg:h-40 w-32 h-32 bg-blue-gray-50 p-3">
-                <p className="text-2xl font-bold text-black self-center font-serif mb-1">
-                  Yadhu
-                </p>
-                <div className="self-center flex flex-row ">
-                  <p>⭐️⭐️⭐️⭐️⭐️</p>
-                  <p className="ms-2">
-                    <span className="font-bold text-black">5</span>
-                    <span className="text-xs">Reviews</span>
-                  </p>
-                </div>
-                <p className="self-center">
-                  Avarage rating <span className="text-black">4.9</span>
-                </p>
-                <p className="self-center">Location</p>
-                <p className="flex flex-row self-center">
-                  <MapPinIcon className="w-5" />
-                  <span className="text-black">Thrissur</span>
-                </p>
-              </Card>
-            </div>
-            <Typography
-              variant="h5"
-              color="black"
-              className="ps-8 font-semibold"
-            >
-              Practiced areas
-            </Typography>
-            <Typography variant="h6" className="ps-8">
-              Adoption,Criminal Defence,Juvenile Law,Tax,GST,Family...
-            </Typography>
-
-            <hr className="border border-solid border-black w-96 self-center"></hr>
-            {/* <---------------------------------------REVIEW---------------------------------------------> */}
-
-            <div className="pt-3">
-              <p className="text-xl font-semibold">Top Notch</p>
-              <div className="self-center flex flex-row ">
-                <p className="text-sm">⭐️⭐️⭐️⭐️⭐️</p>
-                <p className="ms-2">
-                  <span className="text-xs">By yadhu</span>
-                </p>
-              </div>
-              <p className="mt-2">
-                Attorney Clint Wilson was referred to us by another attorney. He
-                came highly recommended as the most qualified for the property
-                issues we were dealing with at the time...Read more
-              </p>
-            </div>
-            <Button variant="outlined">Profile</Button>
-            {/* <---------------------------------------REVIEW---------------------------------------------> */}
-          </Card>
-          {/* <-----------------------------------------------------one card-----------------------------------------------> */}
-          {/* <-----------------------------------------------------one card-----------------------------------------------> */}
-          <Card className="shadow-2xl m-5 w-[27%] p-2">
-            <div className="flex flex-row">
-              <div className="row flex flex-row">
-                <img
-                  size=""
-                  src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436178.jpg?w=740&t=st=1694511037~exp=1694511637~hmac=7afb019f7b279def27b7c8cff245f9ab0ecc12fadc50d085af0db00d777ee63b"
-                  alt="tania andrew"
-                  className="  m-4 me-8 lg:w-32 lg:h-40 w-32 h-32 rounded-xl"
-                />
-              </div>
-              <Card className="flex flex-col mx-8 m-4 lg:w-72 lg:h-40 w-32 h-32 bg-blue-gray-50 p-3">
-                <p className="text-2xl font-bold text-black self-center font-serif mb-1">
-                  Yadhu
-                </p>
-                <div className="self-center flex flex-row ">
-                  <p>⭐️⭐️⭐️⭐️⭐️</p>
-                  <p className="ms-2">
-                    <span className="font-bold text-black">5</span>
-                    <span className="text-xs">Reviews</span>
-                  </p>
-                </div>
-                <p className="self-center">
-                  Avarage rating <span className="text-black">4.9</span>
-                </p>
-                <p className="self-center">Location</p>
-                <p className="flex flex-row self-center">
-                  <MapPinIcon className="w-5" />
-                  <span className="text-black">Thrissur</span>
-                </p>
-              </Card>
-            </div>
-            <Typography
-              variant="h5"
-              color="black"
-              className="ps-8 font-semibold"
-            >
-              Practiced areas
-            </Typography>
-            <Typography variant="h6" className="ps-8">
-              Adoption,Criminal Defence,Juvenile Law,Tax,GST,Family...
-            </Typography>
-
-            <hr className="border border-solid border-black w-96 self-center"></hr>
-            {/* <---------------------------------------REVIEW---------------------------------------------> */}
-
-            <div className="pt-3">
-              <p className="text-xl font-semibold">Top Notch</p>
-              <div className="self-center flex flex-row ">
-                <p className="text-sm">⭐️⭐️⭐️⭐️⭐️</p>
-                <p className="ms-2">
-                  <span className="text-xs">By yadhu</span>
-                </p>
-              </div>
-              <p className="mt-2">
-                Attorney Clint Wilson was referred to us by another attorney. He
-                came highly recommended as the most qualified for the property
-                issues we were dealing with at the time...Read more
-              </p>
-            </div>
-            <Button variant="outlined">Profile</Button>
-            {/* <---------------------------------------REVIEW---------------------------------------------> */}
-          </Card>
+            ))}
           {/* <-----------------------------------------------------one card-----------------------------------------------> */}
         </div>
         <hr className="border border-solid border-black w-3/4 self-center"></hr>

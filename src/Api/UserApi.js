@@ -103,3 +103,7 @@ export const getReviews = async (id) => {
     },
   });
 };
+
+export const getHomedata = async ()=>{
+  return await UserRequest.get("/homedata");
+}

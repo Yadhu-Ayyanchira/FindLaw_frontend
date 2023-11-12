@@ -37,21 +37,6 @@ function SingleLawyer() {
     queryFn: () => getReviews(_id).then((res) => res.data),
   });
 
-  // useEffect(() => {
-  //   getReviews(_id)
-  //     .then((data) => {
-  //       setReviewData(data.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error getting reviews:", error);
-  //     });
-  // }, [_id]);
-
-if(reviewData) console.log("revw data",reviewData);
-    // if (!data) {
-    //   return <div>Data is not available</div>;
-    // }
-
   if (isLoading) {
     return <Loader />;
   }

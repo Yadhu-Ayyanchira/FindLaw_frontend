@@ -46,7 +46,7 @@ function Users() {
     }
     setPage(newPage);
   };
-  // <------------------------------------------------------------------->
+  // <--------------------------------data fetch----------------------------------->
   const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery({
     queryKey: ["users", { page: page, filter, search: debouncedSearch }],
@@ -57,7 +57,7 @@ function Users() {
     enabled: true,
   });
 
-  //<-------------------------------------------------------------------->
+  //<--------------------------------data fetch------------------------------------>
 
   if (isLoading) {
     return <Loader />;
@@ -73,8 +73,6 @@ function Users() {
     await manageUser(userId);
     queryClient.invalidateQueries("users");
   };
-
- 
 
   return (
     <Card className="h-full w-full overflow-hidden">
