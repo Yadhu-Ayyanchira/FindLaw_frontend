@@ -2,19 +2,27 @@ import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { useParams } from 'react-router-dom';
 import './room.css'
 import logo from '../../Assets/Images/logo.svg'
+import LawyerRequest from "../../Utils/LawyerRequests";
 
 function Room() {
     const {roomId} = useParams()
+    const handleLeave = async ()=>{
+    await LawyerRequest.put(`/callupdate/${roomId}`);
+      
+    }
 
 
     const myMeeting = async (element) => {
+
+     
+
       const appID = 1358125877;
-      const serverSecret = import.meta.env.VITE_ZEGO_SECRET;
+      const serverSecret = "ccc28b75e1983c1b0cd40d12174f3f4e";
       const kitToken =  ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomId,  Date.now().toString(),  "name");
 
-      const zp = ZegoUIKitPrebuilt.create(kitToken);
+      const zc = ZegoUIKitPrebuilt.create(kitToken);
 
-      zp.joinRoom({
+      zc.joinRoom({
         container: element,
         sharedLinks: [
           {
@@ -33,9 +41,7 @@ function Room() {
         scenario: {
           mode: ZegoUIKitPrebuilt.OneONoneCall,
         },
-        branding:{
-            logoURL:{logo}
-        }
+        onLeaveRoom:()=>handleLeave()
       });
 
     }

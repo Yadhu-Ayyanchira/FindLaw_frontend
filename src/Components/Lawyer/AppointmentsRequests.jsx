@@ -8,6 +8,7 @@ import RejectAppointment from './RejectAppointment';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import EmptyPage from '../EmptyPage/EmptyPage'
+import ShareLink from './ShareLink';
 
 function AppointmentsRequests() {
     const [selectedDate,setSelectedDate]= useState(moment().format('YYYY-MM-DD'))
@@ -31,21 +32,8 @@ function AppointmentsRequests() {
        return <Loader />;
      }
 
-    //  if(appointmentData){
-    //   return <EmptyPage/>
-    //  }
-
-     const  handleSharelink = async (userName,id) => {
-       try {
-        const response = await LawyerRequest.get('/createroom',{params:{userName,name,id}})
-        if(response){
-          console.log(response)
-          navigate(`/room/${response.data.url}`);
-         
-        }
-      } catch (error) {
-        console.log(error);
-      }
+     const  handleCreate = async (id) => {
+       window.open(`/lawyer/room/${id}`,'_blank')
      }
   return (
     <>
@@ -74,7 +62,11 @@ function AppointmentsRequests() {
             className="font-serif"
           >
             {dateData.data.map((dates, index) => (
-              <Option className="font-serif text-black" key={index} value={moment(dates).format("YYYY-MM-DD")}>
+              <Option
+                className="font-serif text-black"
+                key={index}
+                value={moment(dates).format("YYYY-MM-DD")}
+              >
                 {moment(dates).format("DD-MM-YYYY")}
               </Option>
             ))}
@@ -119,17 +111,18 @@ function AppointmentsRequests() {
                 <div className="flex flex-row justify-evenly pt-3">
                   <RejectAppointment id={appointment._id} refetch={refetch} />
                   <Button
-                    onClick={() =>
-                      handleSharelink(appointment.user.name, appointment._id)
-                    }
+                    onClick={() => handleCreate(appointment._id)}
                     size="sm"
                     className="my-1 bg-green-500 shadow-none"
                     variant="filled"
                   >
-                    Share link
+                    Start
                   </Button>
                 </div>
               )}
+        {appointment.AppoinmentStatus == "active" ? <ShareLink id={appointment._id} /> : null}
+              <div>
+              </div>
             </Card>
           ))}
         </Card>

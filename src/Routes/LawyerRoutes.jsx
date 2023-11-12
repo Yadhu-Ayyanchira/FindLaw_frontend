@@ -25,9 +25,9 @@ function LawyerRoutes() {
           <Route path="/lawyerprofile" element={<LawyerProfile />} />
           <Route path="/timeslot" element={<Timeslot />} />
           <Route path="/appointmentrequest" element={<AppointmentsRequests />} />
-          <Route path="/room/:roomId" element={<Room />} />
         </Route>
       </Route>
+          <Route path="/room/:roomId" element={<Room />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

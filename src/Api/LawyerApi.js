@@ -82,3 +82,9 @@ export async function rejectAppointment({id}){
   console.log("asasasas",id);
   return LawyerRequest.put("/rejectappointment",{id});
 }
+
+export async function ShareVideoLink(data){
+ const response = LawyerRequest.post(`/sharelink`, data);
+ return response;
+}
+

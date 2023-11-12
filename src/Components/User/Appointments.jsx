@@ -15,7 +15,11 @@ function Appointments() {
       return data;
     }
   );
-if(data) console.log("dsssds",data);
+ const handleJoin = async (link) => {
+   console.log(link);
+   // navigate(`/doctor/room/${id}`)
+   window.open(link, "_blank");
+ };
 
  
 
@@ -85,9 +89,9 @@ if(data) console.log("dsssds",data);
                         .format("HH:mm")
                       ? "call time"
                       : "nop"} */}
-                    {appointment.callId == "" ? null : (
+                    {!appointment.callId  ? null : (
                       <Button
-                        onClick={() => navigate(`/room/${appointment.callId}`)}
+                        onClick={() => handleJoin(appointment.callId)}
                         size="sm"
                         className="my-1  bg-green-500 shadow-none "
                         variant="filled"
@@ -97,7 +101,7 @@ if(data) console.log("dsssds",data);
                     )}
                   </div>
                 )}
-                {/* <span className="text-xs self-center pt-2">Reviews</span> */}
+                
               </Card>
             ))}
         </Card>
