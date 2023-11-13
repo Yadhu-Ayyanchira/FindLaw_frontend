@@ -8,22 +8,36 @@ import {
   DialogFooter,
   Input,
 } from "@material-tailwind/react";
+import { addExpertised } from '../../Api/LawyerApi';
+import {GenerateSuccess,GenerateError} from '../../Toast/GenerateError'
+import { ToastContainer } from 'react-toastify';
 
 
-function EditSpecialised() {
+function EditSpecialised({refetch}) {
    const [open, setOpen] = useState(false);
    const [error, setError] = useState("");
-   const [data,setData] = useState([])
+   const [data,setData] = useState("")
    const handleOpen = () => {
      setError("");
      setOpen(!open);
    };
-   const handleChange = ({ currentTarget: input }) => {
-     setError("");
-     setData({ ...data, [input.name]: input.value });
-   };
+
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+     const response = await addExpertised(data)
+     if(response.data.created){
+      GenerateSuccess('Added Successfully')
+      handleOpen()
+      refetch()
+     }else{
+      GenerateError('Something went wrong!')
+      // setTimeout(() => handleOpen(), 2000);
+      handleOpen()
+     }
+   }
   return (
     <>
+    <ToastContainer/>
       <p
         onClick={handleOpen}
         className="flex items-center hover:border-1 hover:text-black me-10 cursor-pointer rounded-xl text-[#5d7582] text-xs"
@@ -37,9 +51,9 @@ function EditSpecialised() {
         size="sm"
         className="rounded-none"
       >
-        <DialogHeader>EDIT SPECIALISED AREAS</DialogHeader>
+        <DialogHeader>ADD SPECIALISED AREAS</DialogHeader>
         <DialogBody className="flex justify-center ">
-          <form >
+          <form onSubmit={handleSubmit}>
             <div className="mt-8 mb-2 w-70 max-w-screen-lg sm:w-96">
               <div className="my-3">
                 <Input
@@ -48,7 +62,7 @@ function EditSpecialised() {
                   name="about"
                   label="About"
                   value={data.about}
-                  onChange={handleChange}
+                  onChange={(event) => setData(event.target.value)}
                 />
               </div>
             </div>

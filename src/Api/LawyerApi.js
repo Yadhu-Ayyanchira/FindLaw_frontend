@@ -88,3 +88,13 @@ export async function ShareVideoLink(data){
  return response;
 }
 
+export async function addExpertised(data){
+   const response = await LawyerRequest.post('/addexpertise',{data});
+   return response;
+}
+
+export async function removeExpertised(data) {
+  const response = await LawyerRequest.post("/removeexpertise", { data });
+  return response;
+}
+

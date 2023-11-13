@@ -30,7 +30,7 @@ function SingleLawyer() {
   });
 
 
-  const { _id, name, image, place, about, experience } = data ? data.data : {};
+  const { _id, name, image, place, about, experience,specialised } = data ? data.data : {};
 
   const { isLoading:reviewLoading, error:reviewError, data:reviewData, refetch } = useQuery({
     queryKey: ["reviewData", { _id }],
@@ -182,36 +182,12 @@ function SingleLawyer() {
                       <span className="text-xl">Expertised in:</span>
                     </p>
                     <div className="flex flex-wrap">
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                        <p>Family</p>
-                      </div>
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                        <p>Business consulting</p>
-                      </div>
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                        <p>Business consulting</p>
-                      </div>
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                        <p>Business consulting</p>
-                      </div>
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                        <p>Business consulting</p>
-                      </div>
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
-                        <p>Business consulting</p>
-                      </div>
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
-                        <p>Business consulting</p>
-                      </div>
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
-                        <p>Business consulting</p>
-                      </div>
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
-                        <p>Business consulting</p>
-                      </div>
-                      <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
-                        <p>Business consulting expert</p>
-                      </div>
+                      {specialised &&
+                        specialised.map((elem) => (
+                          <div key={elem} className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
+                            <p>{elem}</p>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -236,10 +212,7 @@ function SingleLawyer() {
                   <div className="w-2/3">
                     {/* rating and review */}
                     <div className="rating pb-2">
-                      <Stars
-                        stars={rev.rating}
-                        count={0}
-                      />
+                      <Stars stars={rev.rating} count={0} />
                     </div>
                     <div className="review ">
                       <p>{rev.reviewText}</p>

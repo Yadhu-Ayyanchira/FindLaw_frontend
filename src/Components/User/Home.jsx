@@ -153,10 +153,13 @@ function Home() {
                 >
                   Practiced areas
                 </Typography>
-                <Typography variant="h6" className="ps-8">
-                  Adoption,Criminal Defence,Juvenile Law,Tax,GST,Family...
-                </Typography>
-
+                  <div className="grid grid-cols-2">
+                {elem.specialised.map((area) => (
+                  <Typography key={area} variant="h6" className="ps-8">
+                    {area}
+                  </Typography>
+                ))}
+</div>
                 <hr className="border border-solid border-black w-96 self-center"></hr>
                 {/* <---------------------------------------REVIEW---------------------------------------------> */}
 

@@ -14,6 +14,8 @@ import EditImage from "./EditImage";
 import { useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
 import EditSpecialised from "./EditSpecialised";
+import { removeExpertised } from "../../Api/LawyerApi";
+import {GenerateSuccess,GenerateError} from '../../Toast/GenerateError'
 
 
 function VerifiedTag() {
@@ -47,7 +49,18 @@ function LawyerProfile() {
       }
     );
   console.log("data",data);
-  const { name, email,image, mobile,place,about,experience,is_approved } = data ? data.data : {};
+  const {
+    name,
+    email,
+    image,
+    mobile,
+    place,
+    about,
+    experience,
+    is_approved,
+    specialised,
+  } = data ? data.data : {};
+ 
 
    useEffect(() => {
      refetch();
@@ -65,7 +78,13 @@ function LawyerProfile() {
     return <div>Error: {error.message}</div>;
   }
  
-
+const removeSpecialised = async (elem)=>{
+const response = await removeExpertised(elem)
+if(response.data.created){
+  GenerateSuccess("Removed..!")
+  refetch()
+}
+}
 
   return (
     <>
@@ -123,53 +142,21 @@ function LawyerProfile() {
               <h2 className="text-lg font-semibold mb-2 p-4 pb-0">
                 Practiced areas
               </h2>
-              {/* <button
-              className=" text-black px-4 py-2 absolute top-0 right-0 m-4"
-              //onClick="editContent()"
-            >
-              <PencilSquareIcon className="h-8 w-8" />
-            </button> */}
               <div className=" text-black px-4 py-2 absolute top-0 right-0 m-4">
-                <EditSpecialised />
+                <EditSpecialised refetch={refetch} />
               </div>
             </div>
             <div className="flex flex-wrap">
-              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                <p>Family</p>
-                <XCircleIcon className="w-5 h-5 ms-2" />
-              </div>
-              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                <p>Business consulting</p>
-                <XCircleIcon className="w-5 h-5" />
-              </div>
-              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                <p>Business consulting</p>
-                <XCircleIcon className="w-5 h-5" />
-              </div>
-              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                <p>Business consulting</p>
-                <XCircleIcon className="w-5 h-5" />
-              </div>
-              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto">
-                <p>Business consulting</p>
-                <XCircleIcon className="w-5 h-5" />
-              </div>
-              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
-                <p>Business consulting</p>
-                <XCircleIcon className="w-5 h-5" />
-              </div>
-              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
-                <p>Business consulting</p>
-                <XCircleIcon className="w-5 h-5" />
-              </div>
-              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
-                <p>Business consulting</p>
-                <XCircleIcon className="w-5 h-5 V" />
-              </div>
-              <div className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center sm:w-auto">
-                <p>Business consulting</p>
-                <XCircleIcon className="w-5 h-5 ms-2" />
-              </div>
+              {specialised &&
+                specialised.map((elem) => (
+                  <div
+                    key={elem}
+                    className="flex-shrink-0 h-8 w-auto border-2 border-blue-gray-900 rounded-3xl m-2 p-2 flex justify-center items-center  sm:w-auto"
+                  >
+                    <p>{elem}</p>
+                    <XCircleIcon onClick={()=>removeSpecialised(elem)} className="w-5 h-5 ms-2 hover:text-red-800 cursor-pointer" />
+                  </div>
+                ))}
             </div>
           </div>
         </div>
