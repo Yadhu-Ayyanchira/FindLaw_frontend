@@ -46,6 +46,7 @@ export async function UserProfileEdit(data, id) {
 }
 
 export async function UpdateImage(id, img) {
+  console.log("sdhsdlsdnsd",id,img);
   try {
     const formData = new FormData();
     formData.append("image", img);

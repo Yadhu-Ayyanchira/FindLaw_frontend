@@ -58,7 +58,7 @@ function UserProfile() {
           <div className="profile lg:w-2/3 h-64 m-5 lg:m-5 shadow-xl rounded-xl flex">
             <div className="image">
               <Badge
-                content={<EditImage />}
+                content={<EditImage refetch={refetch} />}
                 overlap="circular"
                 placement="bottom-end"
                 className="h-8 w-8 mb-5 me-2 hover:bg-white hover:text-[#5d7582] bg-[#5d7582] cursor-pointer"

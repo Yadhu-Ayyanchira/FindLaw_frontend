@@ -15,6 +15,7 @@ import {
   Tooltip,
   Input,
 } from "@material-tailwind/react";
+import Swal from "sweetalert2";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { getUsers, manageUser } from "../../Api/AdminApi";
 import EmptyPage from "../EmptyPage/EmptyPage";
@@ -69,10 +70,34 @@ function Users() {
   if (!data || data.data.length <= 0) {
     return <EmptyPage />;
   }
+  // const handleAction = async (userId) => {
+  //   await manageUser(userId);
+  //   queryClient.invalidateQueries("users");
+  // };
   const handleAction = async (userId) => {
-    await manageUser(userId);
-    queryClient.invalidateQueries("users");
+    const isBlocked = data.data.find((user) => user._id === userId).is_blocked;
+
+    const confirmationMessage = isBlocked
+      ? "Do you want to unblock this user?"
+      : "Do you want to block this user?";
+
+    const result = await Swal.fire({
+      title: "Confirmation",
+      text: confirmationMessage,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    });
+
+    if (result.isConfirmed) {
+      await manageUser(userId);
+      queryClient.invalidateQueries("users");
+      Swal.fire("Action Successful", "", "success");
+    }
   };
+
 
   return (
     <Card className="h-full w-full overflow-hidden">

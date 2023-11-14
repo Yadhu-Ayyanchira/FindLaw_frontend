@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import './app.css'
+import './App.css'
 import UserRoutes from './Routes/UserRoutes'
 import LawyerRoutes from './Routes/LawyerRoutes'
 import AdminRoutes from './Routes/AdminRoutes'

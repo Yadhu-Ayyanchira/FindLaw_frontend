@@ -14,7 +14,7 @@ import { UpdateImage } from "../../Api/UserApi";
 import Loader from "../Loader/Loader";
 import { setUserDetails } from "../../Redux/UserSlice";
 
-function EditImage() {
+function EditImage({refetch}) {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setisLoading] = useState(false);
@@ -60,6 +60,7 @@ function EditImage() {
     try {
       const response = await UpdateImage(id, selectedImage);
       if (response.status === 200) {
+        console.log("resp issss",response.data);
         const detail = response.data.data;
         dispatch(
           setUserDetails({
@@ -74,6 +75,7 @@ function EditImage() {
         );
         handleOpen();
       }
+      refetch()
       queryClient.invalidateQueries(["lawyer", id]);
     } catch (error) {
       console.error("Error uploading image:", error);
