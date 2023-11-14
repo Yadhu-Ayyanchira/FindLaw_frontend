@@ -1,4 +1,4 @@
-import { AdminNavBar } from "../../Components/Common/Admin/NavBar";
+import { AdminNavBar } from "../../Components/Common/Admin/AdminNavBar";
 import Sidebar from "../../Components/Common/Admin/Sidebar";
 
 import { Outlet } from "react-router-dom";
