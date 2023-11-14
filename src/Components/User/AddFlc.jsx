@@ -8,7 +8,7 @@ import {
   Input,
   Typography,
 } from "@material-tailwind/react";
-import logo from '../../Assets/Images/logo.svg'
+import logo from "../../Assets/Images/Logo.svg";
 import Payment from "./Payment";
 
 function AddFlc() {
