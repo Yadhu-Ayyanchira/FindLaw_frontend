@@ -6,7 +6,7 @@ import LawyerRequest from "../../Utils/LawyerRequests";
 function Room() {
     const {roomId} = useParams()
     const handleLeave = async ()=>{
-    await LawyerRequest.put(`/callupdate/${roomId}`);
+    await LawyerRequest.put(`/callupdate/${roomId}`)
       
     }
 
