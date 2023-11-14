@@ -69,7 +69,7 @@ function ProfileMenu() {
 
 // nav list menu
 
-function AdminNavBar() {
+export function AdminNavBar() {
   // eslint-disable-next-line no-unused-vars
   const [isNavOpen, setIsNavOpen] = React.useState(false);
 
@@ -137,4 +137,3 @@ function AdminNavBar() {
   );
 }
 
-export default AdminNavBar;
