@@ -69,7 +69,7 @@ function ProfileMenu() {
 
 // nav list menu
 
-function NavBar() {
+function AdminNavBar() {
   // eslint-disable-next-line no-unused-vars
   const [isNavOpen, setIsNavOpen] = React.useState(false);
 
@@ -118,9 +118,9 @@ function NavBar() {
             onClick={openDrawer}
             className="h-8 w-8 ms-5 cursor-pointer text-white visible md:invisible"
           />
-         
+
           <img src={logo} alt="" className="h-14 ps-7 py-1 md:-ms-10" />
-         
+
           <IconButton
             size="sm"
             color="blue-gray"
@@ -137,4 +137,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default AdminNavBar;
