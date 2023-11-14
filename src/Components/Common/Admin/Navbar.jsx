@@ -16,7 +16,6 @@ import {
 } from "@heroicons/react/24/outline";
 import Sidebar from "./Sidebar";
 import logo from "../../../Assets/Images/Logo.svg";
-//import { logout } from "../../../Api/AdminApi";
 import { useNavigate } from "react-router-dom";
 
 function ProfileMenu() {
