@@ -1,7 +1,6 @@
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { useParams } from 'react-router-dom';
 import './room.css'
-import logo from '../../Assets/Images/logo.svg'
 import LawyerRequest from "../../Utils/LawyerRequests";
 
 function Room() {

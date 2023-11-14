@@ -5,8 +5,8 @@ import moment from "moment";
 import {
  UserIcon,
  AcademicCapIcon,
- ClipboardDocumentCheckIcon
 } from "@heroicons/react/24/outline";
+import Loader from "../Loader/Loader";
 
 const TABLE_HEAD = ["Name", "Job", "Employed", "status"];
 
@@ -21,7 +21,12 @@ function AdminDashboard() {
     if(data){
       console.log("sdsdsds",data);
     }
-  
+  if(isLoading){
+    return <Loader/>
+  }
+  if(error){
+    return error
+  }
   return (
     <>
       <div className="container mx-auto">
@@ -87,36 +92,9 @@ function AdminDashboard() {
             </Card>
           </div>
         </div>
-        {/* <div className="flex flex-col lg:flex-row w-full">
-          <div className="lg:w-full h-40 m-5 lg:m-5 shadow-xl rounded-xl flex justify-evenly items-center">
-            <Card className="w-1/5 h-4/5 flex flex-row">
-              <div className="w-2/4 h-full bg-green-800 rounded-xl flex justify-center items-center">
-                <UserIcon className="text-black h-24 " />
-              </div>
-              {data?.userCount}
-            </Card>
-            <Card className="w-1/5 h-4/5 flex flex-row">
-              <div className="w-2/4 h-full bg-blue-800 rounded-xl flex justify-center items-center">
-                <AcademicCapIcon className="text-black h-24" />
-              </div>
-              {data?.lawyerCount}
-            </Card>
-            <Card className="w-1/5 h-4/5 flex flex-row">
-              <div className="w-2/4 h-full bg-yellow-800 rounded-xl flex justify-center items-center">
-                <ClipboardDocumentCheckIcon className="text-black h-24" />
-              </div>
-              {data?.appointmentCount}
-            </Card>
-            <Card className="w-1/5 h-4/5">
-              <div className="w-2/4 h-full bg-orange-800 rounded-xl flex justify-center items-center">
-                <UserIcon className="text-black h-24" />
-              </div>
-            </Card>
-          </div>
-        </div> */}
         <div className="flex flex-col lg:flex-row w-full h-96">
           <div className="lg:w-full m-5 lg:m-5 shadow-xl rounded-xl">
-            <h1>Today's Appointments </h1>
+            <h1>Todays Appointments </h1>
             <Card className="h-full w-full overflow-y-scroll no-scrollbar">
               <table className="w-full min-w-max table-auto text-left">
                 <thead>

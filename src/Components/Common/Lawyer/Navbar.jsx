@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  navbar, // Update the component name to use an uppercase "N"
-  MobileNav,
   Typography,
   Button,
   Menu,
@@ -9,7 +7,6 @@ import {
   MenuList,
   MenuItem,
   Avatar,
-  Card,
   IconButton,
   Drawer,
 } from "@material-tailwind/react";

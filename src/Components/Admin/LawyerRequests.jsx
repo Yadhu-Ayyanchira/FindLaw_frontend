@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AiFillCheckCircle } from "react-icons/ai";
@@ -7,7 +8,6 @@ import {
 } from "@heroicons/react/24/outline";
 import Loader from "../Loader/Loader";
 import { approveLawyer, getLawyerRequests } from "../../Api/AdminApi";
-import AdminRequest from "../../Utils/AdminRequest";
 import {
   Card,
   CardHeader,
@@ -17,7 +17,6 @@ import {
   Chip,
   CardFooter,
   Avatar,
-  IconButton,
   Tooltip,
   Input,
 } from "@material-tailwind/react";

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { NoSymbolIcon } from "@heroicons/react/24/solid";
@@ -70,10 +71,6 @@ function Users() {
   if (!data || data.data.length <= 0) {
     return <EmptyPage />;
   }
-  // const handleAction = async (userId) => {
-  //   await manageUser(userId);
-  //   queryClient.invalidateQueries("users");
-  // };
   const handleAction = async (userId) => {
     const isBlocked = data.data.find((user) => user._id === userId).is_blocked;
 

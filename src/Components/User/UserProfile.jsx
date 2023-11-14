@@ -9,7 +9,6 @@ import {
   CardBody,
   CardFooter,
   Typography,
-  Button,
 } from "@material-tailwind/react";
 import {
   MapPinIcon,
@@ -95,7 +94,6 @@ function UserProfile() {
             </div>
             <div className="p-10">
               <EditProfile onEdit={handleEditProfile} />
-              {/* {is_approved ? <VerifiedTag /> : <NotVerifiedTag />} */}
             </div>
           </div>
 
@@ -112,7 +110,6 @@ function UserProfile() {
               </Typography>
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              {/* <Button className="bg-green-700">Add FLC</Button> */}
               <AddFlc id={id} />
             </CardFooter>
           </Card>
