@@ -112,6 +112,7 @@ function Register() {
       } else {
         handleLoad();
         const response = await UserRegister(data);
+        console.log("sdsdsdsd",response);
         if (response.data.created) {
           //localStorage.setItem("currentUser", response.data.token);
           const detail = response.data.user;
@@ -135,7 +136,7 @@ function Register() {
       }
     } catch (error) {
       handleLoad();
-      console.log(error);
+      console.log("erris",error);
     } finally {
       handleLoad();
     }

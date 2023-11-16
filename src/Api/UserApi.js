@@ -21,6 +21,7 @@ export async function UserRegister(user) {
   console.log("okey flasn");
   try {
     const data = await UserRequest.post("/signup", user);
+    console.log("sdsdsdsd",data);
     return data;
   } catch (error) {
     return error;
