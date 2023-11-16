@@ -166,7 +166,7 @@ function NavbarDefault() {
         <div className="cursor-pointer" onClick={() => navigate('/')}>
           <img src={logo} alt="Logo" className="w-40 mx-auto" />
         </div>
-        <div className="hidden lg:block">{navList}</div>
+        <div className=" lg:block">{navList}</div>
         <div className="flex items-center justify-between">
           {/* <div className="hidden md:flex md:items-center md:ml-6 mr-5 justify-normal">
             <Badge
@@ -177,7 +177,7 @@ function NavbarDefault() {
               <BiMessageAltDetail className="h-7 w-7" />
             </Badge>
           </div> */}
-          <div className="hidden md:flex md:items-center md:ml-6 mr-5 justify-normal">
+          <div className=" md:flex md:items-center md:ml-6 mr-5 justify-normal">
             <button className="focus:outline-none">
               <div
                 className="relative inline-block "
