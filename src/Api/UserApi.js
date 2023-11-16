@@ -58,7 +58,6 @@ export async function UpdateImage(id, img) {
         "content-type": "multipart/form-data",
         userId: id,
       },
-      WithCreadentials: true,
     };
     const res = await UserRequest.post("/imgupdate", formData, config);
     return res;
