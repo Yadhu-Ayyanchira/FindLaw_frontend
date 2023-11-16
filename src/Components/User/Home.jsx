@@ -112,7 +112,7 @@ function Home() {
         </Typography>
         <div className="flex flex-row justify-center">
           {/* <-----------------------------------------------------one card-----------------------------------------------> */}
-          {data &&
+          {data && data.topLawyers &&
             data.topLawyers.map((elem, index) => (
               <Card key={index} className="shadow-2xl m-5 w-[27%] p-2 ">
                 <div className="flex flex-row">
