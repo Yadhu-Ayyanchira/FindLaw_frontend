@@ -1,6 +1,6 @@
 import axios from "axios";
 const UserRequest = axios.create({
-  baseURL: "https://find-law-frontend.vercel.app",
+  baseURL: 'https://zainzara.online'
 });
 
 UserRequest.interceptors.request.use((req) => {
