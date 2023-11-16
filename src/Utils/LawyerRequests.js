@@ -1,6 +1,6 @@
 import axios from "axios";
 const LawyerRequest = axios.create({
-  baseURL: "http://localhost:4000/lawyer",
+  baseURL: import.meta.env.VITE_LAWYERURL,
 });
 
 

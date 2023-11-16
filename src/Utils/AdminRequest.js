@@ -1,6 +1,6 @@
 import axios from "axios";
 const AdminRequest = axios.create({
-  baseURL: "http://localhost:4000/admin",
+  baseURL: import.meta.env.VITE_ADMINURL,
 });
 
 AdminRequest.interceptors.request.use((req) => {
