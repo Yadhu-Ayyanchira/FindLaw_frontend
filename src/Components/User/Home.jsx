@@ -112,7 +112,7 @@ function Home() {
         </Typography>
         <div className="flex flex-row justify-center">
           {/* <-----------------------------------------------------one card-----------------------------------------------> */}
-          {data && data.topLawyers &&
+          {data && data.topLawyers.length > 0 ? (
             data.topLawyers.map((elem, index) => (
               <Card key={index} className="shadow-2xl m-5 w-[27%] p-2 ">
                 <div className="flex flex-row">
@@ -150,16 +150,17 @@ function Home() {
                   variant="h5"
                   color="black"
                   className="ps-8 font-semibold"
-              >
+                >
                   Practiced areas
                 </Typography>
-                  <div className="grid grid-cols-2">
-                {elem && elem.specialised.map((area) => (
-                  <Typography key={area} variant="h6" className="ps-8">
-                    {area}
-                  </Typography>
-                ))}
-</div>
+                <div className="grid grid-cols-2">
+                  {elem &&
+                    elem.specialised.map((area) => (
+                      <Typography key={area} variant="h6" className="ps-8">
+                        {area}
+                      </Typography>
+                    ))}
+                </div>
                 <hr className="border border-solid border-black w-96 self-center"></hr>
                 {/* <---------------------------------------REVIEW---------------------------------------------> */}
 
@@ -186,7 +187,10 @@ function Home() {
                 </Button>
                 {/* <---------------------------------------REVIEW---------------------------------------------> */}
               </Card>
-            ))}
+            ))
+          ) : (
+            <p>No top lawyers available.</p>
+          )}
           {/* <-----------------------------------------------------one card-----------------------------------------------> */}
         </div>
         <hr className="border border-solid border-black w-3/4 self-center"></hr>
