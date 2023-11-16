@@ -46,7 +46,7 @@ function DefaultSidebar() {
           <ListItemPrefix>
             <InboxIcon className="h-5 w-5" />
           </ListItemPrefix>
-          Lawyer Requests
+          Appointment Requests
           {/* <ListItemSuffix>
             <Chip
               value="14"
