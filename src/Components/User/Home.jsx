@@ -31,7 +31,6 @@ function Home() {
     queryFn : ()=>getHomedata().then((res)=>res.data)
   })
   
-  if(data) data.topLawyers.map((elem)=>console.log(elem.name))
   if(isLoading) return <Loader/>
   if(error) return error
 
