@@ -18,6 +18,7 @@ export async function changePassword(datas) {
 }
 
 export async function UserRegister(user) {
+  console.log("okey flasn");
   try {
     const data = await UserRequest.post("/signup", user);
     return data;

@@ -111,7 +111,6 @@ function Register() {
          GenerateError("Pasword not match!");
       } else {
         handleLoad();
-        console.log("wtf");
         const response = await UserRegister(data);
         if (response.data.created) {
           //localStorage.setItem("currentUser", response.data.token);
