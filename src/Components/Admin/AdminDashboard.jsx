@@ -41,7 +41,7 @@ function AdminDashboard() {
                   </Typography>
                   <div className="flex items-baseline">
                     <Typography variant="h1" className="text-white my-3 me-3">
-                      {data?.userCount}
+                      {data?.userCount - 1}
                     </Typography>
                     <Typography className="text-white my-3">users </Typography>
                   </div>

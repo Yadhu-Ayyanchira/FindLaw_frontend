@@ -14,8 +14,9 @@ import { UpdateImage } from "../../Api/UserApi";
 import Loader from "../Loader/Loader";
 import { setUserDetails } from "../../Redux/UserSlice";
 
-function EditImage({refetch}) {
+function EditImage({ refetch }) {
   const [open, setOpen] = useState(false);
+  const [load, setLoad] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setisLoading] = useState(false);
   const { id, image } = useSelector((state) => state.user);
@@ -58,9 +59,9 @@ function EditImage({refetch}) {
     }
 
     try {
+      setLoad(true)
       const response = await UpdateImage(id, selectedImage);
       if (response.status === 200) {
-        console.log("resp issss",response.data);
         const detail = response.data.data;
         dispatch(
           setUserDetails({
@@ -70,12 +71,13 @@ function EditImage({refetch}) {
             mobile: detail?.mobile,
             place: detail?.place,
             image: detail?.image,
-            flc: detail?.flc
+            flc: detail?.flc,
           })
         );
+        setLoad(false);
         handleOpen();
       }
-      refetch()
+      refetch();
       queryClient.invalidateQueries(["lawyer", id]);
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -128,9 +130,18 @@ function EditImage({refetch}) {
               >
                 <span>Cancel</span>
               </Button>
-              <Button variant="filled" type="submit" color="green">
-                <span>Save</span>
-              </Button>
+              {load ? (
+                <Button
+                  variant="filled"
+                  color="green"
+                >
+                  <Loader className="text-white h-7 w-7" />
+                </Button>
+              ) : (
+                <Button variant="filled" type="submit" color="green">
+                  <span>Save</span>
+                </Button>
+              )}
             </DialogFooter>
           </form>
         </DialogBody>
