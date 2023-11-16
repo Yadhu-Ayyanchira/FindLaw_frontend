@@ -150,11 +150,11 @@ function Home() {
                   variant="h5"
                   color="black"
                   className="ps-8 font-semibold"
-                >
+              >
                   Practiced areas
                 </Typography>
                   <div className="grid grid-cols-2">
-                {elem.specialised.map((area) => (
+                {elem && elem.specialised.map((area) => (
                   <Typography key={area} variant="h6" className="ps-8">
                     {area}
                   </Typography>
