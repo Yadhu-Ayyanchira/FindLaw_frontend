@@ -1,6 +1,6 @@
 import axios from "axios";
 const UserRequest = axios.create({
-  baseURL: import.meta.env.VITE_USERURL,
+  baseURL: "https://find-law-frontend.vercel.app",
 });
 
 UserRequest.interceptors.request.use((req) => {
