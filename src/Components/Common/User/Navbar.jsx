@@ -177,7 +177,7 @@ function NavbarDefault() {
               <BiMessageAltDetail className="h-7 w-7" />
             </Badge>
           </div> */}
-          <div className=" md:flex md:items-center md:ml-6 mr-5 justify-normal">
+          <div className="self-end md:flex md:items-center md:ml-6 mr-5 justify-normal">
             <button className="focus:outline-none">
               <div
                 className="relative inline-block "
