@@ -35,6 +35,7 @@ function Dashboard() {
                   <div className="flex items-baseline">
                     <Typography variant="h1" className="text-white my-3 me-3">
                       {/* {data?.userCount} */}
+                      3
                     </Typography>
                     <Typography className="text-white my-3">users </Typography>
                   </div>
@@ -53,7 +54,7 @@ function Dashboard() {
                   </Typography>
                   <div className="flex items-baseline">
                     <Typography variant="h1" className="text-white my-3 me-3">
-                      {/* {data?.lawyerCount} */}
+                      {/* {data?.lawyerCount} */}2
                     </Typography>
                     <Typography className="text-white my-3">
                       Lawyers{" "}
@@ -74,7 +75,7 @@ function Dashboard() {
                   </Typography>
                   <div className="flex items-baseline">
                     <Typography variant="h1" className="text-white my-3 me-3">
-                      {/* {data?.appointmentCount} */}
+                      {/* {data?.appointmentCount} */}5
                     </Typography>
                     <Typography className="text-white my-3">
                       appointments{" "}

@@ -18,6 +18,7 @@ function EditImage() {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setisLoading] = useState(false);
+  const [load, setLoad] = useState(false);
   const [error, setError] = useState(null);
   const { id, image } = useSelector((state) => state.lawyer);
   const queryClient = useQueryClient();
@@ -56,6 +57,7 @@ function EditImage() {
       return;
     }
     try {
+      setLoad(true);
       const response = await UpdateImage(id, selectedImage);
       if (response.status === 200) {
         const detail = response.data.data;
@@ -72,6 +74,7 @@ function EditImage() {
             image: detail?.image,
           })
         );
+        setLoad(false);
         handleOpen();
       }
       queryClient.invalidateQueries(["lawyer", id]);
@@ -134,9 +137,16 @@ function EditImage() {
               >
                 <span>Cancel</span>
               </Button>
-              <Button variant="filled" type="submit" color="green">
+              {load?   (<Button
+                  variant="filled"
+                  color="green"
+                >
+                  <Loader className="text-white h-7 w-7" />
+                </Button>
+              ) :( <Button variant="filled" type="submit" color="green">
                 <span>Save</span>
-              </Button>
+              </Button>)}
+             
             </DialogFooter>
           </form>
         </DialogBody>
