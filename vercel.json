@@ -1,3 +1,11 @@
+
+
 {
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
+  "version": 2,
+  "builds": [{ "src": "api/**/*.js", "use": "@now/node" }],
+  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }],
+  "static": {
+    "source": "public",
+    "ignore": ["**/*.js"]
+  }
 }
