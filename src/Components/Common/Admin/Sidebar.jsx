@@ -46,11 +46,16 @@ function Sidebar() {
           <ListItemPrefix>
             <InboxIcon className="h-5 w-5" />
           </ListItemPrefix>
-          Requests
-          
-        </ListItem>
-       
+          Lawyer Requests
         
+        </ListItem>
+        
+        <ListItem onClick={handleLogout}>
+          <ListItemPrefix>
+            <PowerIcon className="h-5 w-5" />
+          </ListItemPrefix>
+          Log Out
+        </ListItem>
       </List>
     </Card>
   );
