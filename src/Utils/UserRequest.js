@@ -22,7 +22,7 @@ UserRequest.interceptors.response.use(
     console.error("Request error:", error);
     if (error.response && error.response.status === 400) {
             console.log("error 400");
-            localStorage.removeItem("currentUser");
+            localStorage.removeItem("currentUser")
       window.location.href = "/login";
     }
     return Promise.reject(error);

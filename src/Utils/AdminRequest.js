@@ -18,7 +18,7 @@ AdminRequest.interceptors.response.use(
     console.log("Request error:", error);
     if (error.response && error.response.status === 400) {
       localStorage.removeItem("currentAdmin");
-      window.location.href = "/admin/login";
+      window.location.href = "/admin/login"
     }
     return Promise.reject(error);
   }
